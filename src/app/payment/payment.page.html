@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="close()" *ngIf="text">{{ text.cancel }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="data && text">
+  
+<h3>{{ text.select_payment_method }} <ion-badge style="float:right;margin-top: 5px;" color="dark">{{setting.currency }}{{ data.amount }}</ion-badge></h3>
+
+
+<br><br>
+<ion-item lines="none" (click)="paymentSheet()" detail *ngIf="setting.stripe_key">
+<ion-thumbnail slot="start"><img src="assets/stripe.png"></ion-thumbnail>
+<ion-label>{{ text.credit }}</ion-label>
+<ion-spinner name="crescent" slot="end" *ngIf="payment_method == 1"></ion-spinner>
+</ion-item><br>
+
+
+<ion-item lines="none" detail  (click)="payWithRazorpay()">
+<ion-label> {{ text.upi }}</ion-label>
+<ion-thumbnail slot="start"><img src="assets/razor.png"></ion-thumbnail>
+<ion-spinner name="crescent" slot="end" *ngIf="payment_method == 2"></ion-spinner>
+</ion-item><br>
+
+<br><br><br>
+<b>For stripe use these Test card detail : </b>
+
+<p>Card No : 4242 4242 4242 4242</p>
+<p>Exp. 12/25 CVV : 321</p>
+
+
+</ion-content>

@@ -1,0 +1,19 @@
+ion-content
+{
+    --background:var(--ion-color-light);
+}
+ion-textarea {
+    --background: #ffffff !important;
+    height:100px;
+    --border-style	:0px
+  }
+
+  ion-item
+  {
+    border-radius: 10px;
+  }
+
+  ion-icon
+  {
+    margin: 5px;
+  }

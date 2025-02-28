@@ -1,0 +1,49 @@
+ion-content
+{
+    --background:var(--ion-color-light);
+}
+
+ion-footer
+{
+    background: white;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+}
+
+h4
+{
+    font-weight: bold;
+}
+
+p
+{
+    color:gray;
+}
+
+ion-input
+{
+    border-radius:10px !important;
+    background-color: white;
+}
+
+ion-item
+{
+    border-radius: 10px;
+    border:1px solid #bbbbbb;
+}
+
+ion-input
+{
+    background-color: white;
+}
+
+.mobile
+{
+    width:100%;
+}
+
+.web
+{
+    width: 50%;
+    margin: auto;
+}

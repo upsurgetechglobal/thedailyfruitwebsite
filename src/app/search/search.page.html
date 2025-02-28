@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+  <ion-buttons><ion-back-button></ion-back-button></ion-buttons>
+
+  <ion-row *ngIf="isMobile">
+    <ion-col size="12"><img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;"></ion-col>
+    </ion-row>
+    
+    <ion-row *ngIf="!isMobile && text">
+    
+    <ion-col size="1">&nbsp;</ion-col>
+    <ion-col size="1"><img src="assets/daily_fruit_logo.png"></ion-col>
+    <ion-col size="7">
+      <ion-button  color="light" class="topBtn"  routerLink="/tabs/home" style="margin-left: 10%;" fill="clear">{{ text.menu_home }}</ion-button>
+      <ion-button  color="light" class="topBtn"  routerLink="/search">Search</ion-button>
+      <ion-button  color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_cart }} <span *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button>
+    <ion-button  color="light" class="topBtn" fill="clear" routerLink="/tabs/account">{{ text.menu_account }}</ion-button>
+    <ion-button  color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_sub }}</ion-button>
+    <ion-button  color="light" class="topBtn" fill="clear" routerLink="/language">{{ text.menu_lang }}</ion-button>
+    
+    
+    </ion-col>
+    </ion-row>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="text">
+
+<ion-grid [fixed]="true">
+<ion-row>
+<ion-col size="12"><h1>Search Here</h1></ion-col>
+<ion-col size="12"><ion-input #searchBar label="Search" name="q" ngModel label-placement="floating" fill="outline" mode="md" (ionInput)="search($event)"></ion-input></ion-col>
+</ion-row>
+
+<div *ngIf="data && data.item.length == 0" class="no"><p align="center">{{ text.no_record }} '{{ q }}'</p></div>
+
+<div *ngIf="data && data.item.length > 0" class="allData">
+<br>
+<ion-item lines="none" *ngFor="let item of data.item" routerLink="/item/{{ item.store_id }}" mode="md" class="sitem">
+<ion-thumbnail slot="start">
+<img src="{{ item.img }}" class="img"/>
+</ion-thumbnail>
+<ion-label class="ion-text-wrap"><span style="font-size: 16px;">{{ item.name }}</span> <ion-badge color="dark" style="float: right;">{{ item.currency }}{{ item.price }} </ion-badge>
+<span class="desc">{{ item.desc }}
+
+<span *ngIf="item.rating > 0" class="rating">
+<ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)" color="primary"></ion-icon>
+</span>
+
+</span>
+</ion-label>
+</ion-item>
+
+</div>
+
+
+<br><br>
+<p>{{ text.from_cate }}</p>
+
+<ion-row>
+<ion-col [size]="isMobile ? 12 : 4" *ngFor="let cate of cates">
+<ion-item  lines="none" detail routerLink="/item/1" routerDirection="forward" mode="md">
+<ion-avatar slot="start">
+<img src="{{ cate.img }}" />
+</ion-avatar>
+<ion-label>{{ cate.name }}</ion-label>
+</ion-item>
+</ion-col>
+</ion-row>
+
+</ion-grid>
+
+</ion-content>

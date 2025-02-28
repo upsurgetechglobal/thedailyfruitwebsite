@@ -1,0 +1,26 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <ion-title>Account Setting</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+<ion-grid [fixed]="true">
+ 
+<form #form="ngForm" (ngSubmit)="updateData(form.value)">
+
+<ion-input label="Your Name" label-placement="floating" fill="outline" [(ngModel)]="data.name" required name="name" [disabled]="hasClick" mode="md"></ion-input>
+
+<ion-input label="Email" label-placement="floating" fill="outline" [(ngModel)]="data.email" required name="email" [disabled]="hasClick" mode="md"></ion-input>
+
+<ion-input label="Phone No" label-placement="floating" fill="outline" [(ngModel)]="data.phone" required name="phone" [disabled]="hasClick" mode="md"></ion-input>
+
+<ion-input label="Change Password" label-placement="floating" fill="outline" [disabled]="hasClick" mode="md"></ion-input>
+
+<br>
+<ion-button mode="ios" expand="block" color="dark" type="submit" *ngIf="!hasClick">Update</ion-button>
+<ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+</form>
+</ion-grid>
+</ion-content>

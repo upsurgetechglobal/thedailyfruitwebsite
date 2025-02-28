@@ -1,0 +1,49 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <!-- <ion-title *ngIf="text">{{ text.my_sub }}</ion-title> -->
+    <ion-title *ngIf="text">{{ text.my_sub }} <a style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{ text.go_back }}</a></ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="text">
+<ion-grid [fixed]="true">
+ 
+<div *ngIf="!data" class="ion-padding">
+<div *ngFor="let fake of fakeData" style="margin-bottom: 10%;">
+<ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text>
+</div>
+</div>
+
+<div *ngIf="data && data.length == 0">
+<p  align="center">{{ text.no_sub }}</p>
+<br>
+<ion-button color="dark" expand="block" mode="ios" routerLink="/tabs/home" routerDirection="forward">{{ text.lets_start }}</ion-button>
+</div>
+
+<div *ngIf="data && data.length > 0">
+  <small>{{ text.manage_sub }}</small>  
+<ion-row *ngFor="let order of data">
+
+<ion-col size="12" class="item">
+<span class="sname">{{ order.store_name }}</span>
+<span class="oitem">{{ order.item }}</span>
+
+<span class="type">{{ order.type }}</span>
+
+<small class="desc">{{ order.desc }}</small>
+
+</ion-col>
+<ion-col size="12" class="start"><span style="color:green">{{ text.start }}</span> : {{ order.start_date }} | <span style="color:red">{{ text.valid }}</span> : {{ order.end_date }}</ion-col>
+<ion-col size="12" class="price">{{ text.sub_price }} : {{ order.currency }}{{ order.price }} x {{ order.dates.length }} :&nbsp;<b>{{ order.currency }}{{ order.total }}</b></ion-col>
+
+<ion-button (click)="detail(order)" color="dark" mode="ios" size="small" style="margin-top: 10px;">{{ text.managesub }}</ion-button>
+
+<ion-button routerLink="/rating/{{ order.item_id }}/{{ order.canRate.store }}/{{ order.item }}/{{ order.store_name }}" color="primary" mode="ios" size="small" class="rate" *ngIf="order.canRate.item"><span style="color:white">{{ text.give_rating }}</span></ion-button>
+
+</ion-row>
+
+</div>
+</ion-grid>
+</ion-content>

@@ -1,0 +1,77 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-title *ngIf="text">{{ text.wallet_title }}</ion-title>
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text">
+  <ion-grid [fixed]="true">
+
+<div *ngIf="!data" class="ion-padding">
+<ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text>
+
+<ion-row>
+<ion-col size="6"><ion-skeleton-text [animated]="true" class="sek2"></ion-skeleton-text></ion-col>
+<ion-col size="6"><ion-skeleton-text [animated]="true" class="sek3"></ion-skeleton-text></ion-col>
+</ion-row>
+
+<ion-skeleton-text [animated]="true" class="sek4" *ngFor="let fake of fakeData"></ion-skeleton-text>
+
+
+</div>
+
+<div *ngIf="data">
+<br>
+<ion-item lines="none" class="wallet" mode="md">
+<ion-icon name="wallet" slot="start" style="font-size: 60px;" color="light"></ion-icon>
+<ion-label>
+<span class="title">{{ text.avil_balance }}</span>
+<h3 class="wallet">{{ setting.currency }}{{ data.wallet }}</h3>
+</ion-label>
+</ion-item>
+<br>
+
+<ion-segment value="1" color="dark" [(ngModel)]="type" mode="md">
+  
+  <ion-segment-button [value]="1">
+    <ion-label>{{ text.trans }}</ion-label>
+  </ion-segment-button>
+  
+  <ion-segment-button [value]="2" color="dark">
+    <ion-label>{{ text.add_fund }}</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<div [ngSwitch]="type" class="ion-padding bottom">
+
+<div *ngSwitchCase="1">
+
+<ion-item *ngFor="let trans of data.trans" lines="full">
+<ion-label>{{ setting.currency }}{{ trans.amount }} <span style="float:right">{{ trans.created_at | date:'dd-MM-yyyy'  }}</span>
+  
+  
+<small class="notes">{{ trans.notes }}</small></ion-label>
+<ion-icon name="add-outline" color="success" slot="start" *ngIf="trans.type == 0"></ion-icon>
+<ion-icon name="remove-circle-outline" color="danger" slot="start" *ngIf="trans.type == 1"></ion-icon>
+</ion-item>
+
+</div>
+
+
+
+<div *ngSwitchCase="2">
+
+  <p>{{ text.fund_desc }}</p>
+  
+  <br>
+  <ion-input label="Enter Amount" label-placement="floating" fill="outline" type="tel" maxlength="10" [(ngModel)]="amount" name="amount" mode="md"></ion-input>
+  <br>
+  <ion-button mode="ios" expand="block" color="dark" (click)="add()">{{ text.add }}</ion-button>
+  </div>
+
+</div>
+
+</div>
+</ion-grid>
+</ion-content>

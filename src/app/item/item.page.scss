@@ -1,0 +1,424 @@
+ion-content {
+    --background: var(--ion-color-light)
+}
+
+
+.scrollable-content {
+    height: 80vh;
+    overflow-y: auto;
+    border-right: 3px solid whitesmoke;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+}
+
+.card_title{
+    width: 100%;
+    font-weight: bold;
+    background-color: var(--ion-color-dark);
+    padding: 10px;
+}
+.card_title ion-card-title{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--ion-color-light);
+}
+.category_card{
+    // width: 100%;
+    // height: 82vh;
+    // margin: 1rem;
+    // padding: 5px 25px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    // box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+.product_card{
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--ion-color-light);
+    // width: 100%;
+    // margin: 1rem;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    // box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    // text-align: center;
+    transition: transform 0.2s;
+}
+.product_card:hover {
+    // transform: translateY(-5px);
+    border: 2px solid var(--ion-color-dark);
+}
+
+.discount {
+    // background: #fff3cd;
+    background: linear-gradient(135deg, white 0%, #fff3cd 100%);
+    padding: 8px;
+    font-size: 14px;
+    margin: 10px 0;
+    border-radius: 5px;
+    // font-weight: bold;
+    color: black;
+}
+
+.discount span {
+    color: #28a745;
+    font-weight: bold;
+}
+.prod_desc{
+    border-top: 1px solid whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+    font-size: 12px;
+
+}
+.feature-row {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .feature-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  .feature-icon {
+    font-size: 20px;
+    color: #333;
+  }
+  .footer {
+    font-weight: 600;
+    // color: gray;
+    // margin-top: 15px;
+    font-size: 14px;
+    line-height: 18px;
+}
+  
+//   .feature-text {
+    // float: right;
+    // white-space: nowrap;
+//   }
+  
+//   .last-icon {
+//     align-self: center;
+//   }
+  
+
+.selected_category{
+    border: 2px solid var(--ion-color-dark);
+    border-radius: 10px;
+    border-left: 10px solid var(--ion-color-dark);
+    color: var(--ion-color-dark);
+    cursor: pointer;
+}
+
+.non_selected_category{
+    border: 2px solid white;
+    border-radius: 10px;
+    border-left: 10px solid white;
+    cursor: pointer;
+}
+
+
+ion-fab {
+    margin-top: 20px;
+}
+
+.iname {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+}
+
+.iname_price {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.total {
+    font-weight: 600;
+    font-size: 20px;
+    text-align: right;
+    color: black;
+}
+
+.trash_icon {
+    margin-top: 3px;
+    color: rgb(208, 1, 1);
+    cursor: pointer;
+}
+
+.white {
+    background-color: white;
+}
+
+.top {
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.cont {
+    padding: 10px 10px;
+    margin-top: 2%;
+}
+
+swiper-slide ion-item {
+    --background: var(--ion-color-light);
+}
+
+.code {
+    letter-spacing: 3px;
+}
+
+.top h1 {
+    font-weight: bold;
+}
+
+.offer {
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 15px;
+}
+
+.buttonDiv ion-icon {
+    background-color: var(--ion-color-dark);
+    padding: 10px 10px;
+    border-radius: 50%;
+    color: white;
+}
+
+.buttonDiv ion-row {
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.buttonDiv {
+    margin-top: -5%;
+}
+
+.day {
+    background-color: var(--ion-color-light);
+    padding: 10px 10px;
+    width: auto !important;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.sek {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.sek2 {
+    width: 80%;
+    height: 50px;
+    border-radius: 10px;
+    margin-left: 10%;
+    margin-top: -10%;
+}
+
+.sek3 {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.sek4 {
+    height: 30px;
+    border-radius: 10px;
+}
+
+.sek5 {
+    height: 30px;
+    border-radius: 5px;
+}
+
+.sek6 {
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.badgeRow {
+    float: right;
+    margin-right: 10px;
+}
+
+.address {
+    float: right;
+    margin-top: 5px;
+}
+
+.desc {
+    display: block;
+    margin-top: 5px;
+}
+
+.ddays {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.swipe {
+    background-color: white;
+    padding: 10px 10px;
+}
+
+.own {
+    float: right;
+    border: 1px solid #607d8b;
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.dtime {
+    font-size: 14px;
+    padding: 10px 10px;
+}
+
+.avial {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.item_desc {
+    display: block;
+    margin-top: 10px;
+    color: gray;
+    font-size: 15px;
+}
+
+
+
+ion-segment {
+    --background: white;
+}
+
+.actual_price {
+    font-size: 22px;
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+}
+
+.total_price {
+    font-size: 13px;
+    font-weight: 500;
+    display: block;
+    margin-top: 18px;
+    color: rgb(181, 180, 180);
+}
+
+.price {
+    font-size: 18px;
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+img {
+    border-radius: 5px;
+}
+
+// .showItem {
+//     background-color: white;
+//     padding: 10px 10px
+// }
+
+.topBtn {
+    margin-top: 15px;
+}
+
+.quantity-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 25px;
+    // margin: 0 auto;    
+}
+
+.quantity-field .value-button {
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 100%;
+    padding: 0;
+    background: #eee;
+    outline: none;
+    cursor: pointer;
+}
+
+.quantity-field .value-button:hover {
+    background: rgb(230, 230, 230);
+}
+
+.quantity-field .value-button:active {
+    background: rgb(210, 210, 210);
+}
+
+.quantity-field .decrease-button {
+    margin-right: -4px;
+    border-radius: 8px 0 0 8px;
+    color: rgb(208, 1, 1);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.quantity-field .increase-button {
+    margin-left: -4px;
+    border-radius: 0 8px 8px 0;
+    color: green;
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+.number {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    background-color: 1px solid #fff;
+    margin: 0px;
+    width: 60px;
+    height: 100%;
+    padding: 0;
+    outline: none;
+    // font-size: 15px;
+    // cursor: pointer;
+}
+
+.address {
+    --min-height: 40px !important;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --background: var(--ion-color-light);
+    width: 100%;
+}
+
+.cat_title{
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+.cat_img{
+    height: 40px;
+    width: 200px;
+    margin-top: 5px;
+}
+
+
+//   .quantity-field .number::selection{
+//     background: none;
+//   }

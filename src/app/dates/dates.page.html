@@ -1,0 +1,76 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <ion-buttons slot="end"><a style="color:white !important;margin-right: 10px;" id="open-modal" *ngIf="text">{{ text.stop_sub }}</a></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data && text" class="ion-padding">
+  <ion-grid [fixed]="true">
+
+<b style="font-size: 18px;">{{ data.item }} - {{ text.del_cal }}</b><br><br>
+
+<small>{{ text.date_desc }}</small>
+
+<br><br>
+<ion-row class="head">
+<ion-col size="4"><b>{{ text.date }}</b></ion-col>
+<ion-col size="8" style="text-align: right;"><b>{{ text.status }}</b></ion-col>
+</ion-row>
+
+<ion-row *ngFor="let date of data.dates" class="detail">
+<ion-col size="4" *ngIf="date.mark && date.status == 0"><ion-checkbox labelPlacement="end" color="dark" (ionChange)="setValue($event,date.id)">{{ date.date }}</ion-checkbox></ion-col>
+<ion-col size="4" *ngIf="!date.mark || date.status != 0">{{ date.date }} <a (click)="viewimg(date.img)" *ngIf="date.img" style="margin-top: 10px;display: block;">View Image</a> </ion-col>
+<ion-col size="8" style="text-align: right;">
+
+<span *ngIf="date.status == 0 && !date.not">---</span>
+<span *ngIf="date.status == 1 && !date.not">{{ text.on_way }}</span>
+<span *ngIf="date.status == 2" style="color:green"><ion-icon name="checkmark-circle-outline" class="f22"></ion-icon></span>
+<span *ngIf="date.status == 3" style="color:orange"><ion-icon name="close-circle-outline" class="f22"></ion-icon></span>
+<span *ngIf="date.not" style="color:red"><ion-icon name="close-circle-outline" class="f22"></ion-icon></span>
+</ion-col>
+
+<ion-col size="12" *ngIf="date.status == 3 && date.mark" style="font-size: 12px;color:blue;" (click)="undo(date.id)">{{ text.reorder }}</ion-col>
+
+</ion-row>
+
+<!--Model-->
+<ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="cancel()" *ngIf="text">{{ text.cancel }}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+  <div class="ion-padding">
+  
+  <p style="font-size: 15px;">{{ text.cancel_sub }}</p>
+
+  <ion-row>
+  <ion-col size="6"><b>{{ text.pending_days }}</b></ion-col>
+  <ion-col size="6">{{ data.pending.count }}</ion-col>
+  </ion-row>
+
+  <ion-row>
+  <ion-col size="6"><b>{{ text.return_amount }}</b></ion-col>
+  <ion-col size="6">{{ data.currency }}{{ data.pending.amount }}</ion-col>
+  </ion-row>
+
+  <br>
+  <ion-button color="dark" expand="block" mode="ios" *ngIf="!hasClick" (click)="stop()">{{ text.stop_sub }}</ion-button>
+  <ion-button color="dark" expand="block" mode="ios" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+
+  </div>
+  </ng-template>
+</ion-modal>
+</ion-grid>
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="text && array && array.length > 0">
+<ion-toolbar color="dark">
+<ion-button expand="block" color="dark" mode="ios" (click)="mark()" *ngIf="!hasClick">{{ text.dont_send }} <span style="margin-left: 10px;margin-top: 5px;"><ion-icon name="arrow-forward-outline"></ion-icon></span></ion-button>
+<ion-button expand="block" color="dark" mode="ios" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+</ion-toolbar>
+</ion-footer>

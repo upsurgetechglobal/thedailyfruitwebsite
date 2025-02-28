@@ -1,0 +1,37 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="dark">
+<ion-buttons><ion-back-button></ion-back-button></ion-buttons>
+</ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding" *ngIf="setting && text">
+
+<ion-grid [fixed]="true">
+<ion-row>
+<ion-col *ngIf="!isMobile"><img src="assets/l.svg" style="width: 80%;margin-left: 10%;"></ion-col>
+
+<ion-col [size]="isMobile ? 12 : 6">
+
+
+<h2>{{ text.signup_title }}</h2>
+<p style="color:gray;font-size: 14px;">{{ text.signup_desc }}</p>
+<br>
+<form #form="ngForm" (ngSubmit)="signup(form.value)">
+<ion-input label="{{ text.name }}" label-placement="floating" fill="outline" type="text" name="name" ngModel required helperText="{{ name_error }}" [disabled]="hasClick" mode="md"></ion-input><br>
+<ion-input label="{{ text.email }}" label-placement="floating" fill="outline" type="email" name="email" ngModel required helperText="{{ email_error }}" [disabled]="hasClick" mode="md"></ion-input><br>
+<ion-input label="{{ text.phone }}" label-placement="floating" fill="outline" type="tel" name="phone" ngModel required helperText="{{ phone_error }}" [disabled]="hasClick" mode="md"></ion-input><br>
+<ion-input label="{{ text.ref_code }}" label-placement="floating" fill="outline" type="text" name="rcode" ngModel [disabled]="hasClick" mode="md"></ion-input><br>
+<ion-input label="{{ text.password }}" label-placement="floating" fill="outline" type="password" name="password" ngModel required helperText="{{ password_error }}" [disabled]="hasClick" mode="md"></ion-input><br>
+
+<ion-item lines="none" style="border:none">
+  <ion-label class="ion-text-wrap" style="font-size: 15px;">{{ text.iagree }} <a href="{{ setting.term_link }}" target="_blank">{{ text.term }}</a></ion-label>
+  <ion-checkbox slot="start" mode="ios" (ionChange)="termAgree()"></ion-checkbox>
+</ion-item>
+
+<br>
+<ion-button mode="ios" expand="block" color="dark" type="submit" *ngIf="!hasClick">{{ text.signup }}</ion-button>
+<ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+</form>
+</ion-col>
+</ion-row>
+</ion-grid>
+</ion-content>

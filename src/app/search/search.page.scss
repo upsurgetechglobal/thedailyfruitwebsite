@@ -1,0 +1,73 @@
+ion-content
+{
+    --background:var(--ion-color-light);
+}
+
+.cate
+{
+    text-align: center;
+}
+
+.cate img
+{
+    background-color: white;
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+ion-list
+{
+    background:none;
+}
+
+ion-item
+{
+    margin-bottom: 8px;
+    border-radius: 10px;
+    --min-height:80px;
+}
+
+.sitem
+{
+    margin-top: 20px;
+}
+
+.sek
+{
+    height: 50px;width:100%;border-radius: 10px;
+}
+
+.desc
+{
+    display: block;margin-top: 5px;color:gray;font-size: 14px;
+}
+
+.rating
+{
+    display:block;margin-top: 5px;
+}
+
+.no
+{
+    margin-bottom: 10%;
+}
+
+.img
+{
+    border-radius: 5px;
+}
+
+.allData
+{
+    margin-bottom: 5%;
+}
+
+ion-input
+{
+    --background:white;
+}
+
+.topBtn
+{
+   margin-top: 15px;
+}

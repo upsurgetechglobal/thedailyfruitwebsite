@@ -1,0 +1,115 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-title *ngIf="text">{{ text.checkout_title }}</ion-title>
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="text">
+  <ion-grid [fixed]="true">
+    
+  <div *ngIf="!data">
+    <ion-skeleton-text [animated]="true" class="sek1" *ngFor="let fake of fakeData"></ion-skeleton-text>
+</div>
+
+<div *ngIf="data">
+
+  <ion-row>
+  <ion-col *ngIf="!isMobile" size="6"><img src="assets/checkout.webp"></ion-col>
+  <ion-col [size]="isMobile ? 12 : 6">
+
+  <ion-item lines="none" detail (click)="getAddress()" class="address"  >
+   <label>{{ text.delivery_address }}
+
+    <small *ngIf="address" class="address">{{ address.address }}</small>
+
+   </label>
+    <ion-icon name="location-outline" slot="start" color="dark"></ion-icon>
+  </ion-item>
+
+  <br>
+  <p class="desc">{{ text.checkout_desc }}</p>
+
+  <ion-item lines="none" class="address">
+  <ion-select label="{{ text.sub_time_title }}" placeholder="Select" interface="popover" [(ngModel)]="sub_time" name="sub_time" (ionChange)="startDate()">
+  <ion-select-option *ngFor="let time of data.time" [value]="time.id" >{{ time.title }}</ion-select-option>
+  </ion-select>
+  <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
+  </ion-item>
+  <br>
+
+  <p class="desc">{{ text.starting_date_desc }}</p>
+
+  <ion-item lines="none" class="address">
+  <ion-select label="{{ text.start_date }}" placeholder="Select" interface="popover" [(ngModel)]="start_date" name="start_date" (ionChange)="startDate()">
+  <ion-select-option *ngFor="let date of data.dates" [value]="date">{{ date }}</ion-select-option>
+  </ion-select>
+  <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
+  </ion-item>
+  <br>
+  
+  <div class="sum" *ngIf="cal">
+  <ion-row *ngFor="let c of cal.summery">
+  <ion-col size="12">{{ c.item }} - {{ c.type }}</ion-col>
+  <ion-col size="12" class="start">{{ text.start }} : {{ c.start }} | {{ text.valid }} : {{ c.end }}</ion-col>
+  <ion-col size="12" class="amount">{{ text.total_day_count }} : {{ c.dayCount }}</ion-col>
+  <ion-col size="12" class="amount">{{ text.amount }} : {{ c.currency }}{{ c.price }} x {{ c.dayCount }} = {{ c.currency }}{{ c.total_price }}</ion-col>
+  </ion-row>
+
+  <h3 *ngIf="!save">{{ text.payable_amount }} : {{ cal.currency }}{{ cal.total }}</h3>
+  <h3 *ngIf="save" style="font-size: 16px;">{{ text.payable_amount }} : <s>{{ cal.currency }}{{ cal.total }}</s> {{ cal.currency }}{{ total }}</h3>
+
+  </div>
+
+  <ion-item lines="none" detail  class="address" (click)="getOffer()" *ngIf="cal && cal.total">
+    <label>{{ text.discount_offers }}
+ 
+     <small *ngIf="save" class="discount">{{ text.you_save }} {{ cal.currency }}{{ save }}</small>
+ 
+    </label>
+     <ion-icon name="receipt-outline" slot="start" color="dark"></ion-icon>
+   </ion-item>
+
+<ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()" *ngIf="!isMobile">{{ text.checkout_button }}</ion-button>
+
+
+  </ion-col>
+</ion-row>
+  </div>
+  
+</ion-grid>
+</ion-content>
+<ion-footer class="ion-no-border">
+<ion-toolbar>
+<div class="ion-padding">
+<ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" *ngIf="!hasClick && isMobile">{{ text.checkout_button }}</ion-button>
+<ion-button mode="ios" color="dark" expand="block" *ngIf="hasClick && isMobile"><ion-spinner name="crescent"></ion-spinner></ion-button>
+
+<!--Confirm Model-->
+<ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]" *ngIf="cal && cal.total && address && show">
+  <ng-template>
+    <div class="block ion-padding">
+    
+  <h3 style="margin-left: 15px;">{{ text.summery }}</h3>
+  <ion-item>
+  <ion-label>{{ text.total_amount }} <span style="float:right">{{ cal.currency }}{{ total }}</span></ion-label>
+  </ion-item>
+  
+  <ion-item>
+  <ion-label>{{ text.wallet_amount }} <span style="float:right">{{ cal.currency }}{{ data.user.wallet }}</span></ion-label>
+  </ion-item>
+
+  <p *ngIf="total > data.user.wallet" align="center" style="font-size: 14px;color:gray">{{ text.you_have_to }} {{ cal.currency }}{{ total - data.user.wallet }} {{ text.add_more  }}</p>
+
+  <br>
+  <ion-button mode="ios" color="dark" expand="block" (click)="placeOrder()" *ngIf="!hasClick">{{ text.checkout_button }}</ion-button>
+  <ion-button mode="ios" color="dark" expand="block" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+
+    </div>
+  </ng-template>
+</ion-modal>
+
+
+</div>
+</ion-toolbar>
+</ion-footer>

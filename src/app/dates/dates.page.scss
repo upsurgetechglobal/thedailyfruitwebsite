@@ -1,0 +1,37 @@
+ion-content
+{
+    --background:var(--ion-color-light);
+}
+
+.head
+{
+    background-color: white;
+    padding: 10px 10px;
+}
+
+.detail
+{
+    background-color: white;
+    padding: 10px 10px;
+    margin-top: 5px;
+}
+
+.block {
+    width: 100%;
+    height: 300px;
+  }
+  
+  ion-modal {
+    --height: auto;
+  }
+
+  ion-modal ion-row
+  {
+    border-bottom:1px solid #efefef;
+    padding:10px 10px
+  }
+
+  .f22
+  {
+    font-size: 22px;
+  }

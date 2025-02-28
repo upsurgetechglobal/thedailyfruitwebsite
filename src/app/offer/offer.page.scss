@@ -1,0 +1,11 @@
+ion-item
+{
+    margin-top:20px;
+    --min-height: 50px !important;
+    border-radius: 5px;
+}
+
+ion-content
+{
+    --background: var(--ion-color-light);
+}

@@ -1,0 +1,18 @@
+<ion-content [fullscreen]="true" *ngIf="data" class="ion-padding">
+  <swiper-container pagination="true" autoplay="true">
+    <swiper-slide *ngFor="let slider of data"><img src="{{ slider.img }}"><br><br></swiper-slide>
+  </swiper-container>
+
+</ion-content>
+
+<ion-footer class="ion-no-border" *ngIf="admin">
+<div class="ion-padding">
+<br>
+<h4>{{ admin.welcome_title }}</h4>
+<p>{{ admin.welcome_text }}</p><br>
+<ion-button mode="ios" expand="block" color="dark" (click)="getStarted()" *ngIf="!hasClick">Get Started</ion-button>
+<ion-button mode="ios" expand="block" color="dark" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner>
+</ion-button>
+<br>
+</div>
+</ion-footer>

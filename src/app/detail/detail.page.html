@@ -1,0 +1,112 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar color="dark">
+        <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+
+        <ion-row *ngIf="isMobile">
+            <ion-col size="8"><img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;"></ion-col>
+            <ion-col size="4"><ion-button color="primary" routerLink="/tabs/subscription"
+                    style="float: right;margin-top: 10px;"><ion-icon name="cart-outline"></ion-icon> <span
+                        *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button></ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!isMobile && text">
+
+            <ion-col size="1">&nbsp;</ion-col>
+            <ion-col size="1"><img src="assets/daily_fruit_logo.png"></ion-col>
+            <ion-col size="4">&nbsp;</ion-col>
+            <ion-col size="6">
+                <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/home"
+                    style="margin-left: 10%;">{{
+                    text.menu_home }}</ion-button>
+                <ion-button color="light" class="topBtn" fill="clear" routerLink="/item/1">{{ text.menu_products }}
+                </ion-button>
+                <!-- <ion-button color="light" class="topBtn" fill="clear" routerLink="/search">Search</ion-button> -->
+                <ion-button color="light" class="topBtn" [fill]="data && data.cart ? 'outline' : 'clear'"
+                    routerLink="/tabs/subscription" color="light">{{ text.menu_cart }} <span
+                        *ngIf="data && data.cart">&nbsp;({{
+                        data.cart }})</span></ion-button>
+                <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/account">{{ text.menu_account
+                    }}</ion-button>
+                <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_sub
+                    }}</ion-button>
+                <!-- <ion-button  color="light" class="topBtn" fill="clear" routerLink="/language">{{ text.menu_lang }}</ion-button> -->
+
+
+            </ion-col>
+        </ion-row>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="data && text">
+    <br>
+    <ion-grid [fixed]="true">
+
+        <ion-row>
+            <ion-col *ngIf="!isMobile" size="5">
+                <img src="{{ data.img }}" style="margin-top: 15px;">
+            </ion-col>
+            <ion-col [size]="isMobile ? 12 : 6">
+
+
+                <img src="{{ data.img }}" *ngIf="isMobile">
+
+
+                <div class="ion-padding">
+
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-wrap"><b style="font-size: 22px;">{{ data.name }}</b>
+
+                            <span style="float:right;font-size: 20px;font-weight: bold;color:gray">{{ data.currency }}{{
+                                data.price }} / {{ text.day }}</span>
+
+                            <span style="display: block;color:gray;font-size: 14px;margin-top: 5px;">{{ data.subscribe
+                                }} {{ text.people_subscribe }}</span>
+
+                            <span *ngIf="data.rating > 0" class="rating" (click)="openModel()">
+                                <ion-icon name="star" class="star" *ngFor="let it of [].constructor(data.rating)"
+                                    color="primary"></ion-icon>
+                            </span>
+                        </ion-label>
+                    </ion-item>
+                    <br>
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-wrap"><b>Description</b><span style="display: block;margin-top: 5px;"
+                                class="dtime">{{ data.desc }}</span></ion-label>
+                    </ion-item>
+
+                    <br>
+                    <ion-item lines="none">
+                        <ion-label class="ion-text-wrap">
+                            <p *ngIf="type == 2" class="dtime">{{ text.delivery_time }} {{ store.b_time }}</p>
+                            <p *ngIf="type == 3" class="dtime">{{ text.delivery_time }} {{ store.l_time }}</p>
+                            <p *ngIf="type == 4" class="dtime">{{ text.delivery_time }} {{ store.d_time }}</p>
+                        </ion-label>
+                    </ion-item>
+
+                    <br>
+                    <ion-item lines="none">
+                        <ion-select label="Delivery Days" placeholder="Monday to Friday" [multiple]="true" name="days"
+                            [(ngModel)]="days">
+                            <ion-select-option value="Monday">Monday</ion-select-option>
+                            <ion-select-option value="Tuesday">Tuesday</ion-select-option>
+                            <ion-select-option value="Wednesday">Wednesday</ion-select-option>
+                            <ion-select-option value="Thursday">Thursday</ion-select-option>
+                            <ion-select-option value="Friday">Friday</ion-select-option>
+                            <ion-select-option value="Saturday">Saturday</ion-select-option>
+                            <ion-select-option value="Sunday">Sunday</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+
+                    <br>
+                    <ion-button color="dark" (click)="add_to_cart()" *ngIf="!hasClick" expand="block" mode="ios"
+                        [disabled]="!days || days.length == 0">{{ text.add_to_cart }}</ion-button>
+                    <ion-button color="dark" (click)="add_to_cart()" *ngIf="hasClick"
+                        expand="block">&nbsp;&nbsp;<ion-spinner name="crescent"></ion-spinner>&nbsp;&nbsp;</ion-button>
+
+                </div>
+
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

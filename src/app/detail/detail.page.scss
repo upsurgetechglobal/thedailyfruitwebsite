@@ -1,0 +1,108 @@
+ion-content
+{
+    --background :var(--ion-color-light)
+}
+
+ion-item
+{
+    border-radius:10px;
+    --min-height:80px;
+}
+.topBtn
+{
+   margin-top: 15px;
+}
+
+.goBack
+{
+    background-color: var(--ion-color-dark);
+    padding:10px 10px;
+    border-radius: 50%;
+    color:white;
+}
+
+.people
+{
+    text-align: right;margin-top: 5px;
+}
+
+.day
+{
+    float:right;color:#304b58;font-weight: bold;font-size: 16px;
+}
+
+.rating
+{
+    display:block;margin-top: 5px;
+}
+
+.desc
+{
+    font-size: 15px;color:gray;display:block;
+}
+
+.star
+{
+    font-size: 15px;margin: 2px;
+}
+
+.dtime
+{
+    font-size: 17px;padding: 0px 10px;
+}
+
+.main
+{
+    background: white;
+    border-radius: 10px;
+    padding:10px 10px;
+}
+
+.tel
+{
+    margin-top: -14%;text-align: center;
+}
+
+.ddays
+{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cont
+{
+    padding: 10px 10px;
+    margin-top: 4%;
+}
+
+.white
+{
+    background-color: white;
+}
+
+.swipe
+{
+    background-color: white;padding:10px 10px;
+}
+
+.day
+{
+    background-color: var(--ion-color-light);
+    padding:10px 10px;
+    width:auto !important;
+    text-align: center;
+    border-radius: 5px;
+}
+
+img
+{
+    border-radius: 10px;
+}
+
+.in
+{
+    border:1px solid gray;
+    border-radius: 10px;
+    padding: 0px 10px;
+    font-size: 20px;
+}

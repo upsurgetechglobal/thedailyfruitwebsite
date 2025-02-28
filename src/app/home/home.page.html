@@ -1,0 +1,312 @@
+<ion-content #content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <ion-header class="ion-no-border">
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button color="light"></ion-menu-button>
+      </ion-buttons>
+
+      <ion-row *ngIf="isMobile">
+        <ion-col size="12"><img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;"></ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!isMobile && text">
+
+        <ion-col size="1">&nbsp;</ion-col>
+        <ion-col size="1"><img src="assets/daily_fruit_logo.png" style="margin-top: 15px;"></ion-col>
+        <ion-col size="1">&nbsp;</ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="1">&nbsp;</ion-col>
+        <ion-col size="5">
+          <ion-button color="light" class="topBtn" routerLink="/tabs/home" style="margin-left: 10%;">{{ text.menu_home
+            }}</ion-button>
+            <ion-button color="light" class="topBtn" fill="clear" routerLink="/item/1">{{ text.menu_products }} </ion-button>
+          <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/cart">{{ text.menu_cart }} <span
+              *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button>
+          <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/account">{{ text.menu_account
+            }}</ion-button>
+          <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_sub
+            }}</ion-button>
+          <!-- <ion-button color="light" class="topBtn" fill="clear" routerLink="/language">{{ text.menu_lang }}</ion-button> -->
+
+
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="!isMobile">
+        <ion-col size="1"></ion-col>
+        <ion-col size="5" class="home_head">
+          <h1>Fresh Daily Fruit Deliveries</h1>
+          <p>Enjoy nutritious fruit bowls delivered to your doorstep every morning with our subscription service..</p>
+          <div class="home_btn">
+            Download Our App on Android & IOS
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <img src="assets/home_img.png" style="height: 90%;">
+        </ion-col>
+      </ion-row>
+
+
+
+    </ion-toolbar>
+
+  </ion-header>
+
+  <!-- <ion-content style="overflow-y: hidden;" *ngIf="text"> -->
+
+  <div *ngIf="!data">
+    <br>
+    <ion-grid [fixed]="true">
+      <ion-row>
+        <ion-col size="6"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+        <ion-col size="6"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+      </ion-row>
+      <br>
+
+      <ion-row>
+        <ion-col [size]="isMobile ? 6 : 2"><ion-skeleton-text [animated]="true"
+            class="sek2"></ion-skeleton-text></ion-col>
+        <ion-col [size]="isMobile ? 6 : 2"><ion-skeleton-text [animated]="true"
+            class="sek2"></ion-skeleton-text></ion-col>
+        <ion-col [size]="isMobile ? 6 : 2"><ion-skeleton-text [animated]="true"
+            class="sek2"></ion-skeleton-text></ion-col>
+        <ion-col [size]="isMobile ? 6 : 2"><ion-skeleton-text [animated]="true"
+            class="sek2"></ion-skeleton-text></ion-col>
+        <ion-col [size]="isMobile ? 6 : 2"><ion-skeleton-text [animated]="true"
+            class="sek2"></ion-skeleton-text></ion-col>
+        <ion-col [size]="isMobile ? 6 : 2"><ion-skeleton-text [animated]="true"
+            class="sek2"></ion-skeleton-text></ion-col>
+      </ion-row>
+      <br><br><br>
+
+      <ion-row>
+        <ion-col size="4"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+        <ion-col size="4"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+        <ion-col size="4"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+      </ion-row>
+      <br><br>
+
+      <ion-row>
+        <ion-col size="3"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+        <ion-col size="3"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+        <ion-col size="3"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+        <ion-col size="3"><ion-skeleton-text [animated]="true" class="sek1"></ion-skeleton-text></ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+  <div *ngIf="data">
+
+    <ion-searchbar routerLink="/search" mode="ios" *ngIf="isMobile"> </ion-searchbar>
+
+    <ion-grid [fixed]="true">
+      <ion-row>
+        <ion-col>
+          <swiper-container [slidesPerView]="isMobile ? '2.6' : '3.5'" class="banner" [pagination]="true"
+            [spaceBetween]="15">
+            <swiper-slide *ngFor="let banner of data.banner"><img src="{{ banner.img }}"
+                (click)="bannerLink(banner)"></swiper-slide>
+          </swiper-container>
+        </ion-col>
+      </ion-row>
+
+      <div class="white">
+        <h1 class="headTitle">Choose From Category</h1>
+        <ion-row class="cate">
+          <ion-col [size]="isMobile ? '3' : '1.5'" *ngFor="let cate of data.cate"
+            routerLink="/item/{{ cate.id }}" routerDirection="forward">
+            <img src="{{ cate.img }}" style="width: 80%;height: 60%;">
+            <b [class]="isMobile ? 'mobileFont' : 'webFont'">{{
+              cate.name }}</b></ion-col>
+        </ion-row>
+      </div>
+
+      <br>
+      <div class="">
+        <h1 class="headTitle">Highly Recommended <span style="font-size: 20px;">(Must-Try Specials) </span> </h1>
+
+        <ion-row>
+          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of allItem.item" style="margin-bottom: 10px;">
+            <ion-row class="showItem">
+              <ion-col size="5"><img src="{{ item.img }}">
+
+                <ion-button color="primary" expand="block" shape="round" color="dark" size="medium"
+                  style="margin-top: 10px;" (click)="detail(item)">{{ text.add }}
+                  + </ion-button>
+
+
+              </ion-col>
+              <ion-col size="7" style="padding: 0px 10px;"><span class="iname">{{ item.name }}</span>
+                <span class="item_desc">{{ item.desc |slice:0-80 }}...</span>
+                <span class="price">{{ item.currency }}{{ item.price }} </span>
+                <span *ngIf="item.rating > 0" class="rating">
+                  <ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)"
+                    color="primary" (click)="openModel(item,2)"></ion-icon>
+                </span>
+                <br>
+                <!-- <ion-button color="primary" shape="round" color="dark" *ngIf="!isMobile"
+                  (click)="detail(item)">&nbsp;&nbsp;{{ text.add }} + &nbsp;</ion-button> -->
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <div class="">
+        <h1 class="headTitle">Most Subscribed Items </h1>
+
+        <ion-row>
+          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of allItem.item" style="margin-bottom: 10px;">
+            <ion-row class="showItem">
+              <ion-col size="5"><img src="{{ item.img }}">
+
+                <ion-button color="primary" expand="block" shape="round" color="dark" size="medium"
+                  style="margin-top: 10px;" (click)="detail(item)">{{ text.add }}
+                  + </ion-button>
+
+
+              </ion-col>
+              <ion-col size="7" style="padding: 0px 10px;"><span class="iname">{{ item.name }}</span>
+                <span class="item_desc">{{ item.desc |slice:0-80 }}...</span>
+                <span class="price">{{ item.currency }}{{ item.price }} </span>
+                <span *ngIf="item.rating > 0" class="rating">
+                  <ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)"
+                    color="primary" (click)="openModel(item,2)"></ion-icon>
+                </span>
+                <br>
+                <!-- <ion-button color="primary" shape="round" color="dark" *ngIf="!isMobile"
+                  (click)="detail(item)">&nbsp;&nbsp;{{ text.add }} + &nbsp;</ion-button> -->
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </div>
+
+      <!-- <div class="">
+          <h1 class="headTitle">{{ text.trending_store }} <a routerLink="/view/trend" class="viewAll">{{ text.view_all
+              }}</a></h1>
+  
+          <ion-row>
+            <ion-col [size]="isMobile ? '12' : '4'" *ngFor="let trend of data.trend">
+              <ion-card mode="ios" routerLink="/item/{{ trend.id }}" routerDirection="forward">
+                <img src="{{ trend.img }}" [class]="trend.deliver ? 'none' :  'gray'">
+                <ion-badge class="badgeRow" color="secondary" *ngIf="trend.deliver && trend.subscribe > 0"><ion-icon
+                    name="bookmark"></ion-icon> {{ trend.subscribe }} {{ text.subscribed }}</ion-badge>
+                <ion-badge class="badgeRow" color="danger" *ngIf="!trend.deliver">{{ text.out_of_delivery }}</ion-badge>
+  
+                <ion-card-content>
+                  <h3>{{ trend.name }} <ion-badge style="float:right" color="dark" *ngIf="trend.rating"><ion-icon
+                        name="star"></ion-icon> {{ trend.rating }}</ion-badge></h3>
+  
+                  <span style="margin-top: 5px;">
+  
+                    <span *ngIf="trend.max > 0" class="max">{{ text.max_delivery }} {{ trend.max }} km</span>
+                    <span *ngIf="trend.max == 0" class="allArea">{{ text.all_area }}</span>
+  
+                    <small class="perPerson">{{ trend.currency }}{{ trend.per_person }} {{ text.per_person
+                      }}</small></span>
+  
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </div>
+        <br>
+        <div class="">
+          <h1 class="headTitle">{{ text.new_arrive }} <a routerLink="/view/new" class="viewAll">{{ text.view_all }}</a>
+          </h1>
+  
+          <ion-row>
+            <ion-col [size]="isMobile ? '12' : '4'" *ngFor="let new of data.new">
+              <ion-card mode="ios" routerLink="/item/{{ new.id }}" routerDirection="forward">
+                <img src="{{ new.img }}" [class]="new.deliver ? 'none' :  'gray'">
+                <ion-badge class="badgeRow" color="secondary" *ngIf="new.deliver && new.subscribe > 0"><ion-icon
+                    name="bookmark"></ion-icon> {{ new.subscribe }} {{ text.subscribed }}</ion-badge>
+                <ion-badge class="badgeRow" color="danger" *ngIf="!new.deliver">{{ text.out_of_delivery }}</ion-badge>
+  
+                <ion-card-content>
+                  <h3>{{ new.name }} <ion-badge style="float:right" color="dark" *ngIf="new.rating"><ion-icon
+                        name="star"></ion-icon> {{ new.rating }}</ion-badge></h3>
+  
+                  <span style="margin-top: 5px;">
+  
+                    <span *ngIf="new.max > 0" class="max">{{ text.max_delivery }} {{ new.max }} km</span>
+                    <span *ngIf="new.max == 0">{{ text.all_area }}</span>
+  
+                    <small class="perPerson">{{ new.currency }}{{ new.per_person }} {{ text.per_person }}</small></span>
+  
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </div>
+  
+        <br>
+        <div class="">
+          <h1 class="headTitle">{{ text.all_store }}</h1>
+  
+          <ion-row>
+            <ion-col [size]="isMobile ? '12' : '3'" *ngFor="let store of data.store">
+              <ion-card mode="ios" routerLink="/item/{{ store.id }}" routerDirection="forward">
+                <img src="{{ store.img }}" [class]="store.deliver ? 'none' :  'gray'">
+                <ion-badge class="badgeRow" color="secondary" *ngIf="store.deliver && store.subscribe > 0"><ion-icon
+                    name="bookmark"></ion-icon> {{ store.subscribe }} Subscribed</ion-badge>
+                <ion-badge class="badgeRow" color="danger" *ngIf="!store.deliver">{{ text.out_of_delivery }}</ion-badge>
+                <ion-card-content style="padding: 5px 10px;">
+                  <span class="sname">{{ store.name }}</span> <ion-badge style="float:right" color="dark"
+                    *ngIf="store.rating"><ion-icon name="star"></ion-icon> {{ store.rating }}</ion-badge>
+                  <span class="storeMax">
+  
+                    <span *ngIf="store.max > 0">{{ text.max_delivery }} {{ store.max }} km</span>
+                    <span *ngIf="store.max == 0">{{ text.all_area }}</span>
+  
+                    <small class="perPerson">{{ store.currency }}{{ store.per_person }} {{ text.per_person
+                      }}</small></span>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </div> -->
+
+
+    </ion-grid>
+  </div>
+  <!-- </ion-content> -->
+  <br><br>
+  <!-- <ion-toolbar class="bottom_tabs" *ngIf="isMobile">
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/tabs/home">
+          <ion-icon name="home"></ion-icon>
+          Home
+        </ion-tab-button>
+        <ion-tab-button routerLink="/tabs/subscription">
+          <ion-icon name="bag"></ion-icon>
+          My Orders
+        </ion-tab-button>
+        <ion-tab-button  routerLink="/tabs/subscription">
+          <ion-icon name="cart"></ion-icon>
+          Cart
+        </ion-tab-button>
+        <ion-tab-button routerLink="/tabs/account">
+          <ion-icon name="person"></ion-icon>
+          My Account
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar> -->
+
+  <ion-footer class="ion-footer" *ngIf="!isMobile">
+    <p>Copyright © 2025 The Daily Fruit | Powered by <strong>UPSURGE TECH GLOBAL</strong> Private Limited</p>
+    <div *ngIf="showScrollTopButton" id="ast-scroll-top" tabindex="0"
+      class="ast-scroll-top-icon ast-scroll-to-top-right" style="display: block;">
+      <ion-icon name="chevron-up-outline" (click)="scrollToTop()"></ion-icon>
+    </div>
+  </ion-footer>
+</ion-content>

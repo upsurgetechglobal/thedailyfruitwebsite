@@ -1,0 +1,24 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="close()" *ngIf="text">{{ text.cancel }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="data">
+  
+<h3>{{ data.item.name }}</h3>
+
+<ion-icon name="star" *ngFor="let it of [].constructor(roundRating(data.item.rating))" color="primary"></ion-icon>
+
+<br><br>
+<ion-item *ngFor="let rating of data.item.ratings" lines="none">
+<ion-label class="ion-text-wrap">{{ rating.name }} <ion-badge style="float:right" color="dark"><ion-icon name="star"></ion-icon> {{ rating.star }}.0</ion-badge>
+
+<small style="margin-top: 5px;display: block;">{{ rating.comment }}</small>
+
+</ion-label>
+</ion-item>
+
+</ion-content>

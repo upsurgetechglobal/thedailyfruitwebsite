@@ -1,0 +1,61 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="close()" *ngIf="text">{{ text.cancel }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<div class="ion-padding">
+
+<ion-accordion-group *ngIf="data && data.length > 0">
+<ion-accordion value="first">
+<ion-item slot="header" color="light" class="h">
+<ion-label>{{ text.saved_address }}</ion-label>
+</ion-item>
+<div class="ion-padding" slot="content">
+<ion-item *ngFor="let a of data" (click)="close(a)">
+<ion-label>{{ a.type }}<small style="color:gray;margin-top: 5px;display: block;">{{ a.address }}</small></ion-label>
+</ion-item>
+</div>
+</ion-accordion>
+</ion-accordion-group>
+
+
+<p style="font-weight: bold;">{{ text.add_new_address }}</p><br>
+<ion-row>
+<ion-col size="4" (click)="setType('Home')"><span [class]="type == 'Home' ? 'typeSelected' : 'type'">{{ text.home }}</span></ion-col>
+<ion-col size="4" (click)="setType('Office')"><span [class]="type == 'Office' ? 'typeSelected' : 'type'">{{ text.office }}</span></ion-col>
+<ion-col size="4" (click)="setType('Other')"><span [class]="type == 'Other' ? 'typeSelected' : 'type'">{{ text.other }}</span></ion-col>
+</ion-row>
+<br><br>
+<ion-input label="{{ text.com_address }}" name="address" [(ngModel)]="address" label-placement="floating" fill="outline" mode="md" [disabled]="hasClick"></ion-input><br>
+<ion-input label="{{ text.floor }}" name="floor" [(ngModel)]="floor" label-placement="floating" fill="outline" mode="md" [disabled]="hasClick"></ion-input><br>
+<ion-input label="{{ text.landmark }}" name="landmark" [(ngModel)]="landmark" label-placement="floating" fill="outline" mode="md" [disabled]="hasClick"></ion-input><br>
+
+<p style="font-weight: bold;">{{ text.pin_point }}</p>
+<ion-searchbar [(ngModel)]="autocomplete" (ionInput)="UpdateSearchResults()" placeholder="{{ text.search_place }}"  (ionClear)="ClearAutocomplete()" mode="ios" color="light" *ngIf="!show" [disabled]="hasClick"></ion-searchbar>
+
+<ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)" [hidden]="autocompleteItems.length == 0">
+      {{ item.description }}
+</ion-item>
+
+<div class="map-wrapper">
+<div id="map_center" *ngIf="!show">
+<ion-icon name="location" color="dark" style="font-size: 40px;"></ion-icon>
+</div>
+
+<div id="map_center" *ngIf="show">
+<p align="center"><ion-spinner name="crescent" style="font-size: 40px;"></ion-spinner></p>
+</div>
+
+<div #map id="map"></div>
+</div>
+
+<br>
+<ion-button mode="ios" expand="block" color="dark" type="submit" *ngIf="!hasClick" (click)="saveAddress()">{{ text.save_address }}</ion-button>
+<ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+</div>
+</ion-content>

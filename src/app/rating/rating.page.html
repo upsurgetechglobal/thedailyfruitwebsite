@@ -1,0 +1,52 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <ion-title>Give Rating</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid [fixed]="true">
+
+<p>Please give your valuable feedback, We will use this for improve our service.</p><br>
+
+<h3>{{ name }}</h3><br>
+
+<ion-item lines="none">
+  <ion-label>Select Rating</ion-label>
+  <ion-icon [name]="rating >= 1 ? 'star' : 'star-outline'" (click)="set(1)" color="dark"></ion-icon>
+  <ion-icon [name]="rating >= 2 ? 'star' : 'star-outline'" (click)="set(2)" color="dark"></ion-icon>
+  <ion-icon [name]="rating >= 3 ? 'star' : 'star-outline'" (click)="set(3)" color="dark"></ion-icon>
+  <ion-icon [name]="rating >= 4 ? 'star' : 'star-outline'" (click)="set(4)" color="dark"></ion-icon>
+  <ion-icon [name]="rating >= 5 ? 'star' : 'star-outline'" (click)="set(5)" color="dark"></ion-icon>
+</ion-item>
+
+<br>
+<ion-textarea label="Write your feedback" labelPlacement="floating" fill="solid" maxlength="500" [(ngModel)]="comment" [disabled]="hasClick"></ion-textarea>
+
+<br>
+
+
+<span *ngIf="type != 0">
+<h3>{{ sname }}</h3><br>
+
+<ion-item lines="none">
+  <ion-label>Select Rating</ion-label>
+  <ion-icon [name]="srating >= 1 ? 'star' : 'star-outline'" (click)="sset(1)" color="dark"></ion-icon>
+  <ion-icon [name]="srating >= 2 ? 'star' : 'star-outline'" (click)="sset(2)" color="dark"></ion-icon>
+  <ion-icon [name]="srating >= 3 ? 'star' : 'star-outline'" (click)="sset(3)" color="dark"></ion-icon>
+  <ion-icon [name]="srating >= 4 ? 'star' : 'star-outline'" (click)="sset(4)" color="dark"></ion-icon>
+  <ion-icon [name]="srating >= 5 ? 'star' : 'star-outline'" (click)="sset(5)" color="dark"></ion-icon>
+</ion-item>
+
+<br>
+<ion-textarea label="Write your feedback" labelPlacement="floating" fill="solid" maxlength="500" [(ngModel)]="scomment" [disabled]="hasClick"></ion-textarea>
+
+<br>
+</span>
+
+<ion-button mode="ios" color="dark" expand="block" (click)="addReview()" *ngIf="!hasClick">Submit</ion-button>
+<ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+
+</ion-grid>
+</ion-content>

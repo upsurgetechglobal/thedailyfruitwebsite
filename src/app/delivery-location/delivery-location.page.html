@@ -1,0 +1,33 @@
+<ion-content>
+  <div class="modal-container">
+    <h2 class="modal-title">Select Location</h2>
+    <p class="modal-subtitle">Provide your location to serve you better</p>
+
+    <ion-row>
+      <ion-col size="12">
+        <div class="section">
+          <h3 class="section-title">Popular Locations</h3>
+          <div class="popular-cities">
+            <ion-row>
+              <ion-col size="3" class="city" *ngFor="let city of popularLocations" (click)="selectCity(city)">
+                <img [src]="city.icon" alt="{{ city.name }}" class="city-icon" />
+                <p class="city-name">{{ city.name }}</p>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </ion-col>
+      <!-- <ion-col size="6">
+        <div class="section">
+          <h3 class="section-title">Other Cities</h3>
+          <div class="other-cities">
+            <button class="city-button" *ngFor="let city of otherLocations" (click)="selectCity(city)">
+              {{ city }}
+            </button>
+          </div>
+        </div>
+      </ion-col> -->
+    </ion-row>
+
+  </div>
+</ion-content>

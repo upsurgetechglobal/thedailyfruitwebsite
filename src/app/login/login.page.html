@@ -1,0 +1,37 @@
+<ion-header class="ion-no-border">
+<ion-toolbar color="dark">
+<ion-buttons><ion-back-button></ion-back-button></ion-buttons>
+</ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+
+<ion-grid [fixed]="true">
+<br><br>
+<ion-row>
+<ion-col [size]="isMobile ? 12 : 6"><img src="assets/l.svg" style="width: 80%;margin-left: 10%;"></ion-col>
+<ion-col [size]="isMobile ? 12 : 6">
+<form #form="ngForm" (ngSubmit)="login(form.value)">
+<h2>{{ text.login_title }}</h2>
+<br>
+<ion-input label="{{ text.phone }}" name="phone" ngModel label-placement="floating" fill="outline" mode="md" *ngIf="setting.verify_type == 1 || setting.verify_type == 2" [disabled]="hasClick"></ion-input>
+<ion-input label="{{ text.email }}" name="email" [(ngModel)]="email" label-placement="floating" fill="outline" mode="md" *ngIf="setting.verify_type == 3 || setting.verify_type == 0" [disabled]="hasClick"></ion-input>
+<br>
+<ion-input type="password" label="{{ text.password }}" name="password" [(ngModel)]="password" label-placement="floating" fill="outline" mode="md" [disabled]="hasClick"></ion-input>
+<br>
+
+<p align="right" style="font-size: 14px;color:gray">{{ text.forgot }} <a routerLink="/forgot">{{ text.reset }}</a></p>
+
+<ion-button mode="ios" expand="block" color="dark" type="submit" *ngIf="!hasClick">{{ text.login }}</ion-button>
+<ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+
+<br>
+<p align="center">{{ text.dont_account }} <a routerLink="/signup">{{ text.signup_here }}</a></p>
+
+
+</form>
+</ion-col>
+</ion-row>
+
+</ion-grid>
+
+</ion-content>

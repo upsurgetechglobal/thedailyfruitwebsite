@@ -1,0 +1,198 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+
+    <ion-title *ngIf="text">{{ text.cart }} <a
+        style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{
+        text.go_back }}</a></ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid [fixed]="isMobile ? true :false">
+
+    <div *ngIf="!data">
+      <ion-grid [fixed]="true">
+        <ion-skeleton-text [animated]="true" class="sek" *ngFor="let fake of fakeData"></ion-skeleton-text>
+      </ion-grid>
+    </div>
+
+    <div *ngIf="data && data.length > 0">
+
+      <ion-row *ngIf="data && isMobile">
+        <ion-col *ngIf="!isMobile" size="6"><img src="assets/ch.avif"></ion-col>
+        <ion-col [size]="isMobile ? 12 : 6"
+          style="background-color: #edf2fa;border-radius: 10px !important;margin-top: 20px;">
+
+          <div class="ion-padding">
+            <ion-item lines="none" *ngFor="let cart of data">
+              <ion-label class="ion-text-wrap"><span style="font-weight: bold;font-size: 20px;">{{ cart.name }} - {{
+                  cart.type }}</span> <ion-badge color="dark" style="float: right;">{{ cart.currency }}{{ cart.price }}
+                </ion-badge>
+                <span class="cart_desc">{{ cart.days }}
+
+                  <a style="float:right;color:red !important" (click)="remove(cart.id)">{{ text.remove }}</a>
+
+                </span>
+              </ion-label>
+            </ion-item>
+            <ion-textarea label="{{ text.notes_order }}" name="notes" [(ngModel)]="notes" label-placement="floating"
+              fill="outline" mode="md" class="msg"></ion-textarea><br>
+
+            <ion-button mode="ios" color="dark" expand="block" (click)="continue()" *ngIf="!hasClick">{{ text.continue
+              }}</ion-button>
+            <ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner
+                name="crescent"></ion-spinner></ion-button>
+          </div>
+
+
+        </ion-col>
+      </ion-row>
+
+      <ion-card>
+      <ion-row *ngIf="data && !isMobile">
+        <ion-col size="8">
+            <ion-card-header class="card_title">
+              <ion-card-title>Selected Products</ion-card-title>
+            </ion-card-header>
+
+
+            <ion-card-content class="scrollable-content">
+              <ion-list *ngFor="let selected_item of data">
+                <ion-item *ngIf="data">
+                  <ion-row>
+                    <ion-col size="1"><img src="{{ selected_item.img }}"></ion-col>
+                    <ion-col size="5" class="cart_item">
+                      <span class="iname_price">{{ selected_item.name }}</span>
+                    </ion-col>
+                    <ion-col size="3"  class="cart_item">
+                      <div class="quantity-field">
+                        <button class="value-button decrease-button" (click)="decrement(selected_item)">-</button>
+                        <div class="number">{{selected_item.qty}}</div>
+                        <button class="value-button increase-button" (click)="increment(selected_item)">+
+                        </button>
+                      </div>
+                    </ion-col>
+                    <ion-col size="2"  class="cart_item">
+                      <span class="iname_price">{{ selected_item.price | currency:'INR' }}</span>
+                    </ion-col>
+                    <ion-col size="1"  class="cart_item">
+                      <ion-icon name="trash" class="trash_icon" (click)="remove(selected_item.id)"></ion-icon>
+                    </ion-col>
+                  </ion-row>
+                </ion-item>
+
+              </ion-list>
+              <ion-row>
+              <ion-col size="12">
+                <h3 class="total">Total Amount&nbsp;:&nbsp;<span>{{ total
+                    | currency:'INR' }}</span></h3>
+              </ion-col>
+            </ion-row>
+
+
+            </ion-card-content>
+
+
+        </ion-col>
+        <ion-col size="4">
+          <div style="padding: 20px;">
+            <ion-row>
+              <ion-col size="12">
+                <h3 class="total">Total Amount&nbsp;:&nbsp;<span>{{ total
+                    | currency:'INR' }}</span></h3>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p class="desc">{{ text.delivery_address_desc }}</p>
+                <ion-item lines="none"  (click)="getAddress()" class="address">
+                  <label>{{ text.delivery_address }}
+
+                    <small *ngIf="address" class="address_1"> <br>{{ address.address }}</small>
+
+                  </label>
+                  <ion-icon name="location-outline" slot="start" color="dark"></ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <!-- <ion-row>
+              <ion-col size="12">
+                <p class="desc">{{ text.checkout_desc }}</p>
+
+                <ion-item lines="none" class="address">
+                  <ion-select label="{{ text.sub_time_title }}" placeholder="Select" interface="popover"
+                    [(ngModel)]="sub_time" name="sub_time" (ionChange)="startDate()">
+                    <ion-select-option *ngFor="let time of checkout_data?.time" [value]="time?.id">{{
+                      time?.title }}</ion-select-option>
+                  </ion-select>
+                  <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <p class="desc">{{ text.starting_date_desc }}</p>
+
+                <ion-item lines="none" class="address">
+                  <ion-select label="{{ text.start_date }}" placeholder="Select" interface="popover"
+                    [(ngModel)]="start_date" name="start_date" (ionChange)="startDate()">
+                    <ion-select-option *ngFor="let date of checkout_data?.dates" [value]="date">{{
+                      date }}</ion-select-option>
+                  </ion-select>
+                  <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row> -->
+
+            <ion-row>
+              <ion-col size="12">
+                <p class="desc">{{ text.discount_desc }}</p>
+                <ion-item lines="none"  class="address" (click)="getOffer()" >
+                  <label>{{ text.discount_offers }}
+
+                    <small *ngIf="save" class="discount">{{ text.you_save }} {{
+                      save | currency:'INR' }}</small>
+
+                  </label>
+                  <ion-icon name="receipt-outline" slot="start" color="dark"></ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12">
+                <h3 class="total" *ngIf="validate()">Total Payable Amount&nbsp;:&nbsp;<span *ngIf="!payble_amount">{{
+                    total
+                    | currency:'INR' }}</span>&nbsp;<s *ngIf="payble_amount">{{ total |
+                    currency:'INR' }}</s>&nbsp;<span *ngIf="payble_amount">{{ total - save |
+                    currency:'INR' }}</span></h3> <br>
+                <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()"
+                  *ngIf="!isMobile">{{ text.checkout_button }}</ion-button>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
+
+    </div>
+
+    <div *ngIf="data && data.length == 0">
+      <br><br>
+      <img src="assets/empty.webp" style="width: 70%;margin-left: 15%;">
+
+      <h1 align="center">{{ text.cart_empty }}</h1>
+
+      <div class="ion-padding" style="text-align: center;">
+        <ion-button routerLink="/tabs/home" [expand]="isMobile ? 'block' : ''" mode="ios" color="dark">{{
+          text.start_item }}</ion-button>
+      </div>
+
+
+    </div>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,23 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="medium" (click)="close()" *ngIf="text">{{ text.cancel }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  *ngIf="data && text" class="ion-padding">
+
+<p *ngIf="data && data.length == 0" align="center">{{ text.no_offer }}</p>
+
+
+<div *ngIf="data && data.length > 0">
+<ion-note style="color:black">{{ text.avilable_offer }}</ion-note><br><br>
+
+<ion-item *ngFor="let offer of data" (click)="setOffer(offer)" lines="none" detail>
+<ion-avatar slot="start"><img src="assets/discount-icon.png"></ion-avatar>
+<ion-label class="ion-text-wrap"><b>{{ offer.code }}</b><span style="display:block;margin-top: 5px;">{{ offer.desc }}</span></ion-label>
+</ion-item>
+
+</div>
+</ion-content>

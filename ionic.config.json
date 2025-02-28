@@ -1,0 +1,7 @@
+{
+  "name": "daily_fruit_web",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

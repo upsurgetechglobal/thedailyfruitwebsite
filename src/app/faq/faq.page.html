@@ -1,0 +1,21 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="text">
+  
+<div *ngIf="!data">
+<ion-skeleton-text [animated]="true" class="sek"></ion-skeleton-text>
+<br><br>
+<ion-skeleton-text [animated]="true" class="sek1" *ngFor="let fake of fakeData"></ion-skeleton-text>
+</div>
+
+<div *ngIf="data">
+<img src="{{ data.faq_img }}">
+<h3>{{ text.faq_title }}</h3>
+<p [innerHTML]="data.faq"></p>
+</div>
+
+</ion-content>

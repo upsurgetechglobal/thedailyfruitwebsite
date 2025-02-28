@@ -1,0 +1,127 @@
+<ion-app dir="{{ dir }}">
+ <!-- <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/tabs/home">
+          <ion-icon name="home"></ion-icon>
+          Home
+        </ion-tab-button>
+        <ion-tab-button routerLink="/tabs/subscription">
+          <ion-icon name="bag"></ion-icon>
+          My Orders
+        </ion-tab-button>
+        <ion-tab-button  routerLink="/tabs/subscription">
+          <ion-icon name="cart"></ion-icon>
+          Cart
+        </ion-tab-button>
+        <ion-tab-button routerLink="/tabs/account">
+          <ion-icon name="person"></ion-icon>
+          My Account
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs> -->
+  <ion-split-pane contentId="main-content">
+    
+    <ion-menu contentId="main-content" type="push" swipeGesture="false" *ngIf="isMobile">
+      <ion-content>
+        
+        <br><Br>
+        <ion-list id="inbox-list">
+            
+          <ion-item lines="none">
+            <ion-avatar slot="start">
+              <img src="assets/profile.png" />
+            </ion-avatar>
+            <ion-label *ngIf="user">{{ user.name }} <small class="user">{{ user.email }}</small> </ion-label>
+            <ion-label *ngIf="!user && text">{{ text.welcome }} <small class="user">{{ text.guest }}</small> </ion-label>
+            <ion-label *ngIf="!user && !text">Welcome <small class="user">Guest User</small> </ion-label>
+          </ion-item>
+
+          <br><br>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/tabs/home" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="home"></ion-icon>
+              <ion-label *ngIf="text && text.menu_home">{{ text.menu_home }}</ion-label>
+              <ion-label *ngIf="!text">Home</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/tabs/account" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="person"></ion-icon>
+              <ion-label *ngIf="text && text.menu_account">{{ text.menu_account }}</ion-label>
+              <ion-label *ngIf="!text">My Account</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/wallet" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="wallet"></ion-icon>
+              <ion-label *ngIf="text && text.menu_wallet">{{ text.menu_wallet }}</ion-label>
+              <ion-label *ngIf="!text">Wallet</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/tabs/subscription" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="document"></ion-icon>
+              <ion-label *ngIf="text && text.menu_sub">{{ text.menu_sub }}</ion-label>
+              <ion-label *ngIf="!text">My Subscriptions</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/tabs/subscription" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="cart"></ion-icon>
+              <ion-label *ngIf="text && text.menu_cart">{{ text.menu_cart }}</ion-label>
+              <ion-label *ngIf="!text">Cart</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <!-- <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/language" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="language"></ion-icon>
+              <ion-label *ngIf="text && text.menu_lang">{{ text.menu_lang }}</ion-label>
+              <ion-label *ngIf="!text">Language</ion-label>
+            </ion-item>
+          </ion-menu-toggle> -->
+
+         
+        </ion-list>
+        <br><br>
+        <ion-list id="labels-list">
+          <ion-list-header *ngIf="text">{{ text.other_link }}</ion-list-header>
+          <ion-list-header *ngIf="!text">Other links</ion-list-header>
+          
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/about" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="information-circle"></ion-icon>
+              <ion-label *ngIf="text && text.about_us">{{ text.about_us }}</ion-label>
+              <ion-label *ngIf="!text">About Us</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/faq" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="document"></ion-icon>
+              <ion-label *ngIf="text && text.faq">{{ text.faq }}</ion-label>
+              <ion-label *ngIf="!text">FAQ's</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="forward" routerLink="/contact" lines="none" detail="false">
+              <ion-icon aria-hidden="true" slot="start" name="mail"></ion-icon>
+              <ion-label *ngIf="text && text.contact_us">{{ text.contact_us }}</ion-label>
+              <ion-label *ngIf="!text">Contact Us</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+        </ion-list>
+        
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content" style="font-family: 'League Spartan', serif;" dir="{{ dir }}"></ion-router-outlet>
+    
+  </ion-split-pane>
+ 
+</ion-app>

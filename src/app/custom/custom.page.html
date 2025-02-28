@@ -1,0 +1,50 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+ <ion-buttons><ion-back-button></ion-back-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="data && text">
+ 
+<h3>{{ text.custom_title }}</h3><br><br>
+
+<ion-segment [scrollable]="true" [(ngModel)]="type" mode="md" color="dark" (ionChange)="setType($event)">
+<ion-segment-button [value]="2" *ngIf="store.breakfast == 0">{{ text.breakfast }}</ion-segment-button>
+<ion-segment-button [value]="3" *ngIf="store.lunch == 0">{{ text.lunch }}</ion-segment-button>
+<ion-segment-button [value]="4" *ngIf="store.dinner == 0">{{ text.dinner }}</ion-segment-button>
+</ion-segment>
+
+<br>
+<p *ngIf="type == 2" class="d_time">{{ text.delivery_time }} {{ store.b_time }}</p>
+<p *ngIf="type == 3" class="d_time">{{ text.delivery_time }} {{ store.l_time }}</p>
+<p *ngIf="type == 4" class="d_time">{{ text.delivery_time }} {{ store.d_time }}</p>
+<br>
+<div *ngFor="let item of data" style="margin-bottom: 10px;">
+<ion-row *ngIf="chkFilter(item)">
+<ion-col size="7">{{ item.name }}</ion-col>
+<ion-col size="5" style="text-align: right;">
+
+<small class="add" (click)="add(item)" *ngIf="!hasItem(item.id)">+ {{ text.add }}</small>
+
+<div class="quantitybtn" *ngIf="hasItem(item.id)">
+
+<button type="button" class="sign plus" data-quantity="plus" data-field="quantity" (click)="update(2,item.id)"> - </button>
+<input class="quantityinput" type="text" name="qty" value="{{ hasItem(item.id) }}" readonly="readonly">
+
+<button type="button" class="sign minus" data-quantity="minus" data-field="quantity" (click)="update(1,item.id)">+</button>
+
+</div>
+
+
+</ion-col>
+<ion-col size="12" style="font-size: 14px;"><b>{{ item.currency }}{{ item.price }}</b> - {{ item.desc }}</ion-col>
+</ion-row>
+</div>
+
+<div *ngIf="addData && addData.length > 0">
+<p align="center">{{ text.total_amount }} : {{ getTotal() }}</p>
+<ion-button mode="ios" expand="block" color="dark" *ngIf="!hasClick" (click)="add_to_cart()">{{ text.add_to_cart }}</ion-button>
+<ion-button mode="ios" expand="block" color="dark" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
+</div>
+
+</ion-content>

@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <ion-title *ngIf="title">{{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="text">
+
+<div *ngIf="!data" class="ion-padding">
+<div *ngFor="let fake of fakeData" style="margin-bottom: 10%;">
+<ion-grid [fixed]="true">
+<ion-skeleton-text [animated]="true" class="sekTitle"></ion-skeleton-text>
+<ion-row>
+<ion-col size="6"><ion-skeleton-text [animated]="true" class="sek"></ion-skeleton-text></ion-col>
+<ion-col size="6"><ion-skeleton-text [animated]="true" class="sek"></ion-skeleton-text></ion-col>
+</ion-row>
+
+<ion-row>
+<ion-col size="6"><ion-skeleton-text [animated]="true" class="sek"></ion-skeleton-text></ion-col>
+<ion-col size="6"><ion-skeleton-text [animated]="true" class="sek"></ion-skeleton-text></ion-col>
+</ion-row>
+</ion-grid>
+</div>
+</div>
+
+<div *ngIf="data">
+
+<ion-grid [fixed]="true">
+<ion-row>
+<ion-col [size]="isMobile ? 12 : 4" *ngFor="let store of data">
+<ion-card mode="ios"  routerLink="/item/{{ store.id }}" routerDirection="forward">
+<img src="{{ store.img }}" [class]="store.deliver ? 'none' :  'gray'">
+<ion-badge class="badgeRow" color="secondary" *ngIf="store.deliver && store.subscribe > 0"><ion-icon name="bookmark"></ion-icon> {{ store.subscribe }} {{ text.subscribed }}</ion-badge>
+<ion-badge class="badgeRow" color="danger" *ngIf="!store.deliver">{{ text.out_of_delivery }}</ion-badge>
+<ion-card-content style="padding: 5px 10px;">
+<span class="sname">{{ store.name }}</span> <ion-badge style="float:right" color="dark" *ngIf="store.rating"><ion-icon name="star"></ion-icon> {{ store.rating }}</ion-badge>
+<span style="margin-top: 5px;display: block;">
+
+<span *ngIf="store.max > 0">{{ text.max_delivery }} {{ store.max }} km</span>
+<span *ngIf="store.max == 0">{{ text.all_area }}</span>
+
+<small style="float:right;margin-top: 5px;">{{ store.currency }}{{ store.per_person }} {{ text.per_person }}</small></span>
+</ion-card-content>
+</ion-card>
+</ion-col>
+</ion-row>
+</ion-grid>
+
+
+
+</div>
+
+</ion-content>
