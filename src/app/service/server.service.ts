@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ServerService {
   //url = "http://localhost/tiffin_go/api/";
-  url = 'http://localhost/daily_fruit_admin/api/';
+  // url = 'http://localhost/daily_fruit_admin/api/';
+  url  = environment.api_url;
 
   constructor(private http: HttpClient) {}
 
