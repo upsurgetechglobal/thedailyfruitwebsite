@@ -303,7 +303,15 @@
   </ion-toolbar> -->
 
   <ion-footer class="ion-footer" *ngIf="!isMobile">
-    <p>Copyright © 2025 The Daily Fruit | Powered by <strong>UPSURGE TECH GLOBAL</strong> Private Limited</p>
+    <ion-row>
+      <ion-col size="4"><br>
+        <a routerLink="/privacy-policy" style="font-size: 18px;">Privacy Policy</a>
+      </ion-col>
+      <ion-col size="8">
+        <p>Copyright © 2025 The Daily Fruit | Powered by <strong>UPSURGE TECH GLOBAL</strong> Private Limited</p>
+      </ion-col>
+    </ion-row>
+    
     <div *ngIf="showScrollTopButton" id="ast-scroll-top" tabindex="0"
       class="ast-scroll-top-icon ast-scroll-to-top-right" style="display: block;">
       <ion-icon name="chevron-up-outline" (click)="scrollToTop()"></ion-icon>

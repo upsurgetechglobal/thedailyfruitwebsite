@@ -33,6 +33,10 @@ const routes: Routes = [
     loadComponent: () => import('./cart/cart.page').then( m => m.CartPage)
   },
   {
+    path: 'privacy-policy',
+    loadComponent: () => import('./privacy-policy/privacy-policy.page').then( m => m.PrivacyPolicyPage)
+  },
+  {
     path: 'subscribed-cart',
     loadComponent: () => import('./subscribed-cart/subscribed-cart.page').then( m => m.SubscribedCartPage)
   },
