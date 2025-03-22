@@ -3,14 +3,15 @@
         <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
 
         <ion-row *ngIf="isMobile">
-            <ion-col size="8"><img src="assets/daily_fruit_logo.png"
-                    style="width: 30%;height: auto;margin-top: 8px;"></ion-col>
+            <ion-col size="8">
+                <!-- <img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;margin-top: 8px;"> -->
+                </ion-col>
             <ion-col size="4"><ion-button color="primary" routerLink="/tabs/cart"
                     style="float: right;margin-top: 10px;"><ion-icon name="cart-outline"></ion-icon> <span
                         *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button></ion-col>
         </ion-row>
 
-        <ion-row *ngIf="!isMobile && text">
+        <!-- <ion-row *ngIf="!isMobile && text">
 
             <ion-col size="1">&nbsp;</ion-col>
             <ion-col size="1"><img src="assets/daily_fruit_logo.png"></ion-col>
@@ -21,7 +22,6 @@
                     text.menu_home }}</ion-button>
                 <ion-button color="light" class="topBtn" fill="outline" routerLink="/item/1">{{ text.menu_products }}
                 </ion-button>
-                <!-- <ion-button color="light" class="topBtn" fill="clear" routerLink="/search">Search</ion-button> -->
                 <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/cart" color="light">{{
                     text.menu_cart }} <span *ngIf="data && data.cart">&nbsp;({{
                         data.cart }})</span></ion-button>
@@ -29,12 +29,8 @@
                     }}</ion-button>
                 <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_sub
                     }}</ion-button>
-                <!-- <ion-button color="light" class="topBtn" fill="clear" routerLink="/language">{{ text.menu_lang
-                    }}</ion-button> -->
-
-
             </ion-col>
-        </ion-row>
+        </ion-row> -->
 
     </ion-toolbar>
 </ion-header>

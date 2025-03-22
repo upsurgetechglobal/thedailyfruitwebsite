@@ -5,34 +5,38 @@
         <ion-menu-button color="light"></ion-menu-button>
       </ion-buttons>
 
-      <ion-row *ngIf="isMobile">
+      <!-- <ion-row *ngIf="isMobile">
         <ion-col size="12"><img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;"></ion-col>
       </ion-row>
-
       <ion-row *ngIf="!isMobile && text">
 
         <ion-col size="1">&nbsp;</ion-col>
         <ion-col size="1"><img src="assets/daily_fruit_logo.png" style="margin-top: 15px;"></ion-col>
         <ion-col size="1">&nbsp;</ion-col>
         <ion-col size="3"></ion-col>
-        <ion-col size="1">&nbsp;</ion-col>
-        <ion-col size="5">
+        
+        <ion-col size="4">
           <ion-button color="light" class="topBtn" routerLink="/tabs/home" style="margin-left: 10%;">{{ text.menu_home
             }}</ion-button>
             <ion-button color="light" class="topBtn" fill="clear" routerLink="/item/1">{{ text.menu_products }} </ion-button>
           <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/cart">{{ text.menu_cart }} <span
               *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button>
-          <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/account">{{ text.menu_account
-            }}</ion-button>
           <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_sub
             }}</ion-button>
-          <!-- <ion-button color="light" class="topBtn" fill="clear" routerLink="/language">{{ text.menu_lang }}</ion-button> -->
-
 
         </ion-col>
-      </ion-row>
+        <ion-col size="2">
+            <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/account">
+              <ion-label style="text-align: left;">
+                <span class="title">Ramesh</span>
+                <small style="display:block;margin-top: 5px;">ramesh&#64;gmail.com</small>
+                </ion-label>
+                <ion-icon name="person-circle" slot="start" style="font-size: 30px;" color="light"></ion-icon>
+            </ion-button>
+        </ion-col>
+      </ion-row> -->
 
-      <ion-row *ngIf="!isMobile">
+      <ion-row *ngIf="!isMobile" style="margin-top: 100px;">
         <ion-col size="1"></ion-col>
         <ion-col size="5" class="home_head">
           <h1>Fresh Daily Fruit Deliveries</h1>
@@ -132,18 +136,20 @@
         <h1 class="headTitle">Highly Recommended <span style="font-size: 20px;">(Must-Try Specials) </span> </h1>
 
         <ion-row>
-          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of allItem.item" style="margin-bottom: 10px;">
+          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of data?.trending" style="margin-bottom: 10px;">
             <ion-row class="showItem">
               <ion-col size="5"><img src="{{ item.img }}">
 
                 <ion-button color="primary" expand="block" shape="round" color="dark" size="medium"
-                  style="margin-top: 10px;" (click)="detail(item)">{{ text.add }}
-                  + </ion-button>
+                  style="margin-top: 10px;" (click)="add_to_cart(item)">{{ item?.subscribed_item ? 'Subscribe' : text.add }}
+                  </ion-button>
 
 
               </ion-col>
               <ion-col size="7" style="padding: 0px 10px;"><span class="iname">{{ item.name }}</span>
-                <span class="item_desc">{{ item.desc |slice:0-80 }}...</span>
+                <!-- <span class="item_desc">{{ item.desc |slice:0-80 }}...</span> -->
+                <span class="item_desc" [innerHTML]="item.desc |slice:0-80"></span>
+
                 <span class="price">{{ item.currency }}{{ item.price }} </span>
                 <span *ngIf="item.rating > 0" class="rating">
                   <ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)"
@@ -162,18 +168,18 @@
         <h1 class="headTitle">Most Subscribed Items </h1>
 
         <ion-row>
-          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of allItem.item" style="margin-bottom: 10px;">
+          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of data?.trending" style="margin-bottom: 10px;">
             <ion-row class="showItem">
               <ion-col size="5"><img src="{{ item.img }}">
 
                 <ion-button color="primary" expand="block" shape="round" color="dark" size="medium"
-                  style="margin-top: 10px;" (click)="detail(item)">{{ text.add }}
-                  + </ion-button>
+                  style="margin-top: 10px;" (click)="add_to_cart(item)">{{ item?.subscribed_item ? 'Subscribe' : text.add }}
+                </ion-button>
 
 
               </ion-col>
               <ion-col size="7" style="padding: 0px 10px;"><span class="iname">{{ item.name }}</span>
-                <span class="item_desc">{{ item.desc |slice:0-80 }}...</span>
+                <span class="item_desc" [innerHTML]="item.desc |slice:0-80"></span>
                 <span class="price">{{ item.currency }}{{ item.price }} </span>
                 <span *ngIf="item.rating > 0" class="rating">
                   <ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)"

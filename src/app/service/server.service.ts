@@ -49,12 +49,14 @@ export class ServerService {
       .pipe(map((results) => results));
   }
 
-  item(store_id: any) {
+  item(request: any) {
     return this.http
       .get(
         this.url +
           'getItem?store_id=' +
-          store_id +
+          request.store_id +
+          '&category_id=' +
+          request.cat_id +
           '&cart_no=' +
           localStorage.getItem('cart_no') +
           '&lid=' +
@@ -154,6 +156,12 @@ export class ServerService {
   getAmount(data: any) {
     return this.http
       .post(this.url + 'getAmount', data)
+      .pipe(map((results) => results));
+  }
+
+  getSubAmount(data: any) {
+    return this.http
+      .post(this.url + 'getsubAmount', data)
       .pipe(map((results) => results));
   }
 

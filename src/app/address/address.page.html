@@ -16,7 +16,7 @@
 <ion-label>{{ text.saved_address }}</ion-label>
 </ion-item>
 <div class="ion-padding" slot="content">
-<ion-item *ngFor="let a of data" (click)="close(a)">
+<ion-item *ngFor="let a of data" (click)="close(a)" style="cursor: pointer;">
 <ion-label>{{ a.type }}<small style="color:gray;margin-top: 5px;display: block;">{{ a.address }}</small></ion-label>
 </ion-item>
 </div>
@@ -35,7 +35,7 @@
 <ion-input label="{{ text.floor }}" name="floor" [(ngModel)]="floor" label-placement="floating" fill="outline" mode="md" [disabled]="hasClick"></ion-input><br>
 <ion-input label="{{ text.landmark }}" name="landmark" [(ngModel)]="landmark" label-placement="floating" fill="outline" mode="md" [disabled]="hasClick"></ion-input><br>
 
-<p style="font-weight: bold;">{{ text.pin_point }}</p>
+<!-- <p style="font-weight: bold;">{{ text.pin_point }}</p>
 <ion-searchbar [(ngModel)]="autocomplete" (ionInput)="UpdateSearchResults()" placeholder="{{ text.search_place }}"  (ionClear)="ClearAutocomplete()" mode="ios" color="light" *ngIf="!show" [disabled]="hasClick"></ion-searchbar>
 
 <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)" [hidden]="autocompleteItems.length == 0">
@@ -51,8 +51,8 @@
 <p align="center"><ion-spinner name="crescent" style="font-size: 40px;"></ion-spinner></p>
 </div>
 
-<div #map id="map"></div>
-</div>
+<div #map id="map"></div> 
+</div>-->
 
 <br>
 <ion-button mode="ios" expand="block" color="dark" type="submit" *ngIf="!hasClick" (click)="saveAddress()">{{ text.save_address }}</ion-button>

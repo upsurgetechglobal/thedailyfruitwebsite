@@ -1,7 +1,9 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { Platform } from '@ionic/angular';
 import { OtherService } from './service/other/other.service';
+import { ServerService } from './service/server.service';
+import { Router } from '@angular/router';
 // import OneSignal from 'onesignal-cordova-plugin';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 @Component({
@@ -10,16 +12,20 @@ import { OtherService } from './service/other/other.service';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   user: any;
   text: any;
   setting: any;
   dir = 'ltr';
   isMobile: boolean = false;
+  data:any;
+  user_data:any;
 
   constructor(
     private platform: Platform,
     public otherService: OtherService,
+     public server: ServerService,
+     private router:Router
     // private oneSignal: OneSignal
   ) {
     const userData = localStorage.getItem('user_data');
@@ -42,13 +48,47 @@ export class AppComponent {
     if (setting !== null) {
       this.setting = JSON.parse(setting);
     }
-
+    this.loadData();
+    this.loadUserData();
     // this.initializeApp();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
+  }
+
+  ngOnInit(): void {
+    this.otherService.triggerLoadData.subscribe(() => {
+      this.loadData(); // ✅ Respond to event
+      this.loadUserData();
+    });
+     
+  }
+  async loadUserData()
+  {
+    this.server.account().subscribe((response:any) => {
+      
+      this.user_data   = response.data;
+      console.log(this.user_data)
+      
+      });
+  }
+  userAccount() {
+    if (this.user_data == undefined && this.user_data?.user   == undefined) {
+      this.router.navigate(["login"]);
+    } else {
+      this.router.navigate(["/tabs/account"]);
+    }
+  }
+  
+  async loadData() {
+    this.server.homepage().subscribe((response: any) => {
+      this.data = response.data;
+      console.log(' this.data', this.data)
+    localStorage.setItem('cates', JSON.stringify(this.data.cate));
+    localStorage.setItem('admin_setting', JSON.stringify(this.data.admin));
+    });
   }
 
   private checkScreenSize() {

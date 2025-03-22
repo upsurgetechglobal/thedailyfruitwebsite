@@ -2,7 +2,9 @@
   <ion-toolbar color="dark">
     <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
     <!-- <ion-title *ngIf="text">{{ text.my_sub }}</ion-title> -->
-    <ion-title *ngIf="text">{{ text.my_sub }} <a style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{ text.go_back }}</a></ion-title>
+    <ion-title *ngIf="text">
+      <!-- {{ text.my_sub }} -->
+       <a style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{ text.go_back }}</a></ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -30,17 +32,19 @@
 <span class="sname">{{ order.store_name }}</span>
 <span class="oitem">{{ order.item }}</span>
 
-<span class="type">{{ order.type }}</span>
+<!-- <span class="type">{{ order.type }}</span> -->
 
-<small class="desc">{{ order.desc }}</small>
+<!-- <small class="desc" [innerHTML]="order.desc"></small> -->
 
 </ion-col>
-<ion-col size="12" class="start"><span style="color:green">{{ text.start }}</span> : {{ order.start_date }} | <span style="color:red">{{ text.valid }}</span> : {{ order.end_date }}</ion-col>
-<ion-col size="12" class="price">{{ text.sub_price }} : {{ order.currency }}{{ order.price }} x {{ order.dates.length }} :&nbsp;<b>{{ order.currency }}{{ order.total }}</b></ion-col>
-
-<ion-button (click)="detail(order)" color="dark" mode="ios" size="small" style="margin-top: 10px;">{{ text.managesub }}</ion-button>
-
-<ion-button routerLink="/rating/{{ order.item_id }}/{{ order.canRate.store }}/{{ order.item }}/{{ order.store_name }}" color="primary" mode="ios" size="small" class="rate" *ngIf="order.canRate.item"><span style="color:white">{{ text.give_rating }}</span></ion-button>
+  <ion-col size="12" class="start" *ngIf="order.subscribed_item"><span style="color:green">{{ text.start }}</span> : {{ order.start_date }} | <span style="color:red">{{ text.valid }}</span> : {{ order.end_date }}</ion-col>
+  <ion-col size="12" class="price" *ngIf="order.subscribed_item">{{ text.sub_price }} : {{ order.currency }}{{ order.price }} x {{ order.qty }}qty x {{ order.days.length }}days :&nbsp;<b>{{ order.currency }}{{ order.total }}</b></ion-col>
+  
+  <ion-col size="12" *ngIf="!order.subscribed_item" class="start"><span style="color:green">Order Placed</span> : {{ order.created_at  }}</ion-col>
+  <ion-col size="12" *ngIf="!order.subscribed_item" class="price">{{ text.sub_price }} : {{ order.currency }}{{ order.price }} x {{ order.qty }}qty :&nbsp;<b>{{ order.currency }}{{ order.total }}</b></ion-col>
+  
+  <ion-button *ngIf="order.subscribed_item" (click)="detail(order)" color="dark" mode="ios" size="small" style="margin-top: 10px;">{{ text.managesub }}</ion-button>
+<!-- <ion-button *ngIf="order.subscribed_item" routerLink="/rating/{{ order.item_id }}/{{ order.canRate.store }}/{{ order.item }}/{{ order.store_name }}" color="primary" mode="ios" size="small" class="rate" *ngIf="order.canRate.item"><span style="color:white">{{ text.give_rating }}</span></ion-button> -->
 
 </ion-row>
 

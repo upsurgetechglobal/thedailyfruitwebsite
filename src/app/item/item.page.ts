@@ -121,7 +121,7 @@ export class ItemPage implements OnInit {
   }
 
   async loadData() {
-    this.server.item(1).subscribe((response: any) => {
+    this.server.item({store_id:1,cat_id:this.cat_id}).subscribe((response: any) => {
       localStorage.setItem(
         'admin_setting',
         JSON.stringify(response.data.admin)
@@ -131,6 +131,7 @@ export class ItemPage implements OnInit {
 
       this.text = response.data.lang.text;
       this.data = response.data;
+      this.filteredItems = this.data.item
       console.log(' this.data ', this.data );
       
       const selectedItms = localStorage.getItem('selectedItms');
@@ -152,11 +153,9 @@ export class ItemPage implements OnInit {
 
   async selectProducts(cat_id: any) {
     this.cat_id = cat_id;
-    const itemIds = this.categoryItemsMap[Number(cat_id)] || [];
-    this.filteredItems = this.allItem.filter((item: any) =>
-      itemIds.includes(item.id)
-    );
-    // this.router.navigate(['/item', cat_id], { replaceUrl: true });
+    this.server.item({store_id:1,cat_id:this.cat_id}).subscribe((response: any) => {
+      this.filteredItems = response.data.item
+    })
   }
 
   getSavedAddress() {
@@ -224,6 +223,7 @@ export class ItemPage implements OnInit {
 
     this.server.add_to_cart(allData).subscribe((response: any) => {
       this.hasClick = false;
+      this.otherService.triggerLoadData.emit();
       this.otherService.toast(this.text.added);
     });
   }

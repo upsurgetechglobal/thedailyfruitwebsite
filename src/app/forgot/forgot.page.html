@@ -8,8 +8,11 @@
 
 <ion-grid [fixed]="true">
 <ion-row>
-<ion-col [size]="isMobile ? 12 : 6"><img src="assets/forgot.avif"></ion-col>
-<ion-col [size]="isMobile ? 12 : 6">
+<ion-col [size]="isMobile ? 12 : 6"><img src="assets/login.png"></ion-col>
+<ion-col [size]="isMobile ? 12 : 6"><br><br>
+  <ion-card style="padding: 15px;">
+
+ 
   <h2 align="center">{{ text.forgot_title }}</h2>
   <p align="center" style="color:gray;font-size: 14px;">{{ text.forgot_desc }}</p>  
   <br><br>
@@ -24,6 +27,7 @@
     <ion-button mode="ios" expand="block" color="dark" type="button" *ngIf="hasClick"><ion-spinner name="crescent"></ion-spinner></ion-button>
   
   </form>
+</ion-card>
 </ion-col>
 </ion-row>
 </ion-grid>

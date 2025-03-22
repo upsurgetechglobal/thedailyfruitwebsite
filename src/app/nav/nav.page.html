@@ -1,0 +1,33 @@
+<ion-content>
+<ion-row *ngIf="isMobile">
+  <ion-col size="12"><img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;"></ion-col>
+</ion-row>
+<ion-row *ngIf="!isMobile && text">
+
+  <ion-col size="1">&nbsp;</ion-col>
+  <ion-col size="1"><img src="assets/daily_fruit_logo.png" style="margin-top: 15px;"></ion-col>
+  <ion-col size="1">&nbsp;</ion-col>
+  <ion-col size="3"></ion-col>
+  
+  <ion-col size="4">
+    <ion-button color="light" class="topBtn" routerLink="/tabs/home" style="margin-left: 10%;">{{ text.menu_home
+      }}</ion-button>
+      <ion-button color="light" class="topBtn" fill="clear" routerLink="/item/1">{{ text.menu_products }} </ion-button>
+    <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/cart">{{ text.menu_cart }} <span
+        *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button>
+    
+    <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/subscription">{{ text.menu_sub
+      }}</ion-button>
+
+  </ion-col>
+  <ion-col size="2">
+      <ion-button color="light" class="topBtn" fill="clear" routerLink="/tabs/account">
+        <ion-label style="text-align: left;">
+          <span class="title">Ramesh</span>
+          <small style="display:block;margin-top: 5px;">ramesh&#64;gmail.com</small>
+          </ion-label>
+          <ion-icon name="person-circle" slot="start" style="font-size: 30px;" color="light"></ion-icon>
+      </ion-button>
+  </ion-col>
+</ion-row>
+</ion-content>

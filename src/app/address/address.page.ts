@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, Platform, NavParams } from '@ionic/angular';
+import { IonicModule, Platform, NavParams, AlertController } from '@ionic/angular';
 import { MapService } from '../service/map/map.service';
 import { OtherService } from '../service/other/other.service';
 import { ServerService } from '../service/server.service';
-
+import { Geolocation } from '@capacitor/geolocation';
 declare var google: any;
 
 @Component({
@@ -41,13 +41,17 @@ export class AddressPage implements OnInit {
   store_id: any;
   text: any;
 
+  latitude: number | undefined;
+  longitude: number | undefined;
+
   constructor(
     public navParams: NavParams,
     private platform: Platform,
     public zone: NgZone,
     public otherService: OtherService,
     public mapService: MapService,
-    public server: ServerService
+    public server: ServerService,
+    private alertCtrl: AlertController
   ) {
     // this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
 
@@ -62,7 +66,84 @@ export class AddressPage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCurrentLocation();
+  }
+  async requestLocationPermission() {
+    try {
+      // Ask for permission first
+      const permStatus = await Geolocation.requestPermissions();
+
+      if (permStatus.location === 'granted') {
+        this.getCurrentLocation();
+      } else {
+        this.showAlert(
+          'Permission Denied',
+          'Please allow location access in your app or browser settings.'
+        );
+      }
+    } catch (error) {
+      this.showAlert('Error', 'Unable to request location permission.');
+      console.error('Permission request error', error);
+    }
+  }
+  async getCurrentLocation() {
+    try {
+      // const position: Position = await Geolocation.getCurrentPosition();
+      const position = await Geolocation.getCurrentPosition();
+            this.latitude = position.coords.latitude;
+      this.longitude = position.coords.longitude;
+      console.log('Latitude:', this.latitude, 'Longitude:', this.longitude);
+    } catch (error: any) {
+      if (error.code === 1) {
+        // Permission denied
+        this.showAlert(
+          'Location Permission Denied',
+          'Please allow location access in your app or browser settings.'
+        );
+        
+      } else {
+        this.showAlert('Error', 'Failed to get your location.');
+      }
+      console.error('Error getting location', error);
+    }
+  }
+  async showAlert(header: string, message: string)
+  {
+    this.otherService.confirmPernissions(header,message) .then(res => {
+      // if (res === 'ok') {
+        this.close()   
+      // }
+    });
+  }
+
+  // async showAlert(header: string, message: string): Promise<void> {
+  //   const alert = await this.alertCtrl.create({
+  //     header,
+  //     message,
+  //     buttons: ['OK'],
+  //   });
+  
+  //   await alert.present();
+  
+  //   await alert.onDidDismiss();
+  
+  //   this.close();
+  // }
+  
+  
+
+  // async getCurrentLocation() {
+  //   try {
+  //     const position = await Geolocation.getCurrentPosition();
+  //     console.log(position)
+  //     this.latitude = position.coords.latitude;
+  //     this.longitude = position.coords.longitude;
+  //     console.log('Latitude:', this.latitude, 'Longitude:', this.longitude);
+  //   } catch (error) {
+  //     console.error('Error getting location', error);
+  //   }
+  // }
 
   setType(type: any) {
     this.type = type;
@@ -141,8 +222,8 @@ export class AddressPage implements OnInit {
   }
 
   async saveAddress() {
-    this.lat = 17.406523626397387;
-    this.lng = 78.49867251781943;
+    this.lat = this.latitude;
+    this.lng = this.longitude;
     // console.log(this.address)
     if (!this.address || this.address.length < 4 || !this.lat || !this.lng) {
       return this.otherService.toast(this.text.correct_detail);
@@ -153,8 +234,8 @@ export class AddressPage implements OnInit {
       address: this.address,
       floor: this.floor,
       landmark: this.landmark,
-      lat: this.lat,
-      lng: this.lng,
+      lat: this.latitude,
+      lng: this.longitude,
       user_id: localStorage.getItem('user_id'),
       store_id: this.store_id,
     };

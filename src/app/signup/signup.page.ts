@@ -1,9 +1,11 @@
 import { Component, OnInit,HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { ServerService } from '../service/server.service';
 import { OtherService } from '../service/other/other.service';
+import { PrivacyPolicyPage } from '../privacy-policy/privacy-policy.page';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
@@ -22,8 +24,10 @@ export class SignupPage implements OnInit {
   term = false;
   text:any;
   isMobile: boolean = false;
-  
-  constructor(public server : ServerService,public otherService : OtherService) {
+  password: string = '';
+  passwordError: string = '';
+  constructor(public server : ServerService,public otherService : OtherService, private router: Router,    private modalCtrl: ModalController,
+  ) {
 
     const setting = localStorage.getItem('admin_setting');
     
@@ -42,6 +46,15 @@ export class SignupPage implements OnInit {
 
    this.checkScreenSize();
 
+  }
+  validatePassword() {
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    
+    if (!this.password.match(passwordPattern)) {
+      this.passwordError = "Password must contain at least one uppercase letter, one number, and one special character.";
+    } else {
+      this.passwordError = '';
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -118,6 +131,16 @@ export class SignupPage implements OnInit {
      }
 
   }
+   async openTermsModal() {
+      const modal = await this.modalCtrl.create({
+        component: PrivacyPolicyPage,
+        animated: true,
+      });
+      await modal.present();
+    
+      const { data } = await modal.onWillDismiss();
+      localStorage.setItem('user_location',data.name)
+    }
 
   termAgree()
   {

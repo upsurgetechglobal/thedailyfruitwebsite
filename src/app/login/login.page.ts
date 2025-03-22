@@ -1,5 +1,5 @@
 import { Component, OnInit,HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
@@ -22,7 +22,11 @@ export class LoginPage implements OnInit {
   password:any = "123456";
   isMobile: boolean = false;
 
-  constructor(public server : ServerService,public otherService : OtherService) {
+  constructor(
+    public server : ServerService,
+    public otherService : OtherService,
+    private loctaion:Location
+  ) {
 
     this.otherService.statusBar("#ffc927",2);
 
@@ -88,17 +92,18 @@ export class LoginPage implements OnInit {
       localStorage.setItem('user_id',response.user.id);
 
       localStorage.setItem('user_data', JSON.stringify(response.user));
-
+      this.otherService.triggerLoadData.emit();
       this.otherService.toast(this.text.logged_in);
+      this.loctaion.back();
 
-      if(localStorage.getItem('cart_no') && localStorage.getItem('cart_no') != undefined)
-      {
-        this.otherService.redirect("cart","root");
-      }
-      else
-      {
-        this.otherService.redirect("account","root");
-      }
+      // if(localStorage.getItem('cart_no') && localStorage.getItem('cart_no') != undefined)
+      // {
+      //   this.otherService.redirect("cart","root");
+      // }
+      // else
+      // {
+      //   this.otherService.redirect("account","root");
+      // }
     }
 
     });

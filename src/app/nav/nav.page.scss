@@ -1,0 +1,13 @@
+/* Hide the tab bar on larger screens */
+@media (min-width: 768px) {
+    ion-tab-bar {
+      display: none;
+    }
+  }
+
+  /* Ensure the tab bar is visible on smaller screens */
+  @media (max-width: 768px) {
+    ion-tab-bar {
+      display: flex;
+    }
+  }

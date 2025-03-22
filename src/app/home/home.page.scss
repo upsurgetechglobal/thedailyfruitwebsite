@@ -4,6 +4,12 @@
     height: 110px;
 
 }
+.info ion-item
+ {
+    --min-height: 100px;
+    --padding-start: 20px;
+    --padding-end: 20px;
+ }
 .home_head h1 {
     font-size: 45px;
     margin-top: 180px;

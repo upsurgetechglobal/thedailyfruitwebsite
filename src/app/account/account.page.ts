@@ -73,6 +73,7 @@ isMobile: boolean = false;
       {
         localStorage.removeItem("user_id");
         localStorage.removeItem("user_data");
+        this.otherService.triggerLoadData.emit();
         this.otherService.redirect("home");     
       }
     });

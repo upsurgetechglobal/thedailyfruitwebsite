@@ -1,49 +1,71 @@
-ion-content
-{
-    --background:var(--ion-color-light);
-}
+.signup-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+  }
+  
+  .signup-card {
+    // max-width: 500px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    // text-align: center;
+    // padding: 10px;
+    background: #ffffff;
+  }
+  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .signup-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
 
-ion-footer
-{
-    background: white;
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
-}
-
-h4
-{
+  }
+  
+  .signup-title {
+    font-size: 24px;
     font-weight: bold;
-}
-
-p
-{
-    color:gray;
-}
-
-ion-input
-{
-    border-radius:10px !important;
-    background-color: white;
-}
-
-ion-item
-{
-    border-radius: 10px;
-    border:1px solid #bbbbbb;
-}
-
-ion-input
-{
-    background-color: white;
-}
-
-.mobile
-{
-    width:100%;
-}
-
-.web
-{
-    width: 50%;
-    margin: auto;
-}
+    color: #333;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
+  .signup-description {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .input-item {
+    --min-height: 56px; /* Ensures label visibility */
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  ion-input{
+    font-weight: 600;
+  }
+  
+  .terms-item {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .terms-item a {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  ion-button {
+    margin-top: 10px;
+  }
+  

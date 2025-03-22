@@ -41,7 +41,7 @@ export class SubscribedCartPage implements OnInit {
   payble_amount = 0;
   offer: any;
   save: any;
-
+  user_id:any;
 
   constructor(
     public server : ServerService,public otherService : OtherService,
@@ -70,6 +70,8 @@ export class SubscribedCartPage implements OnInit {
  }
 
   ngOnInit() {
+    this.user_id =localStorage.getItem('user_id')
+
   }
 
   ionViewDidEnter(){
@@ -89,7 +91,7 @@ export class SubscribedCartPage implements OnInit {
       console.log('this.data',this.data);
       
       this.data.map((res:any)=>{
-        res.selected_price = Number(res.price)
+        res.selected_price = Number(res.price) * res.qty
       })
       this.CalculateTotal();
       this.getSavedAddress();
@@ -106,6 +108,7 @@ export class SubscribedCartPage implements OnInit {
     existingItem.qty += 1;
     existingItem.selected_price =
       Number(item.price) * Number(existingItem.qty);
+      localStorage.setItem('subscribed_items',JSON.stringify(existingItem))
     this.CalculateTotal();
   }
 
@@ -117,6 +120,7 @@ export class SubscribedCartPage implements OnInit {
       existingItem.qty -= 1;
       existingItem.selected_price =
         Number(item.price) * Number(existingItem.qty);
+        localStorage.setItem('subscribed_items',JSON.stringify(existingItem))
       this.CalculateTotal();
     }
   }
@@ -135,6 +139,11 @@ export class SubscribedCartPage implements OnInit {
     });
   }
    async getAddress() {
+    if(!this.user_id){
+      this.continue();
+      }else{
+    console.log(this.savedAddress)
+
       const allData = { data: this.savedAddress, store_id: this.data?.store?.id ? this.data.store.id : 1 };
   
       const modal = await this.modalCtrl.create({
@@ -151,6 +160,7 @@ export class SubscribedCartPage implements OnInit {
       });
   
       return await modal.present();
+    }
     }
   
     async startDate() {
@@ -170,6 +180,8 @@ export class SubscribedCartPage implements OnInit {
         cart_no: localStorage.getItem('cart_no'),
         user_id: localStorage.getItem('user_id'),
         store_id: this.checkout_data.store.id,
+        item_id:this.data[0].id,
+        qty:this.data[0].qty
       };
       this.CalculateTotal();
       if (this.sub_time == 1) {
@@ -179,10 +191,18 @@ export class SubscribedCartPage implements OnInit {
       } else if (this.sub_time == 3) {
         this.total = this.total * 12;
       } else if (this.sub_time == 4) {
-        this.total = this.total * 26;
+        this.total = this.total * 24;
       }
-      this.server.getAmount(allData).subscribe((response: any) => {
+      this.server.getSubAmount(allData).subscribe((response: any) => {
+        console.log('response',response)
         this.cal = response;
+        this.cal.summery = [this.cal.summery[0]]
+        this.cal.summery.map((res:any)=>{
+          res.item_id = this.data[0].id;
+          res.item = this.data[0].name;
+
+        })
+        console.log( this.cal)
         // this.total = this.cal.total;
         this.otherService.hideLoading();
       });
@@ -272,7 +292,7 @@ export class SubscribedCartPage implements OnInit {
         cal: this.cal,
         address: this.address.id,
         plan: this.sub_time,
-        total: this.total,
+        total: this.total - Number(this.save),
         discount: this.save,
         store_id: this.checkout_data.store.id,
         notes:
@@ -281,20 +301,21 @@ export class SubscribedCartPage implements OnInit {
             ? localStorage.getItem('order_notes')
             : null,
       };
+      console.log(allData)
   
-      // this.server.placeOrder(allData).subscribe((response: any) => {
-      //   if (response.done == true) {
-      //     this.show = false;
+      this.server.placeOrder(allData).subscribe((response: any) => {
+        if (response.done == true) {
+          // this.show = false;
   
-      //     localStorage.removeItem('order_notes');
+          localStorage.removeItem('order_notes');
   
-      //     this.otherService.redirect('success');
-      //   } else {
-      //     this.otherService.toast(response.error);
-      //   }
+          this.otherService.redirect('success');
+        } else {
+          this.otherService.toast(response.error);
+        }
   
-      //   this.hasClick = false;
-      // });
+        this.hasClick = false;
+      });
     }
 
 
@@ -370,8 +391,8 @@ export class SubscribedCartPage implements OnInit {
   {
     localStorage.setItem("order_notes",this.notes);
 
-    if(this.validate())
-    {
+    // if(this.validate())
+    // {
       this.hasClick = true;
 
       this.server.updateDays({days : this.selectedDay}).subscribe((response:any) => {
@@ -381,11 +402,11 @@ export class SubscribedCartPage implements OnInit {
       this.otherService.redirect("checkout/0");
 
       });
-    }
-    else
-    {
-      this.otherService.toast(this.text.select_days);
-    }
+    // }
+    // else
+    // {
+    //   this.otherService.toast(this.text.select_days);
+    // }
   }
 
 }

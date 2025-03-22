@@ -2,7 +2,9 @@
   <ion-toolbar color="dark">
     <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
 
-    <ion-title *ngIf="text">{{ text.cart }} <a
+    <ion-title *ngIf="text">
+      <!-- {{ text.cart }}  -->
+      <a
         style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{
         text.go_back }}</a></ion-title>
 

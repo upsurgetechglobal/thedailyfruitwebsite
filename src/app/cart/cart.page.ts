@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { ServerService } from '../service/server.service';
 import { OtherService } from '../service/other/other.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { register } from 'swiper/element/bundle';
 import { AddressPage } from '../address/address.page';
 import { OfferPage } from '../offer/offer.page';
@@ -41,11 +41,14 @@ export class CartPage implements OnInit {
   payble_amount = 0;
   offer: any;
   save: any;
-
+  show = true;
+  user_id:any;
+  cart_no:any;
 
   constructor(
     public server : ServerService,public otherService : OtherService,
-        private modalCtrl: ModalController
+        private modalCtrl: ModalController,
+        private router:Router
     
   ) { 
   
@@ -56,8 +59,18 @@ export class CartPage implements OnInit {
       this.text =  JSON.parse(text);
       this.text = this.text.text;
     }
+    if (
+      localStorage.getItem('cart_no') == 'null' ||
+      localStorage.getItem('cart_no') == undefined
+    ) {
+      this.cart_no = Math.floor(Math.random() * 2000000000) + 1;
+      localStorage.setItem('cart_no', this.cart_no);
+    } else {
+      this.cart_no = localStorage.getItem('cart_no');
+    }
 
     this.checkScreenSize();
+    this.user_id =localStorage.getItem('user_id')
   }
 
 @HostListener('window:resize', ['$event'])
@@ -70,6 +83,10 @@ export class CartPage implements OnInit {
  }
 
   ngOnInit() {
+    this.otherService.triggerLoadData.subscribe(() => {
+      this.user_id =localStorage.getItem('user_id');
+      this.getSavedAddress();
+    });
   }
 
   ionViewDidEnter(){
@@ -83,9 +100,9 @@ export class CartPage implements OnInit {
   async loadData()
   {
     this.server.getCart().subscribe((response:any) => {
-      this.data         = response.data;
+      this.data = response.data;
       this.data.map((res:any)=>{
-        res.selected_price = Number(res.price)
+        res.selected_price = Number(res.price) * res.qty
       })
       this.CalculateTotal();
       this.getSavedAddress();
@@ -103,6 +120,7 @@ export class CartPage implements OnInit {
     existingItem.selected_price =
       Number(item.price) * Number(existingItem.qty);
     this.CalculateTotal();
+    this.addToCart(item,'increment')
   }
 
   decrement(item: any) {
@@ -114,11 +132,27 @@ export class CartPage implements OnInit {
       existingItem.selected_price =
         Number(item.price) * Number(existingItem.qty);
       this.CalculateTotal();
+      this.addToCart(item,'decrement')
     }
   }
 
+  addToCart(item:any,mode:any){
+    var allData = {
+      cart_no: this.cart_no,
+      item_id: item.item_id,
+      mode:mode,
+      qty:1,
+      store_id: item.store_id
+    };
+
+    this.server.add_to_cart(allData).subscribe((response: any) => {
+      this.hasClick = false;
+      // this.otherService.triggerLoadData.emit();
+      // this.otherService.toast(this.text.added);
+    });
+  }
+
   CalculateTotal() {
-    console.log('this.data',this.data)
     this.total = this.data.reduce(
       (sum: number, res: any) => sum + (Number(res.selected_price) || 0),
       0
@@ -131,7 +165,14 @@ export class CartPage implements OnInit {
       this.savedAddress = this.checkout_data.address;
     });
   }
+  
    async getAddress() {
+    // console.log('this.user_id',this.user_id)
+    if(!this.user_id){
+    // this.continue();
+    this.router.navigate(['/login'])
+    }else{
+    // this.continue();
       const allData = { data: this.savedAddress, store_id: this.data?.store?.id ? this.data.store.id : 1 };
   
       const modal = await this.modalCtrl.create({
@@ -140,10 +181,12 @@ export class CartPage implements OnInit {
         mode: 'ios',
         componentProps: allData,
       });
+
+      
   
       modal.onDidDismiss().then((data) => {
-        console.log(data);
-  
+        // console.log(data);
+        this.startDate();
         if (data.data.id) {
           this.address = data.data;
         }
@@ -151,8 +194,18 @@ export class CartPage implements OnInit {
   
       return await modal.present();
     }
+    }
+    
+    formatDate(date: any) {
+      const options = { day: '2-digit', month: 'short', year: 'numeric', weekday: 'short' };
+      return date.toLocaleDateString('en-GB', options).replace(',', '').replace(/ /, '-');
+  }
   
+  // const formattedDate = formatDate(new Date());
+  // console.log(formattedDate);
     async startDate() {
+      this.start_date =this.formatDate(new Date());
+      this.sub_time = 1
       if (!this.sub_time) {
         return this.otherService.toast(this.text.sub_time);
       }
@@ -170,10 +223,10 @@ export class CartPage implements OnInit {
         user_id: localStorage.getItem('user_id'),
         store_id: this.checkout_data.store.id,
       };
-  
+      console.log(allData)
       this.server.getAmount(allData).subscribe((response: any) => {
         this.cal = response;
-  
+        console.log('this.cal',this.cal)
         // this.total = this.cal.total;
   
         this.otherService.hideLoading();
@@ -266,8 +319,9 @@ export class CartPage implements OnInit {
         cal: this.cal,
         address: this.address.id,
         plan: this.sub_time,
-        total: this.total,
+        total: this.total - Number(this.save),
         discount: this.save,
+        // qty:
         store_id: this.checkout_data.store.id,
         notes:
           localStorage.getItem('order_notes') &&
@@ -278,19 +332,20 @@ export class CartPage implements OnInit {
   
       console.log(allData);
   
-      // this.server.placeOrder(allData).subscribe((response: any) => {
-      //   if (response.done == true) {
-      //     this.show = false;
+      this.server.placeOrder(allData).subscribe((response: any) => {
+        if (response.done == true) {
+          this.show = false;
   
-      //     localStorage.removeItem('order_notes');
+          localStorage.removeItem('order_notes');
+          this.otherService.triggerLoadData.emit();
+
+          this.otherService.redirect('success');
+        } else {
+          this.otherService.toast(response.error);
+        }
   
-      //     this.otherService.redirect('success');
-      //   } else {
-      //     this.otherService.toast(response.error);
-      //   }
-  
-      //   this.hasClick = false;
-      // });
+        this.hasClick = false;
+      });
     }
 
 
@@ -306,7 +361,7 @@ export class CartPage implements OnInit {
             res.selected_price = res.price
           })
           this.CalculateTotal();
-
+          this.otherService.triggerLoadData.emit();
           this.otherService.toast(this.text.removed);
           
           });       
@@ -366,8 +421,8 @@ export class CartPage implements OnInit {
   {
     localStorage.setItem("order_notes",this.notes);
 
-    if(this.validate())
-    {
+    // if(this.validate())
+    // {
       this.hasClick = true;
 
       this.server.updateDays({days : this.selectedDay}).subscribe((response:any) => {
@@ -377,11 +432,11 @@ export class CartPage implements OnInit {
       this.otherService.redirect("checkout/0");
 
       });
-    }
-    else
-    {
-      this.otherService.toast(this.text.select_days);
-    }
+    // }
+    // else
+    // {
+    //   this.otherService.toast(this.text.select_days);
+    // }
   }
 
 }

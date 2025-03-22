@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import {
@@ -13,6 +13,7 @@ import {
   providedIn: 'root',
 })
 export class OtherService {
+  triggerLoadData: EventEmitter<void> = new EventEmitter<void>();
   constructor(
     private modalCtrl: ModalController,
     private alertController: AlertController,
@@ -92,6 +93,28 @@ export class OtherService {
     });
   }
 
+  async confirmPernissions(header: string, message: string): Promise<any> {
+    return new Promise(async (resolve) => {
+      const alert = await this.alertController.create({
+        header: message,
+        cssClass: 'alertClass',
+        mode: 'ios',
+        buttons: [
+          {
+            text: 'Close',
+            role: 'cancel',
+            cssClass: 'dark',
+            handler: (cancel) => {
+              resolve('cancel');
+            },
+          },
+          
+        ],
+      });
+      await alert.present();
+    });
+  }
+
   formValidation(data: any) {
     let email_error: any;
     let phone_error: any;
@@ -112,6 +135,14 @@ export class OtherService {
 
     if (data.password.length < 6) {
       password_error = 'Password must be at least 6 characters';
+    }else{
+      const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    
+    if (!data.password.match(passwordPattern)) {
+      password_error = "Password must contain at least one uppercase letter, one number, and one special character.";
+    } else {
+      password_error = '';
+    }
     }
 
     return {
