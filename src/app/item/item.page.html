@@ -211,9 +211,18 @@
                                     </ion-col>
                                     <ion-col size="4">
                                         <ion-button color="primary" expand="block" shape="round" color="dark"
-                                            size="medium" *ngIf="!isMobile" style="margin-top: 10px;"
+                                            size="medium" *ngIf="!isMobile && !item?.cart_added" style="margin-top: 10px;"
                                             (click)="add_to_cart(item)">
                                             {{ item?.subscribed_item ? 'Subscribe' : text.add}}</ion-button>
+
+                                            <div class="quantity-field" *ngIf="item?.cart_added">
+                                                <button class="value-button decrease-button" (click)="decrement(item)">-</button>
+                                                <span class="number">
+                                                    <span style="margin-top: -100px;">{{item.qty}}</span>
+                                                </span>
+                                                <button class="value-button increase-button" (click)="increment(item)">+
+                                                </button>
+                                              </div>
                                     </ion-col>
                                     <!-- <ion-col size="4" style="margin-top: 5px;">
                                         <span class="actual_price">{{ item.price | currency:'INR' }} </span>

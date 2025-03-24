@@ -86,6 +86,7 @@ export class CartPage implements OnInit {
     this.otherService.triggerLoadData.subscribe(() => {
       this.user_id =localStorage.getItem('user_id');
       this.getSavedAddress();
+      this.loadData();
     });
   }
 
@@ -113,6 +114,7 @@ export class CartPage implements OnInit {
   }
 
   increment(item: any) {
+    if (item.qty < 10) {
     const existingItem = this.data.find(
       (res: any) => res.id === item.id
     );
@@ -121,6 +123,7 @@ export class CartPage implements OnInit {
       Number(item.price) * Number(existingItem.qty);
     this.CalculateTotal();
     this.addToCart(item,'increment')
+  }
   }
 
   decrement(item: any) {

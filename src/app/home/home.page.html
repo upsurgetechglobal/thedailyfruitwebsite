@@ -124,7 +124,7 @@
         <h1 class="headTitle">Choose From Category</h1>
         <ion-row class="cate">
           <ion-col [size]="isMobile ? '3' : '1.5'" *ngFor="let cate of data.cate"
-            routerLink="/item/{{ cate.id }}" routerDirection="forward">
+            routerLink="/item/{{ cate.id }}" routerDirection="forward" style="cursor: pointer;">
             <img src="{{ cate.img }}" style="width: 80%;height: 60%;">
             <b [class]="isMobile ? 'mobileFont' : 'webFont'">{{
               cate.name }}</b></ion-col>

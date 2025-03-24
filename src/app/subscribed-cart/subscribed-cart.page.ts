@@ -102,6 +102,7 @@ export class SubscribedCartPage implements OnInit {
   }
 
   increment(item: any) {
+    if (item.qty < 10) {
     const existingItem = this.data.find(
       (res: any) => res.id === item.id
     );
@@ -110,6 +111,7 @@ export class SubscribedCartPage implements OnInit {
       Number(item.price) * Number(existingItem.qty);
       localStorage.setItem('subscribed_items',JSON.stringify(existingItem))
     this.CalculateTotal();
+  }
   }
 
   decrement(item: any) {

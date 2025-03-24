@@ -70,6 +70,7 @@ export class ItemPage implements OnInit {
     'Friday',
     'Saturday',
   ];
+  cratData:any;
 
   constructor(
     public server: ServerService,
@@ -118,44 +119,67 @@ export class ItemPage implements OnInit {
 
   ionViewDidEnter() {
     this.loadData();
+   
   }
-
   async loadData() {
-    this.server.item({store_id:1,cat_id:this.cat_id}).subscribe((response: any) => {
-      localStorage.setItem(
-        'admin_setting',
-        JSON.stringify(response.data.admin)
-      );
-      localStorage.setItem('app_lang', JSON.stringify(response.data.lang));
+    this.server.item({ store_id: 1, cat_id: this.cat_id }).subscribe((response: any) => {
+      const data = response.data;
+  
+      // Store data in localStorage
+      localStorage.setItem('admin_setting', JSON.stringify(data.admin));
+      localStorage.setItem('app_lang', JSON.stringify(data.lang));
       localStorage.setItem('lang_id', '0');
-
-      this.text = response.data.lang.text;
-      this.data = response.data;
-      this.filteredItems = this.data.item
-      console.log(' this.data ', this.data );
-      
+  
+      // Set local variables
+      this.text = data.lang.text;
+      this.data = data;
+      this.filteredItems = data.item;
+  
+      // Update cart status for items
+      // this.updateCartStatus();
+  
+      // Load other necessary data
       const selectedItms = localStorage.getItem('selectedItms');
       this.selectedItms = selectedItms ? JSON.parse(selectedItms) : [];
-      if (this.selectedItms) {
+      if (this.selectedItms.length > 0) {
         this.CalculateTotal();
       }
+  
       this.loadCategoriesData();
       this.getSavedAddress();
       this.setItem();
-      this.selectProducts(this.cat_id);
+      this.selectProducts(this.cat_id); // optional, based on your logic
     });
   }
+  
+  async selectProducts(cat_id: any) {
+    this.cat_id = cat_id;
+    this.server.item({ store_id: 1, cat_id: cat_id }).subscribe((response: any) => {
+      this.filteredItems = response.data.item;
+      console.log('Filtered Items with cart status:', this.filteredItems);
+      // this.updateCartStatus();
+    });
+  }
+  
+  // Reusable helper method
+  // private updateCartStatus() {
+  //   this.server.getCart().subscribe((response: any) => {
+  //     this.cratData = response.data;
+  //     this.filteredItems.forEach((item: any) => {
+  //       const cartItem = this.cratData.find((cart: any) => cart.item_id === item.id);
+  //       item.cart_added = !!cartItem;
+  //       item.cart_id = cartItem ? cartItem.id : null;
+  //       item.qty = cartItem ? cartItem.qty : 1;
+  //     });
+  //     console.log('Filtered Items with cart status:', this.filteredItems);
+  //   });
+  // }
+  
+
   async loadCategoriesData() {
     this.server.homepage().subscribe((response: any) => {
       this.categories_list = response.data.cate;
     });
-  }
-
-  async selectProducts(cat_id: any) {
-    this.cat_id = cat_id;
-    this.server.item({store_id:1,cat_id:this.cat_id}).subscribe((response: any) => {
-      this.filteredItems = response.data.item
-    })
   }
 
   getSavedAddress() {
@@ -210,6 +234,8 @@ export class ItemPage implements OnInit {
       localStorage.setItem('subscribed_items',JSON.stringify(item))
       this.router.navigate(['/subscribed-cart'], { replaceUrl: true });
     }else{
+      item.cart_added = true;
+      item.qty = 1;
     this.hasClick = true;
     var allData = {
       cart_no: this.cart_no,
@@ -252,25 +278,56 @@ export class ItemPage implements OnInit {
     // return this.otherService.redirect('detail');
   }
   increment(item: any) {
-    const existingItem = this.selectedItms.find(
+    if (item.qty < 10) {
+    const existingItem = this.filteredItems.find(
       (res: any) => res.id === item.id
     );
-    existingItem.quantity += 1;
-    existingItem.selected_price =
-      Number(item.price) * Number(existingItem.quantity);
-    this.CalculateTotal();
+    existingItem.qty += 1;
+    this.otherService.triggerLoadData.emit();
+    this.addToCart(item,'increment')
+  }
   }
 
   decrement(item: any) {
-    if (item.quantity > 1) {
-      const existingItem = this.selectedItms.find(
+    if (item.qty > 1) {
+      const existingItem = this.filteredItems.find(
         (res: any) => res.id === item.id
       );
-      existingItem.quantity -= 1;
-      existingItem.selected_price =
-        Number(item.price) * Number(existingItem.quantity);
-      this.CalculateTotal();
+      existingItem.qty -= 1;
+      this.otherService.triggerLoadData.emit();
+      this.addToCart(item,'decrement')
+    }else{
+      this.removefromcart(item)
     }
+  }
+  async removefromcart(item:any)
+  {
+    // this.otherService.confirm() .then(res => {
+    //   if (res === 'ok') 
+    //   {
+        this.server.getCart(item.cart_id).subscribe((response:any) => {
+          item.cart_added = false;
+          this.otherService.triggerLoadData.emit();
+          this.otherService.toast(this.text.removed);
+          
+          });       
+    //   }
+    // });
+  }
+  addToCart(item:any,mode:any){
+    var allData = {
+      cart_no: this.cart_no,
+      item_id: item.id,
+      mode:mode,
+      qty:1,
+      store_id: item.store_id
+    };
+
+    this.server.add_to_cart(allData).subscribe((response: any) => {
+      this.hasClick = false;
+      // this.otherService.triggerLoadData.emit();
+      // this.otherService.toast(this.text.added);
+    });
   }
 
   CalculateTotal() {

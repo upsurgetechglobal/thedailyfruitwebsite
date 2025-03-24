@@ -48,8 +48,7 @@ export class AppComponent implements OnInit {
     if (setting !== null) {
       this.setting = JSON.parse(setting);
     }
-    this.loadData();
-    this.loadUserData();
+  
     // this.initializeApp();
   }
 
@@ -59,10 +58,20 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
     this.otherService.triggerLoadData.subscribe(() => {
-      this.loadData(); // ✅ Respond to event
-      this.loadUserData();
+      console.log('in')
+      const user_id = localStorage.getItem('user_id');
+      console.log(user_id)
+      this.loadData(); 
+      if(user_id){
+        this.loadUserData();
+      }else{
+        this.user_data = null
+      }
     });
+    this.loadData();
+    this.loadUserData();
      
   }
   async loadUserData()

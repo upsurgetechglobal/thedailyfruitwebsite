@@ -422,3 +422,67 @@ img {
 //   .quantity-field .number::selection{
 //     background: none;
 //   }
+
+
+.quantity-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    margin-top: 20px;    
+}
+
+.quantity-field .value-button {
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 100%;
+    padding: 0;
+    background: #eee;
+    outline: none;
+    cursor: pointer;
+}
+
+.quantity-field .value-button:hover {
+    background: rgb(230, 230, 230);
+}
+
+.quantity-field .value-button:active {
+    background: rgb(210, 210, 210);
+}
+
+.quantity-field .decrease-button {
+    margin-right: -4px;
+    border-radius: 8px 0 0 8px;
+    color: rgb(208, 1, 1);
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.quantity-field .increase-button {
+    margin-left: -4px;
+    border-radius: 0 8px 8px 0;
+    color: green;
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+.number {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    background-color: 1px solid #fff;
+    margin: 0px;
+    width: 60px;
+    height: 100%;
+    padding: 5px 15px;
+    outline: none;
+    display: inline;
+    font-size: 20px;
+    // cursor: pointer;
+}
+.number span{
+   color: var(--ion-color-dark);
+}
