@@ -46,6 +46,10 @@ isMobile: boolean = false;
 
   ngOnInit() 
   {
+    this.otherService.triggerAddressLoadData.subscribe(() => {
+      this.loadData(); // ✅ Respond to event
+    });
+    this.loadData();
   }
 
   ionViewDidEnter()

@@ -319,7 +319,7 @@ export class CartPage implements OnInit {
         cal: this.cal,
         address: this.address.id,
         plan: this.sub_time,
-        total: this.total - Number(this.save),
+        total: this.save ? (this.total - Number(this.save)): this.total,
         discount: this.save,
         // qty:
         store_id: this.checkout_data.store.id,
@@ -346,6 +346,12 @@ export class CartPage implements OnInit {
   
         this.hasClick = false;
       });
+    }
+
+    removeDiscount(event:any){
+      event.stopPropagation();
+      this.save = 0;
+      this.payble_amount = 0
     }
 
 

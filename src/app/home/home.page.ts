@@ -86,24 +86,24 @@ if (
   }
 
   ngOnInit() {
-    if(!localStorage.getItem('user_location')){
-      this.openLocationModal();
-    }
+    // if(!localStorage.getItem('user_location')){
+    //   this.openLocationModal();
+    // }
     this.loadData();
     this.highlyRecommended();
   }
 
-  async openLocationModal() {
-    const modal = await this.modalCtrl.create({
-      component: DeliveryLocationPage,
-      animated: true,
-      cssClass: 'custom-modal', // Add a custom class here
-    });
-    await modal.present();
+  // async openLocationModal() {
+  //   const modal = await this.modalCtrl.create({
+  //     component: DeliveryLocationPage,
+  //     animated: true,
+  //     cssClass: 'custom-modal', // Add a custom class here
+  //   });
+  //   await modal.present();
   
-    const { data } = await modal.onWillDismiss();
-    localStorage.setItem('user_location',data.name)
-  }
+  //   const { data } = await modal.onWillDismiss();
+  //   localStorage.setItem('user_location',data.name)
+  // }
   
 
   async loadData() {

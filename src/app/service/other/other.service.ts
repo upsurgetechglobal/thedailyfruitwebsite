@@ -14,6 +14,7 @@ import {
 })
 export class OtherService {
   triggerLoadData: EventEmitter<void> = new EventEmitter<void>();
+  triggerAddressLoadData: EventEmitter<void> = new EventEmitter<void>();
   constructor(
     private modalCtrl: ModalController,
     private alertController: AlertController,

@@ -31,7 +31,7 @@ export class SubscribedCartPage implements OnInit {
   text:any;
   notes:any;
   isMobile: boolean = false;
-  total:any;
+  total=0;
   savedAddress: any;
   address: any;
   cal: any;
@@ -126,10 +126,22 @@ export class SubscribedCartPage implements OnInit {
   }
 
   CalculateTotal() {
+    // console.log('this.data',this.data)
+    
     this.total = this.data.reduce(
-      (sum: number, res: any) => sum + (Number(res.selected_price) || 0),
+      (sum: number, res: any) => sum + (Number(res.selected_price) || 0) ,
       0
     );
+    if (this.sub_time == 1) {
+      this.total = this.total * 1;
+    } else if (this.sub_time == 2) {
+      this.total = this.total * 6;
+    } else if (this.sub_time == 3) {
+      this.total = this.total * 12;
+    } else if (this.sub_time == 4) {
+      this.total = this.total * 24;
+    }
+
     // localStorage.setItem('selectedItms', JSON.stringify(this.selectedItms));
   }
   getSavedAddress() {
@@ -142,8 +154,6 @@ export class SubscribedCartPage implements OnInit {
     if(!this.user_id){
       this.continue();
       }else{
-    console.log(this.savedAddress)
-
       const allData = { data: this.savedAddress, store_id: this.data?.store?.id ? this.data.store.id : 1 };
   
       const modal = await this.modalCtrl.create({
@@ -184,15 +194,15 @@ export class SubscribedCartPage implements OnInit {
         qty:this.data[0].qty
       };
       this.CalculateTotal();
-      if (this.sub_time == 1) {
-        this.total = this.total * 1;
-      } else if (this.sub_time == 2) {
-        this.total = this.total * 6;
-      } else if (this.sub_time == 3) {
-        this.total = this.total * 12;
-      } else if (this.sub_time == 4) {
-        this.total = this.total * 24;
-      }
+      // if (this.sub_time == 1) {
+      //   this.total = this.total * 1;
+      // } else if (this.sub_time == 2) {
+      //   this.total = this.total * 6;
+      // } else if (this.sub_time == 3) {
+      //   this.total = this.total * 12;
+      // } else if (this.sub_time == 4) {
+      //   this.total = this.total * 24;
+      // }
       this.server.getSubAmount(allData).subscribe((response: any) => {
         console.log('response',response)
         this.cal = response;
@@ -292,7 +302,7 @@ export class SubscribedCartPage implements OnInit {
         cal: this.cal,
         address: this.address.id,
         plan: this.sub_time,
-        total: this.total - Number(this.save),
+        total: this.save ? (this.total - Number(this.save)): this.total,
         discount: this.save,
         store_id: this.checkout_data.store.id,
         notes:
@@ -317,7 +327,11 @@ export class SubscribedCartPage implements OnInit {
         this.hasClick = false;
       });
     }
-
+    removeDiscount(event:any){
+      event.stopPropagation();
+      this.save = 0;
+      this.payble_amount = 0
+    }
 
   async remove(id:any)
   {

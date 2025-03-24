@@ -244,7 +244,7 @@ export class AddressPage implements OnInit {
 
     this.server.saveAddress(allData).subscribe((response: any) => {
       this.hasClick = false;
-
+      this.otherService.triggerAddressLoadData.emit();
       this.close(response.latest);
     });
 
