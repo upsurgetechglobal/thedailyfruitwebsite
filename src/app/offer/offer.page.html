@@ -13,11 +13,19 @@
 
 <div *ngIf="data && data.length > 0">
 <ion-note style="color:black">{{ text.avilable_offer }}</ion-note><br><br>
+<div *ngFor="let offer of data" (click)="setOffer(offer)" >
+  <ion-item lines="none" detail *ngIf="type == 'SUBSCRIPTION' && offer.subscription =='SUBSCRIPTION'"  style="cursor: pointer;">
+    <ion-avatar slot="start"><img src="assets/discount-icon.png"></ion-avatar>
+    <ion-label class="ion-text-wrap" ><b>{{ offer.code }}</b><span style="display:block;margin-top: 5px;">{{ offer.desc }}</span></ion-label>
+    </ion-item>
+</div>
+<div *ngFor="let offer of data" (click)="setOffer(offer)" >
+  <ion-item lines="none" detail *ngIf="type == 'NORMAL' && offer.subscription =='NORMAL'" style="cursor: pointer;">
+    <ion-avatar slot="start"><img src="assets/discount-icon.png"></ion-avatar>
+    <ion-label class="ion-text-wrap" ><b>{{ offer.code }}</b><span style="display:block;margin-top: 5px;">{{ offer.desc }}</span></ion-label>
+    </ion-item>
+</div>
 
-<ion-item *ngFor="let offer of data" (click)="setOffer(offer)" lines="none" detail>
-<ion-avatar slot="start"><img src="assets/discount-icon.png"></ion-avatar>
-<ion-label class="ion-text-wrap"><b>{{ offer.code }}</b><span style="display:block;margin-top: 5px;">{{ offer.desc }}</span></ion-label>
-</ion-item>
 
 </div>
 </ion-content>

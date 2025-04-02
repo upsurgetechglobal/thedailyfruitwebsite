@@ -51,6 +51,7 @@ text:any;
 
   async detail(data:any)
   {
+    console.log(data)
     localStorage.setItem("sub_data",JSON.stringify(data));
 
     this.otherService.redirect("/dates");

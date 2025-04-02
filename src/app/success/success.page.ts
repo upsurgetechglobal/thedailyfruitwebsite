@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
+import { OtherService } from '../service/other/other.service';
 
 @Component({
   selector: 'app-success',
@@ -16,7 +17,8 @@ export class SuccessPage implements OnInit {
   text:any;
   isMobile: boolean = false;
 
-  constructor() { 
+  constructor(    public otherService: OtherService,
+  ) { 
 
     const text = localStorage.getItem('app_lang');
     
@@ -40,6 +42,9 @@ export class SuccessPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+  async close(data: any = []) {
+    this.otherService.closeModel(data);
   }
 
 }

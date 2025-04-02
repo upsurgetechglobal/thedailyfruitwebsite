@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { ServerService } from '../service/server.service';
 import { OtherService } from '../service/other/other.service';
 import { IonModal } from '@ionic/angular';
-import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
+// import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
 
 @Component({
   selector: 'app-dates',
@@ -25,7 +25,7 @@ array:any = [];
 hasClick = false;
 text:any;
 
-  constructor(private photoViewer: PhotoViewer,public server : ServerService,public otherService : OtherService) {
+  constructor(public server : ServerService,public otherService : OtherService) {
 
     const data = localStorage.getItem('sub_data');
   
@@ -144,6 +144,6 @@ text:any;
 
   async viewimg(img:any)
   {
-    this.photoViewer.show(img);
+    // this.photoViewer.show(img);
   }
 }

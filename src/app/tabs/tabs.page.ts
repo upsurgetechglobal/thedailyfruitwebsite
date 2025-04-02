@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
+import { OtherService } from '../service/other/other.service';
+import { ServerService } from '../service/server.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.page.html',
@@ -19,10 +21,20 @@ import { RouterLink } from '@angular/router';
 export class TabsPage implements OnInit {
   isMobile: boolean = false;
   dir = 'ltr';
+  data:any;
 
-  constructor() {}
+  constructor(
+      public otherService: OtherService,
+         public server: ServerService,
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.otherService.triggerLoadData.subscribe(() => {
+      this.loadData(); 
+    });
+    this.loadData();
+  }
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
@@ -30,5 +42,10 @@ export class TabsPage implements OnInit {
 
   private checkScreenSize() {
     this.isMobile = window.innerWidth <= 768; // Adjust the breakpoint as needed
+  }
+  async loadData() {
+    this.server.homepage().subscribe((response: any) => {
+      this.data = response.data;
+    });
   }
 }

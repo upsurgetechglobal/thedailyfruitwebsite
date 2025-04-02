@@ -9,6 +9,7 @@ import { register } from 'swiper/element/bundle';
 import { AddressPage } from '../address/address.page';
 import { OfferPage } from '../offer/offer.page';
 import { PaymentPage } from '../payment/payment.page';
+import { SuccessPage } from '../success/success.page';
 register();
 
 @Component({
@@ -217,7 +218,7 @@ export class CartPage implements OnInit {
         return;
       }
   
-      this.otherService.showLoading();
+      // this.otherService.showLoading();
   
       const allData = {
         plan: this.sub_time,
@@ -245,6 +246,7 @@ export class CartPage implements OnInit {
         mode: 'ios',
         componentProps: {
           data: this.checkout_data.offer,
+          type:'NORMAL'
         },
       });
   
@@ -341,14 +343,32 @@ export class CartPage implements OnInit {
   
           localStorage.removeItem('order_notes');
           this.otherService.triggerLoadData.emit();
-
-          this.otherService.redirect('success');
+      this.openSuccessModel();
+      //     this.otherService.redirect('success');
         } else {
           this.otherService.toast(response.error);
         }
   
         this.hasClick = false;
       });
+    }
+
+    async openSuccessModel() {
+      const modal = await this.modalCtrl.create({
+        component: SuccessPage,
+        animated: true,
+        mode: 'ios',
+      });
+  
+      modal.onDidDismiss().then((data) => {
+        if (data.data) {
+          
+        } else {
+          this.otherService.redirect('/tabs/home');
+        }
+      });
+  
+      return await modal.present();
     }
 
     removeDiscount(event:any){

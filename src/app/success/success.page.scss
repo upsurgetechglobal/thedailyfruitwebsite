@@ -1,0 +1,12 @@
+ion-content{
+    height: 80vh;
+    overflow-y: auto;
+    border-right: 3px solid whitesmoke;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+}

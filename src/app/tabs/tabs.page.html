@@ -10,8 +10,9 @@
       <ion-label>My Orders</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="cart">
+    <ion-tab-button tab="cart" class="cart-tab">
       <ion-icon name="cart"></ion-icon>
+      <ion-badge class="custom-badge" *ngIf="data && data.cart">{{data.cart}}</ion-badge>
       <ion-label>Cart</ion-label>
     </ion-tab-button>
 

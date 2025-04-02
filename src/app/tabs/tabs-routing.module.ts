@@ -33,6 +33,10 @@ const routes: Routes = [
           import('../account/account.page').then((m) => m.AccountPage),
       },
       {
+        path: 'item/:id',
+        loadComponent: () => import('../item/item.page').then( m => m.ItemPage)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full',

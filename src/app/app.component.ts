@@ -60,9 +60,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
    
     this.otherService.triggerLoadData.subscribe(() => {
-      console.log('in')
       const user_id = localStorage.getItem('user_id');
-      console.log(user_id)
       this.loadData(); 
       if(user_id){
         this.loadUserData();

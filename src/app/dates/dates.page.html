@@ -30,7 +30,7 @@
 <span *ngIf="date.not" style="color:red"><ion-icon name="close-circle-outline" class="f22"></ion-icon></span>
 </ion-col>
 
-<ion-col size="12" *ngIf="date.status == 3 && date.mark" style="font-size: 12px;color:blue;" (click)="undo(date.id)">{{ text.reorder }}</ion-col>
+<ion-col size="12" *ngIf="date.status == 3 && date.mark" style="font-size: 12px;color:blue;cursor: pointer;" (click)="undo(date.id)">{{ text.reorder }}</ion-col>
 
 </ion-row>
 

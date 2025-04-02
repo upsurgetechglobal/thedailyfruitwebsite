@@ -24,10 +24,12 @@
 <div *ngIf="data">
 <br>
 <ion-item lines="none" class="wallet" mode="md">
-<ion-icon name="wallet" slot="start" style="font-size: 60px;" color="light"></ion-icon>
+<ion-icon name="wallet" slot="start" [style.font-size]="isMobile ? '30px' : '60px'" color="light"></ion-icon>
 <ion-label>
-<span class="title">{{ text.avil_balance }}</span>
-<h3 class="wallet">{{ setting.currency }}{{ data.wallet }}</h3>
+<div   style="display: block;gap: 8px;">
+  <span [style.font-size]="isMobile ? '15px' : '20px'">{{ text.avil_balance }}</span><br>
+<span [style.font-size]="isMobile ? '15px' : '20px'">{{ setting.currency }}{{ data.wallet }}</span>
+</div>
 </ion-label>
 </ion-item>
 <br>

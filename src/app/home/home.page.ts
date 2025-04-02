@@ -6,6 +6,10 @@ import { FeedbackPage } from '../feedback/feedback.page';
 import { DeliveryLocationPage } from '../delivery-location/delivery-location.page';
 import { Router } from '@angular/router';
 
+import Swiper from 'swiper';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+
+Swiper.use([Autoplay, Pagination, Navigation]);
 
 @Component({
   selector: 'app-home',

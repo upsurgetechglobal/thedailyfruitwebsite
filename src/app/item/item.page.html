@@ -2,14 +2,13 @@
     <ion-toolbar color="dark">
         <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
 
-        <ion-row *ngIf="isMobile">
+        <!-- <ion-row *ngIf="isMobile">
             <ion-col size="8">
-                <!-- <img src="assets/daily_fruit_logo.png" style="width: 30%;height: auto;margin-top: 8px;"> -->
                 </ion-col>
             <ion-col size="4"><ion-button color="primary" routerLink="/tabs/cart"
                     style="float: right;margin-top: 10px;"><ion-icon name="cart-outline"></ion-icon> <span
                         *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span></ion-button></ion-col>
-        </ion-row>
+        </ion-row> -->
 
         <!-- <ion-row *ngIf="!isMobile && text">
 
@@ -69,36 +68,13 @@
         </ion-grid>
     </div>
 
-    <div *ngIf="data && isMobile">
+    <!-- <div *ngIf="data && isMobile">
         <ion-grid [fixed]="true">
 
             <ion-row>
                 <ion-col *ngIf="!isMobile" size="3"></ion-col>
                 <ion-col [size]="isMobile ? 12 : 7">
 
-
-                    <!-- <div class="white top">
-
-                        <img src="{{ data.store.img }}" style="border-radius: 10px !important;">
-
-                        <div class="topHeader">
-                            <h1><span style="font-weight: bold;font-size: 38px;">{{ data.store.name }}</span> <ion-badge
-                                    class="badgeRow" color="dark" *ngIf="data.store.rating"
-                                    (click)="openModel(data.store,1)"><ion-icon name="star"></ion-icon> {{
-                                    data.store.rating }}</ion-badge></h1>
-
-                            <span *ngFor="let cat of data.store.cates; let last = last"
-                                style="padding: 0px 2px;color:gray">{{ cat }}{{ !last ? ',' : '' }}</span>
-
-                            <p style="color:gray;">{{ data.store.address }}</p>
-
-                        </div>
-
-                        <ion-row *ngIf="data.store.subscribe > 0">
-                            <ion-col size="12" style="font-weight: bold;">{{ data.store.subscribe }} {{
-                                text.people_subscribe }}</ion-col>
-                        </ion-row>
-                    </div> -->
 
                     <br>
                     <div class="white">
@@ -149,14 +125,19 @@
             </ion-row>
         </ion-grid>
 
-    </div>
+    </div> -->
 
 
-    <div *ngIf="data && !isMobile" class="ion-padding">
-        <ion-card class="category_card">
+    <div *ngIf="data" class="ion-padding">
+        <ion-segment [scrollable]="true" mode="sm" color="dark" *ngIf="isMobile" class="cat_menu">
+            <ion-segment-button *ngFor="let cat of categories_list" (click)="selectProducts(cat.id)" [ngClass]="cat_id == cat.id ? 'mobile_selected_category':''">
+                {{ cat.name}}
+            </ion-segment-button>
+        </ion-segment>
+        <ion-card [class]="isMobile?'':'category_card'">
             <ion-row>
-                <ion-col size="2">
-                    <ion-card-content class="scrollable-content">
+                <ion-col [size]="isMobile ? 12 :2">
+                    <ion-card-content class="scrollable-content" *ngIf="!isMobile">
                         <ion-list *ngFor="let cat of categories_list" style="cursor: pointer;padding:0px;">
                             <ion-item lines="none" [ngClass]="cat_id == cat.id ? 'selected_category':'non_selected_category'"
                                 (click)="selectProducts(cat.id)">
@@ -170,18 +151,17 @@
                         </ion-list>
                     </ion-card-content>
                 </ion-col>
-                <ion-col size="10" style="padding: 5px 25px;">
+                <ion-col [size]="isMobile ? 12 :10" style="padding: 5px 25px;">
 
                     <ion-row *ngIf="filteredItems">
-                        <ion-col size="4" *ngFor="let item of filteredItems" style="margin-bottom: 10px;">
-                            <ion-card class="product_card mat-elevation-z8">
-                                <ion-row class="showItem">
+                        <ion-col [size]="isMobile? 12: 4" *ngFor="let item of filteredItems" style="margin-bottom: 10px;">
+                            <ion-card class="product_card">
+                                <ion-row>
                                     <ion-col size="3"><img src="{{ item.img }}">
                                     </ion-col>
                                     <ion-col size="9" style="padding: 15px 10px;">
                                         <span class="iname">{{ item.name }}</span>
                                         <span class="actual_price">{{ item.price | currency:'INR' }} </span>
-                                        <!-- <span class="item_desc">{{ item.desc | slice:0:120 }}</span> -->
                                         <br>
                                     </ion-col>
                                     <ion-col size="12">
@@ -206,12 +186,12 @@
                                           </ion-row>
                                           
                                     </ion-col>
-                                    <ion-col size="8">
+                                    <ion-col [size]="isMobile? 12: 8">
                                         <p class="footer">Order Premium Quality {{ item.name }} Online</p>
                                     </ion-col>
-                                    <ion-col size="4">
+                                    <ion-col [size]="isMobile? 12: 4">
                                         <ion-button color="primary" expand="block" shape="round" color="dark"
-                                            size="medium" *ngIf="!isMobile && !item?.cart_added" style="margin-top: 10px;"
+                                            size="medium" *ngIf="!item?.cart_added" style="margin-top: 10px;"
                                             (click)="add_to_cart(item)">
                                             {{ item?.subscribed_item ? 'Subscribe' : text.add}}</ion-button>
 
@@ -224,14 +204,6 @@
                                                 </button>
                                               </div>
                                     </ion-col>
-                                    <!-- <ion-col size="4" style="margin-top: 5px;">
-                                        <span class="actual_price">{{ item.price | currency:'INR' }} </span>
-                                    </ion-col>
-                                    <ion-col size="4" style="margin-top: 8px;">
-                                        <span class="total_price"><span style="text-decoration: line-through;">₹{{
-                                                item.price + 0
-                                                }}</span>&nbsp;(90% off)</span>
-                                    </ion-col> -->
                                 </ion-row>
                             </ion-card>
                         </ion-col>

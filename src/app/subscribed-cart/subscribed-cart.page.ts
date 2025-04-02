@@ -9,6 +9,7 @@ import { register } from 'swiper/element/bundle';
 import { AddressPage } from '../address/address.page';
 import { OfferPage } from '../offer/offer.page';
 import { PaymentPage } from '../payment/payment.page';
+import { SuccessPage } from '../success/success.page';
 register();
 
 @Component({
@@ -227,6 +228,7 @@ export class SubscribedCartPage implements OnInit {
         mode: 'ios',
         componentProps: {
           data: this.checkout_data.offer,
+            type:'SUBSCRIPTION'
         },
       });
   
@@ -320,8 +322,8 @@ export class SubscribedCartPage implements OnInit {
           // this.show = false;
   
           localStorage.removeItem('order_notes');
-  
-          this.otherService.redirect('success');
+         this.openSuccessModel();
+          // this.otherService.redirect('success');
         } else {
           this.otherService.toast(response.error);
         }
@@ -329,6 +331,22 @@ export class SubscribedCartPage implements OnInit {
         this.hasClick = false;
       });
     }
+     async openSuccessModel() {
+          const modal = await this.modalCtrl.create({
+            component: SuccessPage,
+            animated: true,
+            mode: 'ios',
+          });
+      
+          modal.onDidDismiss().then((data) => {
+            if (data.data) {
+            } else {
+              this.otherService.redirect('/tabs/home');
+            }
+          });
+      
+          return await modal.present();
+        }
     removeDiscount(event:any){
       event.stopPropagation();
       this.save = 0;

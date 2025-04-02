@@ -129,9 +129,6 @@ MIT
 @awesome-cordova-plugins/native-geocoder
 MIT
 
-@awesome-cordova-plugins/photo-viewer
-MIT
-
 @babel/runtime
 MIT
 MIT License

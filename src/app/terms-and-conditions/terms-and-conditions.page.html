@@ -1,0 +1,99 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+
+    <ion-title *ngIf="text">Terms and Conditions <a
+        style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{
+        text.go_back }}</a></ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid [fixed]="isMobile ? true :false">
+
+    <!-- <div *ngIf="!data">
+      <ion-grid [fixed]="true">
+        <ion-skeleton-text [animated]="true" class="sek" *ngFor="let fake of fakeData"></ion-skeleton-text>
+      </ion-grid>
+    </div> -->
+    <ion-card>
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+        <div class="container-fluid">
+          <h1>Terms and Conditions</h1>
+          <p>Welcome to the Daily Fruit App! These Terms and Conditions govern your use of our app and services. By accessing or using the Daily Fruit App, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use the App.</p>
+        
+        <h3>1. Definitions</h3>
+        <ul>
+            <li><strong>"App"</strong> refers to the Daily Fruit mobile application and its associated services.</li>
+            <li><strong>"Company"</strong> ("We," "Us," or "Our") refers to the entity that owns and operates the Daily Fruit App.</li>
+            <li><strong>"User"</strong> ("You," "Your") refers to any individual who accesses or uses the Daily Fruit App.</li>
+            <li><strong>"Services"</strong> refers to the features, functionalities, and offerings provided by the App.</li>
+        </ul>
+
+        <h3>2. Use of the App</h3>
+        <ul>
+            <li>You must be at least 18 years old to use the App. If you are under 18, you must obtain permission from a parent or guardian.</li>
+            <li>You agree to provide accurate and up-to-date information when registering or using the App.</li>
+            <li>You must not use the App for any unlawful or unauthorized purpose.</li>
+            <li>We reserve the right to modify, suspend, or discontinue the App at any time without notice.</li>
+        </ul>
+
+        <h3>3. User Accounts</h3>
+        <ul>
+            <li>You are responsible for maintaining the confidentiality of your account credentials.</li>
+            <li>You agree to notify us immediately if you suspect any unauthorized use of your account.</li>
+            <li>We reserve the right to terminate or suspend accounts that violate these Terms.</li>
+        </ul>
+
+        <h3>4. Payments and Subscriptions</h3>
+        <ul>
+            <li>Certain features or services may require payment. You agree to pay all applicable fees.</li>
+            <li>Payments are processed through third-party payment providers, and we do not store your financial information.</li>
+            <li>We reserve the right to change pricing, payment terms, or subscription plans with prior notice.</li>
+        </ul>
+
+        <h3>5. Privacy Policy</h3>
+        <ul>
+            <li>Your use of the App is also governed by our Privacy Policy, which details how we collect, use, and protect your data.</li>
+            <li>By using the App, you consent to the collection and processing of your personal data as outlined in the Privacy Policy.</li>
+        </ul>
+
+        <h3>6. Intellectual Property</h3>
+        <ul>
+            <li>The App and all its content (logos, text, graphics, software, etc.) are owned by the Company and protected by copyright and trademark laws.</li>
+            <li>You may not reproduce, distribute, or modify any content from the App without our written consent.</li>
+        </ul>
+
+        <h3>7. Limitation of Liability</h3>
+        <ul>
+            <li>The App is provided on an "as-is" and "as-available" basis. We do not guarantee uninterrupted or error-free service.</li>
+            <li>We are not liable for any direct, indirect, incidental, or consequential damages arising from your use of the App.</li>
+        </ul>
+
+        <h3>8. Termination</h3>
+        <ul>
+            <li>We may terminate or suspend your access to the App if you violate these Terms.</li>
+            <li>You may delete your account at any time if you wish to stop using the App.</li>
+        </ul>
+
+        <h3>9. Changes to These Terms</h3>
+        <ul>
+            <li>We reserve the right to modify these Terms at any time. Changes will be posted on this page.</li>
+            <li>Your continued use of the App after changes take effect constitutes your acceptance of the revised Terms.</li>
+        </ul>
+
+        <h3>10. Contact Us</h3>
+        <p class="contact">If you have any questions or concerns regarding these Terms, please contact us at:</p>
+        <p class="contact">Email: <a href="mailto:support@thedailyfruit.in">support&#64;thedailyfruit.in</a></p>
+        </div><br><br><br>
+     
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-card>
+  </ion-grid>
+
+</ion-content>

@@ -1,10 +1,10 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="dark">
-    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <!-- <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
 
     <ion-title *ngIf="text">{{ text.cart }} <a
         style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{
-        text.go_back }}</a></ion-title>
+        text.go_back }}</a></ion-title> -->
 
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
 
     <div *ngIf="data && data.length > 0">
 
-      <ion-row *ngIf="data && isMobile">
+      <!-- <ion-row *ngIf="data && isMobile">
         <ion-col *ngIf="!isMobile" size="6"><img src="assets/ch.avif"></ion-col>
         <ion-col [size]="isMobile ? 12 : 6"
           style="background-color: #edf2fa;border-radius: 10px !important;margin-top: 20px;">
@@ -48,30 +48,30 @@
 
 
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-card>
-      <ion-row *ngIf="data && !isMobile">
-          <ion-col size="8">
+      <ion-row *ngIf="data">
+          <ion-col [size]="isMobile ? 12 :8" [style.background-color]="isMobile ? 'whitesmoke':''">
             <ion-card-content class="scrollable-content"> 
               <ion-row *ngFor="let selected_item of data">
-                <ion-col *ngIf="!isMobile" size="4">
+                <ion-col [size]="isMobile ? 12 : 4">
                   <img src="{{ selected_item.img }}" style="margin-top: 15px;">
       
                 </ion-col>
                 <ion-col [size]="isMobile ? 12 : 8">
-                  <!-- <img src="{{ data.img }}" *ngIf="isMobile"> -->
                   <div class="ion-padding">
                     <ion-item lines="none" style="margin-top: -20px;margin-left: -20px;">
                       <ion-label class="ion-text-wrap">
                         <ion-row>
-                          <ion-col size="7">
-                            <b class="iname_price">{{ selected_item.name }}</b>
+                          <ion-col [size]="isMobile ? 7 : 7">
+                            <b [class]="isMobile ?'mobile_iname_name':'iname_price'">{{ selected_item.name }}</b>
                             <span style="display: block;color:gray;font-size: 14px;">{{
                               selected_item.subscribe
                               }} {{ text.people_subscribe }}</span>
                           </ion-col>
-                          <ion-col size="5" style="text-align: right;">
-                            <span class="iname_price">{{ selected_item.price | currency:'INR' }}&nbsp;/&nbsp;{{ text.day
+                          <ion-col [size]="isMobile ? 5:5" style="text-align: right;">
+                            <span [class]="isMobile ? 'mobile_iname_price':'iname_price'">{{ selected_item.price | currency:'INR'
+                              }}&nbsp;/&nbsp;{{ text.day
                               }}</span>
                           </ion-col>
                         </ion-row>
@@ -81,7 +81,7 @@
                               </span> -->
                       </ion-label>
                     </ion-item>
-                    <br>
+                    <br><br>
                     <!-- <ion-item lines="none">
                             <ion-label class="ion-text-wrap"><b>Description</b>
                               <span style="display: block;margin-top: 5px;" class="dtime">{{ selected_item.desc }}</span>
@@ -95,52 +95,9 @@
                     <div class="description">
                       <ion-label class="ion-text-wrap"><b>Description</b><br>
                       </ion-label>
-                      <span>
-                        Our Diabetic Fruit Box is thoughtfully curated for individuals managing diabetes, ensuring a
-                        delicious and health-conscious selection of fruits. Each fruit is carefully chosen to be low in
-                        sugar while still being rich in essential nutrients, fiber, and antioxidants.
-                      </span><br>
-                      <ion-label class="ion-text-wrap"><b>What's Inside?</b></ion-label>
-                      <ul style="margin-top: -1px;">
-                        <li>
-                          <b>Berries</b> (Strawberries, Blueberries, Blackberries) – Packed with fiber and antioxidants,
-                          they help regulate blood sugar.
-                        </li>
-                        <li>
-                          <b>Green Apples</b> – A crisp, fiber-rich fruit with a lower glycemic index.
-                        </li>
-                        <li>
-                          <b>Guava</b> – High in fiber and vitamin C, known to aid in blood sugar control.
-                        </li>
-      
-                        <li>
-                          <b>Kiwis</b> – Loaded with vitamin C and fiber, helping with blood sugar balance.
-                        </li>
-                        <li>
-                          <b>Avocados</b> – Though not sweet, they provide healthy fats that improve insulin
-                          sensitivity.
-                        </li>
-                      </ul>
-                      <span>
-                        Why Choose Our Diabetic Fruit Box?
-                      </span><br>
-                      <span>
-                        ✅ <strong> Low Glycemic Index Fruits</strong> – Helps prevent blood sugar spikes.
-                      </span><br>
-                      <span>
-                        ✅ <strong>Rich in Fiber & Antioxidants</strong> – Supports digestion and overall health.
-                      </span><br>
-                      <span>
-                        ✅ <strong>100% Fresh & Natural</strong> – No artificial sweeteners or preservatives.
-                      </span><br>
-                      <span>
-                        ✅ <strong>Perfect for Snacking or Gifting</strong> – A thoughtful and healthy choice for loved
-                        ones.
-                      </span><br>
-                      <span>
-                        Enjoy a guilt-free, nutritious, and delicious fruit experience with our Diabetic Fruit Box!
-                        🍏🍓🥑
-                      </span><br>
+                      <div [innerHTML]="selected_item?.desc"></div>
+                      
+                      <br>
                       <div style="margin-top: 12px;">
                         <ion-label class="ion-text-wrap"><b>Select Quantity :</b></ion-label>
                         <div class="quantity-field">
@@ -161,7 +118,7 @@
               </ion-row>
             </ion-card-content>
           </ion-col>
-          <ion-col size="4" class="checkout_page">
+          <ion-col  [size]="isMobile ? 12 :4" class="checkout_page">
               <div class="scrollable-content"  style="padding: 20px;">
                 <ion-row>
                   <ion-col size="12">
@@ -205,7 +162,7 @@
                     <p class="desc">{{ text.starting_date_desc }}</p>
       
                     <ion-item lines="none" class="address">
-                      <ion-select label="{{ text.start_date }}" placeholder="Select" interface="popover"
+                      <ion-select label="{{ isMobile ?  start_date ? start_date : text.start_date : text.start_date}}" placeholder="Select" interface="popover"
                         [(ngModel)]="start_date" name="start_date" (ionChange)="startDate()">
                         <ion-select-option *ngFor="let date of checkout_data?.dates" [value]="date">{{
                           date }}</ion-select-option>
@@ -234,13 +191,12 @@
       
                 <ion-row>
                   <ion-col size="12">
-                    <h3 class="total" *ngIf="validate()">Total Payable Amount&nbsp;:&nbsp;<span *ngIf="!payble_amount">{{
+                    <h3 [class]="isMobile?'mobile_total':'total'" *ngIf="validate()">Total Payable Amount&nbsp;:&nbsp;<span *ngIf="!payble_amount">{{
                         total
                         | currency:'INR' }}</span>&nbsp;<s *ngIf="payble_amount">{{ total |
                         currency:'INR' }}</s>&nbsp;<span *ngIf="payble_amount">{{ total - save |
                         currency:'INR' }}</span></h3> <br>
-                    <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()"
-                      *ngIf="!isMobile">{{ text.checkout_button }}</ion-button>
+                    <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()">{{ text.checkout_button }}</ion-button>
                   </ion-col>
                 </ion-row>
               </div>

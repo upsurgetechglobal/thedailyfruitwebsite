@@ -1,12 +1,12 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="dark">
-    <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
+    <!-- <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
 
     <ion-title *ngIf="text">
-      <!-- {{ text.cart }}  -->
+      {{ text.cart }} 
       <a
         style="float:right;font-size: 14px;color:white !important;margin-top: 5px;" routerLink="/tabs/home">{{
-        text.go_back }}</a></ion-title>
+        text.go_back }}</a></ion-title> -->
 
   </ion-toolbar>
 </ion-header>
@@ -22,7 +22,7 @@
 
     <div *ngIf="data && data.length > 0">
 
-      <ion-row *ngIf="data && isMobile">
+      <!-- <ion-row *ngIf="data && isMobile">
         <ion-col *ngIf="!isMobile" size="6"><img src="assets/ch.avif"></ion-col>
         <ion-col [size]="isMobile ? 12 : 6"
           style="background-color: #edf2fa;border-radius: 10px !important;margin-top: 20px;">
@@ -50,17 +50,41 @@
 
 
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
       <ion-card>
-      <ion-row *ngIf="data && !isMobile">
-        <ion-col size="8">
+      <ion-row *ngIf="data">
+        <ion-col [size]="isMobile ? 12 :8">
             <ion-card-header class="card_title">
               <ion-card-title>Selected Products</ion-card-title>
             </ion-card-header>
 
+            <div class="ion-padding" *ngIf="isMobile"  style="background-color: whitesmoke !important;">
+              <ion-item lines="none" *ngFor="let selected_item of data">
+                <ion-label class="ion-text-wrap">
+                  <span style="font-weight: bold;font-size: 20px;">{{ selected_item.name }} </span><br>
+                  <ion-row>
+                    <ion-col size="6">
+                      <div class="quantity-field">
+                        <button class="value-button decrease-button" (click)="decrement(selected_item)">-</button>
+                        <div class="number">{{selected_item.qty}}</div>
+                        <button class="value-button increase-button" (click)="increment(selected_item)">+
+                        </button>
+                      </div>
+                    </ion-col>
+                    <ion-col size="4">
+                   <ion-badge color="dark" style="float: right;padding:8px 15px;">{{ selected_item.currency }}{{ selected_item.price }}</ion-badge>
+                    </ion-col>
+                    <ion-col size="2">
+                      <ion-icon name="trash" class="trash_icon" (click)="remove(selected_item.id)"></ion-icon>
+                    </ion-col>
+                  </ion-row>
+                 
+                </ion-label>
+              </ion-item>
+            </div>
 
-            <ion-card-content class="scrollable-content">
+            <ion-card-content class="scrollable-content" *ngIf="!isMobile">
               <ion-list *ngFor="let selected_item of data">
                 <ion-item *ngIf="data">
                   <ion-row>
@@ -98,7 +122,7 @@
 
 
         </ion-col>
-        <ion-col size="4">
+        <ion-col [size]="isMobile ? 12 :4">
           <div style="padding: 20px;">
             <ion-row>
               <ion-col size="12">
@@ -119,34 +143,6 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-            <!-- <ion-row>
-              <ion-col size="12">
-                <p class="desc">{{ text.checkout_desc }}</p>
-
-                <ion-item lines="none" class="address">
-                  <ion-select label="{{ text.sub_time_title }}" placeholder="Select" interface="popover"
-                    [(ngModel)]="sub_time" name="sub_time" (ionChange)="startDate()">
-                    <ion-select-option *ngFor="let time of checkout_data?.time" [value]="time?.id">{{
-                      time?.title }}</ion-select-option>
-                  </ion-select>
-                  <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="12">
-                <p class="desc">{{ text.starting_date_desc }}</p>
-
-                <ion-item lines="none" class="address">
-                  <ion-select label="{{ text.start_date }}" placeholder="Select" interface="popover"
-                    [(ngModel)]="start_date" name="start_date" (ionChange)="startDate()">
-                    <ion-select-option *ngFor="let date of checkout_data?.dates" [value]="date">{{
-                      date }}</ion-select-option>
-                  </ion-select>
-                  <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
-                </ion-item>
-              </ion-col>
-            </ion-row> -->
 
             <ion-row>
               <ion-col size="12">
@@ -167,13 +163,13 @@
 
             <ion-row>
               <ion-col size="12">
-                <h3 class="total" *ngIf="validate()">Total Payable Amount&nbsp;:&nbsp;<span *ngIf="!payble_amount">{{
+                <h3 [class]="isMobile?'mobile_total':'total'" *ngIf="validate()">Total Payable Amount&nbsp;:&nbsp;<span *ngIf="!payble_amount">{{
                     total
                     | currency:'INR' }}</span>&nbsp;<s *ngIf="payble_amount">{{ total |
                     currency:'INR' }}</s>&nbsp;<span *ngIf="payble_amount">{{ total - save |
                     currency:'INR' }}</span></h3> <br>
                 <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()"
-                  *ngIf="!isMobile">{{ text.checkout_button }}</ion-button>
+                  >{{ text.checkout_button }}</ion-button>
               </ion-col>
             </ion-row>
           </div>
@@ -184,9 +180,9 @@
 
     </div>
 
-    <div *ngIf="data && data.length == 0">
+    <div *ngIf="data && data.length == 0" class="ion-padding" style="text-align: center;">
       <br><br>
-      <img src="assets/empty.webp" style="width: 70%;margin-left: 15%;">
+      <img src="assets/empty-cart.gif" style="width: 20%;">
 
       <h1 align="center">{{ text.cart_empty }}</h1>
 

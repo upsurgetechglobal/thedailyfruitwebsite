@@ -4,6 +4,7 @@
 /** Ionic CSS Variables **/
 * {
     font-family: 'League Spartan', serif;
+    // font-family: 'Poppins';
 }
   
 :root {
@@ -258,3 +259,14 @@ ion-footer ion-icon {
 .input-bottom.sc-ion-input-md .helper-text.sc-ion-input-md {
     color: red !important;
 }
+.custom-toast {
+    --max-width: 450px;
+    --min-height: 50px; 
+    --border-radius: 12px; 
+    --padding-start: 16px;
+    --padding-end:16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    text-align: center; 
+  }
+  

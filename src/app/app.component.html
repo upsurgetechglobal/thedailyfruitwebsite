@@ -6,13 +6,13 @@
         <ion-col size="1">
           <img src="assets/daily_fruit_logo.png" routerLink="/tabs/home" style="height: 50px;margin-top: 2px;cursor: pointer;">
         </ion-col>
-        <ion-col size="5"></ion-col>
-        <ion-col size="3" class="menu-container">
+        <ion-col size="4"></ion-col>
+        <ion-col size="4" class="menu-container">
           <ion-button fill="clear" routerLink="/tabs/home" routerLinkActive="active-menu">
             <span>{{ text.menu_home }}</span>
           </ion-button>
           
-          <ion-button fill="clear" routerLink="/item/1" routerLinkActive="active-menu">
+          <ion-button fill="clear" routerLink="/tabs/item/1" routerLinkActive="active-menu">
             <span>{{ text.menu_products }}</span>
           </ion-button>
         
@@ -39,10 +39,10 @@
     <!-- </ion-toolbar> -->
   </ion-header>
   <ion-split-pane contentId="main-content">
-    <ion-row *ngIf="isMobile" style="z-index: 100;">
+    <!-- <ion-row *ngIf="isMobile" style="z-index: 100;">
       <ion-col size="4"></ion-col>
       <ion-col size="7"><img src="assets/daily_fruit_logo.png" style="width: 100%;height: auto;"></ion-col>
-    </ion-row>
+    </ion-row> -->
     <ion-menu contentId="main-content" type="push" swipeGesture="false" *ngIf="isMobile">
       <ion-content>
         

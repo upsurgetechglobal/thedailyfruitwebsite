@@ -80,10 +80,25 @@ ion-content {
     font-size: 25px;
     font-weight: 700;
 }
+.mobile_iname_price {
+    font-size: 12px !important;
+    font-weight: 700;
+}
+.mobile_iname_name{
+    font-size: 16px;
+    font-weight: 700;
+}
+
 
 .total {
     font-weight: 600;
     font-size: 20px;
+    text-align: right;
+    color: black;
+}
+.mobile_total {
+    font-weight: 600;
+    font-size: 15px;
     text-align: right;
     color: black;
 }

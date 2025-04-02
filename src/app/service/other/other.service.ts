@@ -62,9 +62,10 @@ export class OtherService {
       position: 'bottom',
       mode: 'ios',
       color: 'dark',
+      cssClass: 'custom-toast' // Custom class for styling
     });
-
-    toast.present();
+  
+    await toast.present();
   }
 
   async confirm(): Promise<any> {

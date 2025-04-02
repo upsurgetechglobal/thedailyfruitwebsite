@@ -14,11 +14,15 @@ import { OtherService } from '../service/other/other.service';
 export class OfferPage implements OnInit {
 
   data:any;
-  text:any
+  text:any;
+  type:any;
 
   constructor(public otherService : OtherService,public navParams: NavParams) { 
 
     this.data  = navParams.get('data');
+    this.type = navParams.get('type');
+    console.log('this.type',this.type);
+    
 
     const text = localStorage.getItem('app_lang');
     

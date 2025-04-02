@@ -23,14 +23,14 @@
   <ion-col size="12">
     <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="addNew()" >+ Add New Address</ion-button>
   </ion-col>
-<ion-col [size]="isMobile ? 12 : 6" *ngFor="let address of data">
+<ion-col [size]="isMobile ? 12 : 4" *ngFor="let address of data">
   <ion-card mode="ios">
     <ion-card-header>
     <ion-card-subtitle>{{ address.type }}</ion-card-subtitle>
     </ion-card-header>
     
     <ion-card-content>
-    {{ address.address }} {{ address.floor }} {{ address.landmark }}
+    {{ address.address }} <br> {{ address.floor }} <br> {{ address.landmark }}
     </ion-card-content>
     <ion-button fill="clear" color="danger" (click)="deleteAddress(address.id)"><ion-icon name="trash-outline"></ion-icon> &nbsp;{{ text.remove }}</ion-button>
     </ion-card>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule,ModalController } from '@ionic/angular';
@@ -21,7 +21,7 @@ export class WalletPage implements OnInit {
   fakeData = [1,2,3,4,5,6,7];
   setting:any;
   text:any;
-
+  isMobile: boolean = false;
   constructor(public server : ServerService,public otherService : OtherService,private modalCtrl: ModalController) {
 
     const setting  = localStorage.getItem('admin_setting');
@@ -45,6 +45,14 @@ export class WalletPage implements OnInit {
   {
 
   }
+  @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+      this.checkScreenSize();
+    }
+  
+    private checkScreenSize() {
+      this.isMobile = window.innerWidth <= 768; // Adjust the breakpoint as needed
+    }
 
   ionViewDidEnter()
   {

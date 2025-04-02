@@ -105,29 +105,51 @@
   </ion-refresher>
 
 
-  <div *ngIf="data">
+  <div *ngIf="data" [class]="!isMobile ? 'container-fluid':''">
 
     <ion-searchbar routerLink="/search" mode="ios" *ngIf="isMobile"> </ion-searchbar>
 
-    <ion-grid [fixed]="true">
+    <ion-grid>
       <ion-row>
         <ion-col>
-          <swiper-container [slidesPerView]="isMobile ? '2.6' : '3.5'" class="banner" [pagination]="true"
-            [spaceBetween]="15">
-            <swiper-slide *ngFor="let banner of data.banner"><img src="{{ banner.img }}"
-                (click)="bannerLink(banner)"></swiper-slide>
+          <swiper-container [slidesPerView]="isMobile ? 2.6 : 2" class="banner" pagination="true" space-between="15"
+            autoplay="true" loop="true" [autoplay]="{ delay: 1500, disableOnInteraction: false }">
+            <swiper-slide *ngFor="let banner of data.banner">
+              <img [src]="banner.img" (click)="bannerLink(banner)" style="cursor: pointer;">
+            </swiper-slide>
           </swiper-container>
         </ion-col>
       </ion-row>
 
+
+
       <div class="white">
         <h1 class="headTitle">Choose From Category</h1>
         <ion-row class="cate">
-          <ion-col [size]="isMobile ? '3' : '1.5'" *ngFor="let cate of data.cate"
-            routerLink="/item/{{ cate.id }}" routerDirection="forward" style="cursor: pointer;">
-            <img src="{{ cate.img }}" style="width: 80%;height: 60%;">
-            <b [class]="isMobile ? 'mobileFont' : 'webFont'">{{
-              cate.name }}</b></ion-col>
+          <ion-col [size]="isMobile ? '3' : '2.5'" *ngFor="let cate of data.cate" routerLink="/tabs/item/{{ cate.id }}"
+            routerDirection="forward" style="cursor: pointer;">
+            <img src="{{ cate.img }}" style="width: 80%;height: 60%;" *ngIf="isMobile">
+            <b [class]="isMobile ? 'mobileFont' : 'webFont'" *ngIf="isMobile">{{
+              cate.name }}</b>
+            <ion-card class="custom-offer-card" *ngIf="!isMobile">
+              <div class="card-content-wrapper">
+                <div class="text-section">
+                  <h2 class="main-title">{{cate?.name}}</h2>
+                  <!-- <p class="sub-title">FROM RESTAURANTS</p>
+                    <div class="discount-badge">UPTO 60% OFF</div> -->
+                </div>
+
+                <div class="bottom-section">
+                  <div class="arrow-circle">
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                  </div>
+                  <img class="offer-image" [src]="cate.img" alt="Offer Image" />
+                </div>
+              </div>
+            </ion-card>
+
+
+          </ion-col>
         </ion-row>
       </div>
 
@@ -136,35 +158,56 @@
         <h1 class="headTitle">Highly Recommended <span style="font-size: 20px;">(Must-Try Specials) </span> </h1>
 
         <ion-row>
-          <ion-col [size]="isMobile ? 12:4" *ngFor="let item of data?.trending" style="margin-bottom: 10px;">
-            <ion-row class="showItem">
-              <ion-col size="5"><img src="{{ item.img }}">
+          <ion-col [size]="isMobile ? 6:3" *ngFor="let item of data?.trending" style="margin-bottom: 10px;">
 
-                <ion-button color="primary" expand="block" shape="round" color="dark" size="medium"
-                  style="margin-top: 10px;" (click)="add_to_cart(item)">{{ item?.subscribed_item ? 'Subscribe' : text.add }}
-                  </ion-button>
+            <div class="product-card-grid"><img class="product-card-grid-image" [src]="item?.img" alt="product">
+              <div class="product-card-grid-content-group">
+                <div class="product-card-grid-header-group">
+                  <h3 class="product-card-grid-title">{{item.name}}</h3><button type="button"
+                    class="product-card-grid-info-btn info-btn" data-modal="#item-info-modal"><i
+                      class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i></button>
+                </div>
+                <!-- <p class="product-card-grid-describe char-limit" [innerHTML]="item.desc |slice:0-200"></p> -->
+                <div class="product-card-list-footer-group">
+                  <div class="product-card-list-price-group"><!---->
+                    <h4 class="product-card-list-price-current">{{ item.currency }}{{ item.price }}</h4>
+                  </div>
+                  <div><button data-modal="#item-variation-modal" class="product-card-list-cart-btn add-btn"
+                      (click)="add_to_cart(item)"><i
+                        class="lab lab-bag-2 font-fill-primary transition lab-font-size-14"></i><span
+                        class="text-xs text-primary transition">{{ item?.subscribed_item ? 'Subscribe' : text.add
+                        }}</span></button></div>
+                </div>
+              </div>
+            </div>
 
 
-              </ion-col>
-              <ion-col size="7" style="padding: 0px 10px;"><span class="iname">{{ item.name }}</span>
-                <!-- <span class="item_desc">{{ item.desc |slice:0-80 }}...</span> -->
-                <span class="item_desc" [innerHTML]="item.desc |slice:0-80"></span>
 
-                <span class="price">{{ item.currency }}{{ item.price }} </span>
-                <span *ngIf="item.rating > 0" class="rating">
-                  <ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)"
-                    color="primary" (click)="openModel(item,2)"></ion-icon>
-                </span>
-                <br>
-                <!-- <ion-button color="primary" shape="round" color="dark" *ngIf="!isMobile"
-                  (click)="detail(item)">&nbsp;&nbsp;{{ text.add }} + &nbsp;</ion-button> -->
-              </ion-col>
-            </ion-row>
+            <!-- <ion-row class="showItem">
+                        <ion-col size="5"><img src="{{ item.img }}">
+          
+                          <ion-button color="primary" expand="block" shape="round" color="dark" size="medium"
+                            style="margin-top: 10px;" (click)="add_to_cart(item)">{{ item?.subscribed_item ? 'Subscribe' : text.add }}
+                            </ion-button>
+          
+          
+                        </ion-col>
+                        <ion-col size="7" style="padding: 0px 10px;"><span class="iname">{{ item.name }}</span>
+                          <span class="item_desc" [innerHTML]="item.desc |slice:0-80"></span>
+          
+                          <span class="price">{{ item.currency }}{{ item.price }} </span>
+                          <span *ngIf="item.rating > 0" class="rating">
+                            <ion-icon name="star" style="font-size: 10px;" *ngFor="let it of [].constructor(item.rating)"
+                              color="primary" (click)="openModel(item,2)"></ion-icon>
+                          </span>
+                          <br>
+                        </ion-col>
+                      </ion-row> -->
           </ion-col>
         </ion-row>
       </div>
 
-      <div class="">
+      <!-- <div class="">
         <h1 class="headTitle">Most Subscribed Items </h1>
 
         <ion-row>
@@ -186,13 +229,11 @@
                     color="primary" (click)="openModel(item,2)"></ion-icon>
                 </span>
                 <br>
-                <!-- <ion-button color="primary" shape="round" color="dark" *ngIf="!isMobile"
-                  (click)="detail(item)">&nbsp;&nbsp;{{ text.add }} + &nbsp;</ion-button> -->
               </ion-col>
             </ion-row>
           </ion-col>
         </ion-row>
-      </div>
+      </div> -->
 
       <!-- <div class="">
           <h1 class="headTitle">{{ text.trending_store }} <a routerLink="/view/trend" class="viewAll">{{ text.view_all
@@ -285,39 +326,55 @@
   </div>
   <!-- </ion-content> -->
   <br><br>
-  <!-- <ion-toolbar class="bottom_tabs" *ngIf="isMobile">
-    <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button routerLink="/tabs/home">
-          <ion-icon name="home"></ion-icon>
-          Home
-        </ion-tab-button>
-        <ion-tab-button routerLink="/tabs/subscription">
-          <ion-icon name="bag"></ion-icon>
-          My Orders
-        </ion-tab-button>
-        <ion-tab-button  routerLink="/tabs/subscription">
-          <ion-icon name="cart"></ion-icon>
-          Cart
-        </ion-tab-button>
-        <ion-tab-button routerLink="/tabs/account">
-          <ion-icon name="person"></ion-icon>
-          My Account
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-toolbar> -->
-
   <ion-footer class="ion-footer" *ngIf="!isMobile">
-    <ion-row>
-      <ion-col size="4"><br>
-        <a routerLink="/privacy-policy" style="font-size: 18px;">Privacy Policy</a>
+    <ion-row color="dark">
+      <ion-col size="3">
+        <img src="assets/daily_fruit_logo.png" routerLink="/tabs/home"
+          style="height: 80px;margin-top: 80px;cursor: pointer;">
       </ion-col>
-      <ion-col size="8">
-        <p>Copyright © 2025 The Daily Fruit | Powered by <strong>UPSURGE TECH GLOBAL</strong> Private Limited</p>
+      <ion-col size="3" class="company-links"><br>
+        <h3 color="dark">Company</h3>
+        <a routerLink="/about">About Us</a>
+        <a routerLink="/terms-and-conditions">Terms And Conditions</a>
+        <a routerLink="/privacy-policy">Privacy Policy</a>
+        <a routerLink="/faq">FAQ's</a>
       </ion-col>
-    </ion-row>
-    
+      <ion-col size="3" class="company-links"> <br>
+        <h3 color="dark">Address</h3>
+        <p>
+          1-72/s/61 <br> The Daily Fruit <br>
+          Miyapur,<br> Hyderabad, 500049.
+        </p>
+      </ion-col>
+      <ion-col size="3" class="company-links"> <br>
+        <h3 color="dark">Contact</h3>
+        <div class="contact-item">
+          <ion-icon name="mail-outline"></ion-icon>
+          <a href="mailto:support@thedailyfruit.in">support&#64;thedailyfruit.in</a>
+        </div>
+        <div class="contact-item">
+          <ion-icon name="call-outline"></ion-icon>
+          <span>9550695596</span>
+        </div> <br>
+        <h3 color="dark">Social Links</h3>
+        <div class="contact-item">
+          <a href="https://www.instagram.com/thedailyfruit.in?igsh=MTF4bWx4MzV6b3d1dw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
+          <ion-icon name="logo-instagram"></ion-icon>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61566366943782" target="_blank" rel="noopener noreferrer">
+            <ion-icon name="logo-facebook"></ion-icon>
+          </a>
+          <a href="https://www.linkedin.com/company/thedailyfruit/" target="_blank" rel="noopener noreferrer">
+          <ion-icon name="logo-linkedin"></ion-icon>
+          </a>
+        </div>
+      </ion-col>
+      
+    </ion-row><br><br><br><br>
+  </ion-footer>
+
+  <ion-footer class="ion-footer-copy" *ngIf="!isMobile">
+    <p>Copyright © 2025 The Daily Fruit | Powered by <strong>UPSURGE TECH GLOBAL</strong> Private Limited</p>
     <div *ngIf="showScrollTopButton" id="ast-scroll-top" tabindex="0"
       class="ast-scroll-top-icon ast-scroll-to-top-right" style="display: block;">
       <ion-icon name="chevron-up-outline" (click)="scrollToTop()"></ion-icon>

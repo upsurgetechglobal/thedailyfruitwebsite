@@ -1,20 +1,29 @@
-<ion-header class="ion-no-border">
+<!-- <ion-header class="ion-no-border">
 <ion-toolbar color="dark">
 <ion-title></ion-title>
 </ion-toolbar>
-</ion-header>
+</ion-header> -->
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="medium" (click)="close()" *ngIf="text">{{ text.cancel }}</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content class="ion-padding" *ngIf="text">
 <ion-grid [fixed]="true">
-<ion-row>
-<ion-col [size]="isMobile ? 12 : 6"><img src="assets/done.jpg" style="width: 80%;margin-left: 10%;"></ion-col>
-<ion-col [size]="isMobile ? 12 : 6">
-<br><br>
+<ion-row style="text-align: center;">
+<ion-col [size]="isMobile ? 12 : 12"><img src="assets/confirm.gif" style="width: 22%;margin-top: 50px;"></ion-col>
+<ion-col [size]="isMobile ? 12 : 12">
+
 <h1 align="center">{{ text.success_title }}</h1>
 <p style="color:gray" align="center">{{ text.success_desc }}</p><br><br>
 <ion-row style="text-align: center;">
-<ion-col size="6"><ion-button shape="round" color="dark" routerLink="/tabs/home" routerDirection="root">{{ text.go_back }}</ion-button></ion-col>
-<ion-col size="6"><ion-button shape="round" color="dark" routerLink="/tabs/account" routerDirection="forward">{{ text.my_order }}</ion-button></ion-col>
+    <ion-col size="3" *ngIf="!isMobile"></ion-col>
+<ion-col [size]="isMobile ? 6 :3"><ion-button shape="round" color="dark" routerLink="/tabs/home" routerDirection="root" (click)="close()"><span style="white-space: nowrap;">{{ text.go_back }}</span></ion-button></ion-col>
+<ion-col  [size]="isMobile ? 6 :3"><ion-button shape="round" color="dark" routerLink="/tabs/account" routerDirection="forward" (click)="close()"><span style="white-space: nowrap;">{{ text.my_order }}</span></ion-button></ion-col>
+<ion-col size="3" *ngIf="!isMobile"></ion-col>
 </ion-row>
 </ion-col>
 </ion-row>

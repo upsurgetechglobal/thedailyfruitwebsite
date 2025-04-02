@@ -11,3 +11,20 @@
       display: flex;
     }
   }
+
+  .custom-badge {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    background: var(--ion-color-dark);
+    color: white;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  

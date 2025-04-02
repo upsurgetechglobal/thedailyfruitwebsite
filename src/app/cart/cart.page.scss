@@ -71,12 +71,22 @@ ion-item
     text-align: right;
     color: black;
 }
+.mobile_total {
+    font-weight: 600;
+    font-size: 15px;
+    text-align: right;
+    color: black;
+}
 
 .trash_icon {
-    margin-top: 5px;
+    margin-top: -1px;
     color: rgb(208, 1, 1);
     cursor: pointer;
     font-size: 20px;
+    border: 1px solid var(--ion-color-light);
+    border-radius: 5px;
+    padding: 5px;
+    background-color: whitesmoke;
 }
 
 .quantity-field {
