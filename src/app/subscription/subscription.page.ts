@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ServerService } from '../service/server.service';
 import { OtherService } from '../service/other/other.service';
 @Component({
@@ -17,7 +17,7 @@ data:any;
 fakeData:any = [1,2,3,4,5,6];
 text:any;
 
-  constructor(public server : ServerService,public otherService : OtherService) {
+  constructor(public server : ServerService,public otherService : OtherService,private router:Router) {
 
     const text = localStorage.getItem('app_lang');
     
@@ -30,8 +30,7 @@ text:any;
    }
 
   ngOnInit() 
-  {
-  }
+  {}
 
   ionViewDidEnter()
   {
@@ -44,17 +43,19 @@ text:any;
       
       this.data   = response.data;
 
-      console.log(this.data);
+      // console.log(this.data);
       
       });
   }
 
   async detail(data:any)
   {
-    console.log(data)
     localStorage.setItem("sub_data",JSON.stringify(data));
+   this.router.navigate(['/dates']).then(() => {
+  window.location.reload(); // Force refresh
+});
 
-    this.otherService.redirect("/dates");
+    // this.otherService.redirect("/dates");
   }
 
 }

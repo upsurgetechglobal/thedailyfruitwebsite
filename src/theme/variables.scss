@@ -269,4 +269,27 @@ ion-footer ion-icon {
     --padding-bottom: 12px;
     text-align: center; 
   }
+  .custom-alert .alert-wrapper {
+    width: 90% !important; /* Increase width */
+    max-width: 400px !important; /* Adjust max width */
+    height: auto !important; /* Increase height */
+    max-height: 500px !important; /* Set max height */
+  }
+  
+  .custom-alert .alert-message {
+    font-size: 16px; 
+    line-height: 20px;
+  }
+
+  .custom-alert .alert-title {
+    font-size: 20px; 
+    line-height: 25px;
+  }
+  
+  .custom-alert .alert-button {
+    font-size: 16px; /* Adjust button text size */
+    padding: 12px 20px; /* Increase button padding */
+  }
+  
+  
   

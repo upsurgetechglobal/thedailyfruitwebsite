@@ -58,14 +58,15 @@ export class ForgotPage implements OnInit {
 
   forgot(data:any)
   {
-    if(this.setting.verify_type == 1 || this.setting.verify_type == 2 && data.phone.length == 0)
-    {
-      return this.otherService.toast(this.text.correct_detail);
-    }
-    else if(data.email.length == 0)
-    {
-      return this.otherService.toast(this.text.correct_detail);
-    }
+    console.log('data',data)
+    // if(this.setting.verify_type == 1 || this.setting.verify_type == 2 && data.phone.length == 0)
+    // {
+    //   return this.otherService.toast(this.text.correct_detail);
+    // }
+    // else(data.phone.length == 0)
+    // {
+    //   return this.otherService.toast(this.text.correct_detail);
+    // }
 
     this.hasClick = true;
 

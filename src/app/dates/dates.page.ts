@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit,ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -25,7 +25,7 @@ array:any = [];
 hasClick = false;
 text:any;
 
-  constructor(public server : ServerService,public otherService : OtherService) {
+  constructor(public server : ServerService,public otherService : OtherService,) {
 
     const data = localStorage.getItem('sub_data');
   
@@ -47,11 +47,14 @@ text:any;
 
   ngOnInit() 
   {
+  
   }
 
   async mark()
   {
-    this.otherService.confirm() .then(res => {
+    var header = 'Order Cancellation & Refund Update'
+    var message = `Your order will be canceled in ${this.array.length} days, and the refunded amount ${this.data.currency}${this.array.length * this.data.price} will be added to your wallet. Thank you.`
+    this.otherService.vacationModeConfirm(header,message) .then(res => {
       if (res === 'ok') 
       {
         this.hasClick = true;
@@ -59,13 +62,11 @@ text:any;
         const allData = { id : this.array,user_id : localStorage.getItem('user_id') }
 
         this.server.mark(allData).subscribe((response:any) => {
-        
         this.hasClick = false;
-
+        // this.otherService.triggerVacationData.emit();
+        this.otherService.triggerLoadData.emit();
         this.otherService.toast("Delivery dates updated successfully. "+response.data+" credited in your wallet.");
-
         this.otherService.redirect('subscription');
-
         });
       }
     });
@@ -73,7 +74,11 @@ text:any;
 
   async undo(id:any)
   {
-    this.otherService.confirm() .then(res => {
+    var header = 'Reorder Confirmation'
+
+    var message = `The amount ${this.data.currency}${this.data.price} will be directly debited from your wallet balance. Thank you.`
+
+    this.otherService.vacationModeConfirm(header,message) .then(res => {
       if (res === 'ok') 
       {
         const allData = { id : this.array,user_id : localStorage.getItem('user_id') }
@@ -81,20 +86,19 @@ text:any;
         this.otherService.showLoading();
 
         this.server.undo(id).subscribe((response:any) => {
-        
-        this.otherService.hideLoading();
+          // this.otherService.triggerVacationData.emit();
 
+        this.otherService.hideLoading();
         if(response.msg == "done")
         {
           this.otherService.toast("Delivery dates updated successfully. "+response.data+" debited from your wallet.");
-
           this.otherService.redirect('subscription');
         }
         else
         {
           this.otherService.toast(response.error);
         }
-
+        this.otherService.triggerLoadData.emit();
         });
       }
     });

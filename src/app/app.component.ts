@@ -77,7 +77,7 @@ export class AppComponent implements OnInit {
     this.server.account().subscribe((response:any) => {
       
       this.user_data   = response.data;
-      console.log(this.user_data)
+      console.log('this.user_data',this.user_data)
       
       });
   }

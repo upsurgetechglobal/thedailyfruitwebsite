@@ -8,11 +8,19 @@
 
 <ion-content class="ion-padding" *ngIf="data && text">
   
-<h3>{{ text.select_payment_method }} <ion-badge style="float:right;margin-top: 5px;" color="dark">{{setting.currency }}{{ data.amount }}</ion-badge></h3>
-
+<!-- <h3>{{ text.select_payment_method }} <ion-badge style="float:right;margin-top: 5px;" color="dark">{{setting.currency }}{{ data.amount }}</ion-badge></h3> -->
+<h3>You have insufficient balance in your wallet. Please add <strong>{{setting.currency }}{{ data.amount }}</strong> to  continue.</h3>
 
 <br><br>
-<ion-item lines="none" (click)="paymentSheet()" detail *ngIf="setting.stripe_key">
+<ion-row>
+  <ion-col size="12" style="text-align: center;">
+<img src="assets/razorpay.gif" style="width: 40%;height: auto;border-radius: 25px;">
+</ion-col><br>
+  <ion-col size="12">
+    <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="addAmountToWallet()" >Add {{ data.amount | currency:'INR' }} to Wallet</ion-button>
+  </ion-col>
+  </ion-row>
+<!-- <ion-item lines="none" (click)="paymentSheet()" detail *ngIf="setting.stripe_key">
 <ion-thumbnail slot="start"><img src="assets/stripe.png"></ion-thumbnail>
 <ion-label>{{ text.credit }}</ion-label>
 <ion-spinner name="crescent" slot="end" *ngIf="payment_method == 1"></ion-spinner>
@@ -23,13 +31,13 @@
 <ion-label> {{ text.upi }}</ion-label>
 <ion-thumbnail slot="start"><img src="assets/razor.png"></ion-thumbnail>
 <ion-spinner name="crescent" slot="end" *ngIf="payment_method == 2"></ion-spinner>
-</ion-item><br>
+</ion-item><br> -->
 
-<br><br><br>
+<!-- <br><br><br>
 <b>For stripe use these Test card detail : </b>
 
 <p>Card No : 4242 4242 4242 4242</p>
-<p>Exp. 12/25 CVV : 321</p>
+<p>Exp. 12/25 CVV : 321</p> -->
 
 
 </ion-content>

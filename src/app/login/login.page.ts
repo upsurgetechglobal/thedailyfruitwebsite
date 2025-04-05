@@ -2,7 +2,7 @@ import { Component, OnInit,HostListener } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ServerService } from '../service/server.service';
 import { OtherService } from '../service/other/other.service';
 
@@ -25,7 +25,8 @@ export class LoginPage implements OnInit {
   constructor(
     public server : ServerService,
     public otherService : OtherService,
-    private loctaion:Location
+    private loctaion:Location,
+    private router:Router
   ) {
 
     this.otherService.statusBar("#ffc927",2);
@@ -94,7 +95,13 @@ export class LoginPage implements OnInit {
       localStorage.setItem('user_data', JSON.stringify(response.user));
       this.otherService.triggerLoadData.emit();
       this.otherService.toast(this.text.logged_in);
-      this.loctaion.back();
+      const path = window.location.pathname;
+      console.log(path); // "/tabs/cart"
+      if(path == '/tabs/cart' || path == '/subscribed-cart'){
+        this.loctaion.back();
+      }else{
+        this.router.navigate(['/tabs/home']);    
+       }
 
       // if(localStorage.getItem('cart_no') && localStorage.getItem('cart_no') != undefined)
       // {

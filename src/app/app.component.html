@@ -1,49 +1,55 @@
 <ion-app dir="{{ dir }}">
-  <ion-header *ngIf="!isMobile" style="box-shadow: none;">
-    <!-- <ion-toolbar style="box-shadow: none;"> -->
-      <ion-row class="ion-align-items-center navBar">
-        <ion-col size="1">&nbsp;</ion-col>
-        <ion-col size="1">
-          <img src="assets/daily_fruit_logo.png" routerLink="/tabs/home" style="height: 50px;margin-top: 2px;cursor: pointer;">
-        </ion-col>
-        <ion-col size="4"></ion-col>
-        <ion-col size="4" class="menu-container">
-          <ion-button fill="clear" routerLink="/tabs/home" routerLinkActive="active-menu">
-            <span>{{ text.menu_home }}</span>
-          </ion-button>
-          
-          <ion-button fill="clear" routerLink="/tabs/item/1" routerLinkActive="active-menu">
-            <span>{{ text.menu_products }}</span>
-          </ion-button>
-        
-          <ion-button fill="clear" routerLink="/tabs/cart" routerLinkActive="active-menu">
-            <span>{{ text.menu_cart }}</span><span *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span>
-          </ion-button>
-        
-          <ion-button fill="clear" routerLink="/tabs/subscription" routerLinkActive="active-menu">
-            <span>{{ text.menu_sub }}</span>
-          </ion-button>
-        </ion-col>
-        <ion-col size="2" class="ion-text-end">
-          <ion-button fill="clear" (click)="userAccount()">
-            <ion-label style="text-align: left;">
-              <!-- <span class="title">Ramesh</span>
-              <small style="display:block;color: white;">ramesh&#64;gmail.com</small> -->
-              <span class="title">{{ user_data?.user?.name }}</span>
-                <small style="display:block;margin-top: 5px;color: white;font-size: 12px;text-transform: lowercase;">{{user_data?.user?.email }}</small>
-            </ion-label>
-            <ion-icon name="person-circle" slot="start" style="font-size: 30px;background-color: white;border-radius: 50%;"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    <!-- </ion-toolbar> -->
+  <ion-header style="box-shadow: none;">
+    <ion-row class="ion-align-items-center navBar">
+      <ion-col size="1" *ngIf="!isMobile">&nbsp;</ion-col>
+      <ion-col [size]="isMobile?4:1">
+        <img src="assets/daily_fruit_logo.png" routerLink="/tabs/home"
+          style="height: 50px;margin-top: 2px;cursor: pointer;">
+      </ion-col>
+      <ion-col [size]="isMobile?4:3"></ion-col>
+      <ion-col size="4" class="menu-container" *ngIf="!isMobile">
+        <ion-button fill="clear" routerLink="/tabs/home" routerLinkActive="active-menu">
+          <span>{{ text.menu_home }}</span>
+        </ion-button>
+
+        <ion-button fill="clear" routerLink="/tabs/item/1" routerLinkActive="active-menu">
+          <span>{{ text.menu_products }}</span>
+        </ion-button>
+
+        <ion-button fill="clear" routerLink="/tabs/cart" routerLinkActive="active-menu">
+          <span>{{ text.menu_cart }}</span><span *ngIf="data && data.cart">&nbsp;({{ data.cart }})</span>
+        </ion-button>
+
+        <ion-button fill="clear" routerLink="/tabs/subscription" routerLinkActive="active-menu">
+          <span>{{ text.menu_sub }}</span>
+        </ion-button>
+      </ion-col>
+      <ion-col size="1" routerLink="/wallet" *ngIf="!isMobile">
+        <ion-button fill="clear" (click)="userAccount()" *ngIf="user_data?.user">
+          <ion-label style="text-align: left;">
+          <span class="user_main">Wallet</span>
+          <small class="user_sub">{{ user_data?.user?.wallet | currency:'INR' }}
+          </small>
+          </ion-label>
+          <ion-icon name="wallet" color="light" slot="start" style="font-size: 30px;"></ion-icon>
+        </ion-button>
+      </ion-col>
+
+      <ion-col [size]="isMobile?4:2" class="ion-text-end">
+        <ion-button fill="clear" (click)="userAccount()">
+          <ion-label style="text-align: left;">
+            <span class="title">{{ user_data?.user?.name }}</span>
+            <small class="user_sub" *ngIf="isMobile">{{ user_data?.user?.wallet | currency:'INR' }}</small>
+            <small class="user_sub" *ngIf="!isMobile">{{user_data?.user?.email }}</small>
+          </ion-label>
+          <ion-icon name="person-circle" slot="start"
+            style="font-size: 30px;background-color: white;border-radius: 50%;"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-header>
   <ion-split-pane contentId="main-content">
-    <!-- <ion-row *ngIf="isMobile" style="z-index: 100;">
-      <ion-col size="4"></ion-col>
-      <ion-col size="7"><img src="assets/daily_fruit_logo.png" style="width: 100%;height: auto;"></ion-col>
-    </ion-row> -->
-    <ion-menu contentId="main-content" type="push" swipeGesture="false" *ngIf="isMobile">
+    <!-- <ion-menu contentId="main-content" type="push" swipeGesture="false" *ngIf="isMobile">
       <ion-content>
         
         <br><br>
@@ -98,16 +104,6 @@
               <ion-label *ngIf="!text">Cart</ion-label>
             </ion-item>
           </ion-menu-toggle>
-
-          <!-- <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="forward" routerLink="/language" lines="none" detail="false">
-              <ion-icon aria-hidden="true" slot="start" name="language"></ion-icon>
-              <ion-label *ngIf="text && text.menu_lang">{{ text.menu_lang }}</ion-label>
-              <ion-label *ngIf="!text">Language</ion-label>
-            </ion-item>
-          </ion-menu-toggle> -->
-
-         
         </ion-list>
         <br><br>
         <ion-list id="labels-list">
@@ -141,9 +137,11 @@
         </ion-list>
         
       </ion-content>
-    </ion-menu>
-    <ion-router-outlet id="main-content" style="font-family: 'League Spartan', serif;" dir="{{ dir }}"></ion-router-outlet>
-    
+    </ion-menu> -->
+
+    <ion-router-outlet id="main-content" style="font-family: 'League Spartan', serif;"
+      dir="{{ dir }}"></ion-router-outlet>
+
   </ion-split-pane>
- 
+
 </ion-app>

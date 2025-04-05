@@ -27,7 +27,16 @@ ion-menu.md ion-content {
     border:1px solid var(--ion-color-light) !important;
     border-radius: 5px;
   }
-  
+    .user_sub {
+      display: block;
+      margin-top: 5px;
+      color: white;
+      font-size: 12px;
+      text-transform: lowercase;
+    }
+    .user_main{
+      text-transform: capitalize;
+    }
   // .menu-container ion-button.active-menu::after {
   //   content: "";
   //   position: absolute;

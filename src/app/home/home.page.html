@@ -107,7 +107,7 @@
 
   <div *ngIf="data" [class]="!isMobile ? 'container-fluid':''">
 
-    <ion-searchbar routerLink="/search" mode="ios" *ngIf="isMobile"> </ion-searchbar>
+    <!-- <ion-searchbar routerLink="/search" mode="ios" *ngIf="isMobile"> </ion-searchbar> -->
 
     <ion-grid>
       <ion-row>
@@ -126,17 +126,15 @@
       <div class="white">
         <h1 class="headTitle">Choose From Category</h1>
         <ion-row class="cate">
-          <ion-col [size]="isMobile ? '3' : '2.5'" *ngFor="let cate of data.cate" routerLink="/tabs/item/{{ cate.id }}"
+          <ion-col [size]="isMobile ? '4' : '1.2'" *ngFor="let cate of data.cate" routerLink="/tabs/item/{{ cate.id }}"
             routerDirection="forward" style="cursor: pointer;">
-            <img src="{{ cate.img }}" style="width: 80%;height: 60%;" *ngIf="isMobile">
-            <b [class]="isMobile ? 'mobileFont' : 'webFont'" *ngIf="isMobile">{{
+            <img src="{{ cate.img }}">
+            <b [class]="isMobile ? 'mobileFont' : 'webFont'">{{
               cate.name }}</b>
-            <ion-card class="custom-offer-card" *ngIf="!isMobile">
+            <!-- <ion-card class="custom-offer-card" *ngIf="!isMobile">
               <div class="card-content-wrapper">
                 <div class="text-section">
                   <h2 class="main-title">{{cate?.name}}</h2>
-                  <!-- <p class="sub-title">FROM RESTAURANTS</p>
-                    <div class="discount-badge">UPTO 60% OFF</div> -->
                 </div>
 
                 <div class="bottom-section">
@@ -146,7 +144,7 @@
                   <img class="offer-image" [src]="cate.img" alt="Offer Image" />
                 </div>
               </div>
-            </ion-card>
+            </ion-card> -->
 
 
           </ion-col>
@@ -163,13 +161,10 @@
             <div class="product-card-grid"><img class="product-card-grid-image" [src]="item?.img" alt="product">
               <div class="product-card-grid-content-group">
                 <div class="product-card-grid-header-group">
-                  <h3 class="product-card-grid-title">{{item.name}}</h3><button type="button"
-                    class="product-card-grid-info-btn info-btn" data-modal="#item-info-modal"><i
-                      class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i></button>
+                  <h4 class="product-card-grid-title">{{item.name}}</h4>
                 </div>
-                <!-- <p class="product-card-grid-describe char-limit" [innerHTML]="item.desc |slice:0-200"></p> -->
                 <div class="product-card-list-footer-group">
-                  <div class="product-card-list-price-group"><!---->
+                  <div class="product-card-list-price-group">
                     <h4 class="product-card-list-price-current">{{ item.currency }}{{ item.price }}</h4>
                   </div>
                   <div><button data-modal="#item-variation-modal" class="product-card-list-cart-btn add-btn"
@@ -329,8 +324,7 @@
   <ion-footer class="ion-footer" *ngIf="!isMobile">
     <ion-row color="dark">
       <ion-col size="3">
-        <img src="assets/daily_fruit_logo.png" routerLink="/tabs/home"
-          style="height: 80px;margin-top: 80px;cursor: pointer;">
+        <img src="assets/daily_fruit_logo.png" routerLink="/tabs/home" class="footer_img">
       </ion-col>
       <ion-col size="3" class="company-links"><br>
         <h3 color="dark">Company</h3>

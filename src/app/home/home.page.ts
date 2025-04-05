@@ -93,8 +93,18 @@ if (
     // if(!localStorage.getItem('user_location')){
     //   this.openLocationModal();
     // }
+    this.welcomeLoadData();
     this.loadData();
     this.highlyRecommended();
+  }
+  async welcomeLoadData()
+  {
+    this.server.welcome().subscribe((response:any) => {
+      this.data = response.data;
+      this.admin = response.admin;
+      localStorage.setItem('setting',JSON.stringify(response.admin));
+      localStorage.setItem("app_lang",JSON.stringify(response.lang));
+      });
   }
 
   // async openLocationModal() {

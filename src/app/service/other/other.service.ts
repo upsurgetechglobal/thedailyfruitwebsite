@@ -15,6 +15,7 @@ import {
 export class OtherService {
   triggerLoadData: EventEmitter<void> = new EventEmitter<void>();
   triggerAddressLoadData: EventEmitter<void> = new EventEmitter<void>();
+  triggerVacationData: EventEmitter<void> = new EventEmitter<void>();
   constructor(
     private modalCtrl: ModalController,
     private alertController: AlertController,
@@ -116,6 +117,36 @@ export class OtherService {
       await alert.present();
     });
   }
+
+  async vacationModeConfirm(header: any, message: any): Promise<any> {
+    return new Promise(async (resolve) => {
+      const alert = await this.alertController.create({
+        header: header,
+        cssClass: 'custom-alert', // Updated class name
+        mode: 'ios',
+        message: message,
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'dark',
+            handler: () => {
+              resolve('cancel');
+            },
+          },
+          {
+            text: 'Yes Sure',
+            handler: () => {
+              resolve('ok');
+            },
+          },
+        ],
+      });
+      alert.present();
+    });
+  }
+  
+
 
   formValidation(data: any) {
     let email_error: any;

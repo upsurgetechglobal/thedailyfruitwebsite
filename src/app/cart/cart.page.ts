@@ -110,7 +110,7 @@ export class CartPage implements OnInit {
       this.getSavedAddress();
       this.working_days = response.working_day;
       this.selectedDay  = response.days;
-       console.log(this.data )
+       // console.log(this.data )
       });
   }
 
@@ -171,7 +171,7 @@ export class CartPage implements OnInit {
   }
   
    async getAddress() {
-    // console.log('this.user_id',this.user_id)
+    // // console.log('this.user_id',this.user_id)
     if(!this.user_id){
     // this.continue();
     this.router.navigate(['/login'])
@@ -189,7 +189,7 @@ export class CartPage implements OnInit {
       
   
       modal.onDidDismiss().then((data) => {
-        // console.log(data);
+        // // console.log(data);
         this.startDate();
         if (data.data.id) {
           this.address = data.data;
@@ -206,7 +206,7 @@ export class CartPage implements OnInit {
   }
   
   // const formattedDate = formatDate(new Date());
-  // console.log(formattedDate);
+  // // console.log(formattedDate);
     async startDate() {
       this.start_date =this.formatDate(new Date());
       this.sub_time = 1
@@ -227,15 +227,15 @@ export class CartPage implements OnInit {
         user_id: localStorage.getItem('user_id'),
         store_id: this.checkout_data.store.id,
       };
-      console.log(allData)
+      // console.log(allData)
       this.server.getAmount(allData).subscribe((response: any) => {
         this.cal = response;
-        console.log('this.cal',this.cal)
+        // console.log('this.cal',this.cal)
         // this.total = this.cal.total;
   
         this.otherService.hideLoading();
   
-        console.log(this.cal.summery);
+        // console.log(this.cal.summery);
       });
     }
   
@@ -279,9 +279,10 @@ export class CartPage implements OnInit {
     }
     async placeOrder() {
       if (this.validate()) {
-        if (this.total > this.checkout_data.user.wallet) {
+        var amount = this.save ? (this.total - Number(this.save)): this.total;
+        if (amount > this.checkout_data.user.wallet) {
           const data = {
-            amount: this.total - this.checkout_data.user.wallet,
+            amount:  amount - this.checkout_data.user.wallet, 
             stripe_key: this.checkout_data.stripe_id,
           };
   
@@ -305,6 +306,7 @@ export class CartPage implements OnInit {
       });
   
       modal.onDidDismiss().then((data) => {
+        console.log('data',data.data.status)
         if (data.data) {
           this.checkout();
         } else {
@@ -335,7 +337,7 @@ export class CartPage implements OnInit {
             : null,
       };
   
-      console.log(allData);
+      // console.log(allData);
   
       this.server.placeOrder(allData).subscribe((response: any) => {
         if (response.done == true) {
@@ -440,7 +442,7 @@ export class CartPage implements OnInit {
   //   const ids    = this.selectedDay.map((item: { id: any; }) => item.id);
   //   const result = arr.every((item: any) => ids.includes(item));
 
-  //   console.log(result);
+  //   // console.log(result);
 
   //   return result ? true : false;
 

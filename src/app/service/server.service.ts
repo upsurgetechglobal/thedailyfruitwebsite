@@ -200,6 +200,18 @@ export class ServerService {
       .pipe(map((results) => results));
   }
 
+  async createRazorpayOrder(request:any){
+    return this.http
+    .post(this.url + 'razorpay/create-order', request)
+    .pipe(map((results) => results));
+  }
+
+  async verifyRazorpayOrder(request:any){
+    return this.http
+    .post(this.url + 'razorpay/verify-payment', request)
+    .pipe(map((results) => results));
+  }
+
   subscription() {
     return this.http
       .get(
