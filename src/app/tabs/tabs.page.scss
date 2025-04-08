@@ -9,6 +9,8 @@
   @media (max-width: 768px) {
     ion-tab-bar {
       display: flex;
+      --background: white;
+      border-top: 2px solid whitesmoke;
     }
   }
 

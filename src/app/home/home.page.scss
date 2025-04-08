@@ -328,10 +328,7 @@ ion-card
     margin-top: 20px;
 }
 
-.headTitle
-{
-    padding: 0px 20px;
-}
+
 
 h1
 {
@@ -448,7 +445,7 @@ img
     text-decoration: underline;
 }
 .company-links a,.company-links p{
-    font-size: 18px;
+    font-size: 15px;
     display: block;
     line-height: 30px;
     color: #304b58 !important;
@@ -557,6 +554,7 @@ transition: transform 0.4s ease, box-shadow 0.4s ease;
     gap: .5rem;
     margin-bottom: .5rem;
    height: 50px;
+   color: black;
 }
 // .product-card-grid-describe {
 //     font-size: .75rem;
@@ -569,6 +567,8 @@ transition: transform 0.4s ease, box-shadow 0.4s ease;
     display: flex;
     gap: .5rem;
     justify-content: space-between;
+    color: black;
+
 }
 .product-card-list-price-group {
     align-items: center;
@@ -595,7 +595,7 @@ transition: transform 0.4s ease, box-shadow 0.4s ease;
     line-height: 1.25rem;
     padding-left: .5rem;
     padding-right: .8rem;
-    padding-top: .2rem;
+    // padding-top: .1rem;
     text-transform: capitalize;
     transition-duration: .3s;
     transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
@@ -610,6 +610,65 @@ transition: transform 0.4s ease, box-shadow 0.4s ease;
     margin-top: 80px;
     cursor: pointer;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+.quantity-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 25px;
+    // margin: 0 auto;    
+}
+
+.quantity-field .value-button {
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 100%;
+    padding: 0;
+    background: #eee;
+    outline: none;
+    cursor: pointer;
+}
+
+.quantity-field .value-button:hover {
+    background: rgb(230, 230, 230);
+}
+
+.quantity-field .value-button:active {
+    background: rgb(210, 210, 210);
+}
+
+.quantity-field .decrease-button {
+    margin-right: -4px;
+    border-radius: 8px 0 0 8px;
+    color: rgb(208, 1, 1);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.quantity-field .increase-button {
+    margin-left: -4px;
+    border-radius: 0 8px 8px 0;
+    color: green;
+    font-size: 18px;
+    cursor: pointer;
+
+}
+
+.number {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    background-color: 1px solid #fff;
+    margin: 0px;
+    width: 60px;
+    height: 100%;
+    padding: 0;
+    outline: none;
+    // font-size: 15px;
+    // cursor: pointer;
 }
 
   

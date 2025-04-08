@@ -73,7 +73,7 @@ export class OtherService {
     return new Promise(async (resolve) => {
       const alert = await this.alertController.create({
         header: 'Are you sure?',
-        cssClass: 'alertClass',
+        cssClass: 'custom-alert', // Updated class name
         mode: 'ios',
         buttons: [
           {
@@ -100,7 +100,7 @@ export class OtherService {
     return new Promise(async (resolve) => {
       const alert = await this.alertController.create({
         header: message,
-        cssClass: 'alertClass',
+        cssClass: 'custom-alert', // Updated class name
         mode: 'ios',
         buttons: [
           {

@@ -7,17 +7,22 @@
   
 <ion-grid [fixed]="true">
 <ion-row>
-<ion-col [size]="isMobile ? 12 : 6"><img src="assets/otp2.svg" style="width: 80%;margin-left: 10%;"></ion-col>
+  
+<!-- <ion-col [size]="isMobile ? 12 : 6"><img src="assets/otp2.svg" style="width: 80%;margin-left: 10%;"></ion-col> -->
+<ion-col size="3" *ngIf="!isMobile"></ion-col>
 <ion-col [size]="isMobile ? 12 : 6">
+  <ion-card class="signup-card">
   <form #form="ngForm" (ngSubmit)="verify(form.value)">
-    <h2>{{ title }}</h2>
-    <p style="font-size: 14px;color:gray">{{ desc }}</p>
+    <h2 class="headTitle">{{ title }}</h2>
+    <p style="font-size: 14px;color:gray;text-align: center;">{{ desc }}</p>
     <br>
     <ion-row style="text-align: center;" *ngIf="!hasClick">
-      <ion-col size="3"><ion-input type="tel" #otp1 maxlength="1" name="otp_1" ngModel (ionInput)="otpChange($event,otp2,'')"></ion-input></ion-col>
-      <ion-col size="3"><ion-input type="tel" #otp2 maxlength="1" name="otp_2" ngModel (ionInput)="otpChange($event,otp3,otp1)"></ion-input></ion-col>
-      <ion-col size="3"><ion-input type="tel" #otp3 maxlength="1" name="otp_3" ngModel (ionInput)="otpChange($event,otp4,otp2)"></ion-input></ion-col>
-      <ion-col size="3"><ion-input type="tel" #otp4 maxlength="1" name="otp_4" ngModel (ionInput)="otpChange($event,'',otp3)"></ion-input></ion-col>
+      <ion-col [size]="isMobile ? 1 : 2"></ion-col>
+      <ion-col size="2"><ion-input type="tel" #otp1 maxlength="1" name="otp_1" ngModel (ionInput)="otpChange($event,otp2,'')"></ion-input></ion-col>
+      <ion-col size="2"><ion-input type="tel" #otp2 maxlength="1" name="otp_2" ngModel (ionInput)="otpChange($event,otp3,otp1)"></ion-input></ion-col>
+      <ion-col size="2"><ion-input type="tel" #otp3 maxlength="1" name="otp_3" ngModel (ionInput)="otpChange($event,otp4,otp2)"></ion-input></ion-col>
+      <ion-col size="2"><ion-input type="tel" #otp4 maxlength="1" name="otp_4" ngModel (ionInput)="otpChange($event,'',otp3)"></ion-input></ion-col>
+      <ion-col size="2"></ion-col>
     </ion-row>
   
     <p *ngIf="hasClick" align="center"><ion-spinner name="crescent"></ion-spinner></p>
@@ -26,10 +31,13 @@
     
     <ion-button mode="ios" expand="block" color="dark" type="submit" *ngIf="!hasClick">{{ text.verify }}</ion-button>
     <br>
-    <p align="center" style="color:gray;font-size: 14px;">{{ text.dont_otp }} <a (click)="resend()">{{ text.resend_code }}</a></p>
+    <p align="center" style="color:gray;font-size: 14px;cursor: pointer;">{{ text.dont_otp }} <a (click)="resend()">{{ text.resend_code }}</a></p>
     </form>
+  </ion-card>
 </ion-col>
+<ion-col size="3" *ngIf="!isMobile"></ion-col>
 </ion-row>
+
 </ion-grid>
 </ion-content>
   

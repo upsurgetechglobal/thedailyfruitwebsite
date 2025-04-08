@@ -55,15 +55,16 @@
 <br>
 
 <ion-list>
-<ion-list-header><ion-note>{{ text.my_account }}</ion-note></ion-list-header>
+
+<ion-list-header><ion-label class="item-label" >{{ text.my_account }}</ion-label></ion-list-header>
 
 <ion-item  detail routerLink="/setting">
-<ion-label>{{ text.account_setting }}</ion-label>
+<ion-label class="item-label">{{ text.account_setting }}</ion-label>
 <ion-icon name="settings" slot="start" color="dark"></ion-icon>
 </ion-item>
 
 <ion-item   routerLink="/wallet">
-<ion-label>{{ text.wallet_balance }}<span style="float:right;font-size: 14px;color:green">{{ data.admin.currency }}{{ data.user.wallet }}</span></ion-label>
+<ion-label class="item-label">{{ text.wallet_balance }}<span style="float:right;font-size: 14px;color:green">{{ data.admin.currency }}{{ data.user.wallet }}</span></ion-label>
 <ion-icon name="wallet" slot="start" color="dark"></ion-icon>
 </ion-item>
 
@@ -74,17 +75,17 @@
     </ion-item> -->
   
   <ion-item  detail routerLink="/book">
-  <ion-label>{{ text.address_book }}</ion-label>
+  <ion-label class="item-label">{{ text.address_book }}</ion-label>
   <ion-icon name="book" slot="start" color="dark"></ion-icon>
   </ion-item>
   
   <ion-item  detail (click)="deleteAccount()" style="cursor: pointer;">
-  <ion-label>{{ text.delete_account }}</ion-label>
+  <ion-label class="item-label">{{ text.delete_account }}</ion-label>
   <ion-icon name="trash" slot="start" color="dark"></ion-icon>
   </ion-item> 
   
   <ion-item  detail lines="none" (click)="logout()"  style="cursor: pointer;">
-    <ion-label>{{ text.logout }}</ion-label>
+    <ion-label class="item-label">{{ text.logout }}</ion-label>
     <ion-icon name="log-out" slot="start" color="dark"></ion-icon>
     </ion-item> 
 

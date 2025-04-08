@@ -161,17 +161,27 @@
             <div class="product-card-grid"><img class="product-card-grid-image" [src]="item?.img" alt="product">
               <div class="product-card-grid-content-group">
                 <div class="product-card-grid-header-group">
-                  <h4 class="product-card-grid-title">{{item.name}}</h4>
+                  <h5 class="product-card-grid-title">{{item.name}}</h5>
                 </div>
                 <div class="product-card-list-footer-group">
                   <div class="product-card-list-price-group">
-                    <h4 class="product-card-list-price-current">{{ item.currency }}{{ item.price }}</h4>
+                    <h5 class="product-card-list-price-current">{{ item.currency }}{{ item.price }}</h5>
                   </div>
-                  <div><button data-modal="#item-variation-modal" class="product-card-list-cart-btn add-btn"
+                  <div  *ngIf="!item?.cart_added">
+                    <button data-modal="#item-variation-modal" class="product-card-list-cart-btn add-btn"
                       (click)="add_to_cart(item)"><i
                         class="lab lab-bag-2 font-fill-primary transition lab-font-size-14"></i><span
                         class="text-xs text-primary transition">{{ item?.subscribed_item ? 'Subscribe' : text.add
-                        }}</span></button></div>
+                        }}</span></button>
+                    </div>
+                    <div class="quantity-field" *ngIf="item?.cart_added">
+                      <button class="value-button decrease-button" (click)="decrement(item)">-</button>
+                      <span class="number">
+                          <p style="margin-top: 2px;">{{item.qty}}</p>
+                      </span>
+                      <button class="value-button increase-button" (click)="increment(item)">+
+                      </button>
+                    </div>
                 </div>
               </div>
             </div>

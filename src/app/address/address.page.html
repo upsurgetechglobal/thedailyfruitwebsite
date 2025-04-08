@@ -13,7 +13,7 @@
 <ion-accordion-group *ngIf="data && data.length > 0">
 <ion-accordion value="first">
 <ion-item slot="header" color="light" class="h">
-<ion-label>{{ text.saved_address }}</ion-label>
+<span>{{ text.saved_address }}</span>
 </ion-item>
 <div class="ion-padding" slot="content">
 <ion-item *ngFor="let a of data" (click)="close(a)" style="cursor: pointer;">

@@ -31,7 +31,7 @@
  * For more info, please see:
  * https://ionicframework.com/docs/theming/dark-mode
  */
-
+ @import "https://ionicframework.com/docs/theming/dark-mode";
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
@@ -54,6 +54,34 @@
     height: 50px;
   }
 }
+ion-select-popover {
+  --background: #ffffff !important;
+  --color: #000000 !important;
+}
+
+ion-select-popover .select-interface-option {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+ion-select-popover .select-interface-option:hover {
+  background-color: #000000 !important;
+  color: #fff !important;
+}
+
+ion-select-popover .select-interface-option.select-interface-option-selected {
+  background-color: #dcdcdc !important;
+  color: #000000 !important;
+  font-weight: bold;
+}
+
+/* ✅ 5. Ensure it works even in dark mode (Ionic adds dark classes) */
+ion-select-popover.select-popover-interface,
+ion-select-popover .sc-ion-select-popover-md {
+  --background: #ffffff !important;
+  color: #000000 !important;
+}
+
 
 
 

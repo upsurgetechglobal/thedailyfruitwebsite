@@ -58,9 +58,10 @@ ion-content {
     // background: #fff3cd;
     background: linear-gradient(135deg, white 0%, #fff3cd 100%);
     padding: 8px;
-    font-size: 14px;
+    font-size: 12px;
     margin: 10px 0;
     border-radius: 5px;
+    text-align: center;
     // font-weight: bold;
     color: black;
 }
@@ -95,7 +96,7 @@ ion-content {
     font-weight: 600;
     // color: gray;
     // margin-top: 15px;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 18px;
 }
   
@@ -108,6 +109,11 @@ ion-content {
 //     align-self: center;
 //   }
   
+ion-list{
+    --background: white;
+    background: white;
+    padding: 0px;  
+}
 
 .selected_category{
     border: 2px solid var(--ion-color-dark);
@@ -115,6 +121,8 @@ ion-content {
     border-left: 10px solid var(--ion-color-dark);
     color: var(--ion-color-dark);
     cursor: pointer;
+    --background: white;
+    background: white;
 }
 .mobile_selected_category{
     color: var(--ion-color-dark);
@@ -124,6 +132,8 @@ ion-content {
 .non_selected_category{
     border: 2px solid white;
     border-radius: 10px;
+    --background: white;
+    background: white;
     border-left: 10px solid white;
     cursor: pointer;
 }
@@ -134,7 +144,7 @@ ion-fab {
 }
 
 .iname {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--ion-color-dark);
 }
@@ -309,11 +319,16 @@ ion-segment {
 }
 
 .actual_price {
-    font-size: 22px;
+    font-size: 18px;
     display: block;
-    margin-top: 15px;
+    margin-top: 5px;
     font-weight: bold;
     color: var(--ion-color-dark);
+}
+.add_btn{
+    margin-top: 10px;
+   font-size: 12px;
+  
 }
 
 .total_price {
@@ -406,17 +421,33 @@ img {
     width: 100%;
 }
 
-.cat_title{
-    font-size: 16px;
+.cat_row {
+    display: flex;
+    align-items: center; // aligns both image and title vertically center
+  }
+  
+  .cat_img_col,
+  .cat_title_col {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cat_title_col {
+    height: 100%;
+  }
+  
+  .cat_title {
+    font-size: 14px;
     font-weight: bold;
-    margin-top: 15px;
-}
-.cat_img{
-    height: 40px;
-    width: 200px;
-    margin-top: 5px;
-}
-
+    color: black;
+    margin: 0;
+  }
+  
+  .cat_img {
+    width: 10rem;
+    height: auto;
+  }
+  
 
 //   .quantity-field .number::selection{
 //     background: none;
@@ -482,12 +513,15 @@ img {
     font-size: 20px;
     // cursor: pointer;
 }
-.number span{
+.number p{
    color: var(--ion-color-dark);
 }
 .cat_menu{
     position: sticky;
     top: 0px;
     z-index: 10;
-    color: black;
+    color: black !important;
+}
+ion-segment-button span{
+    color: black ;
 }

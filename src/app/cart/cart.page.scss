@@ -63,6 +63,7 @@ ion-item
 .iname_price {
     font-size: 20px;
     font-weight: 700;
+    color: black;
 }
 
 .total {
@@ -77,6 +78,12 @@ ion-item
     text-align: right;
     color: black;
 }
+ion-list{
+    --background: white;
+    background: white;
+    padding: 0px;  
+}
+
 
 .trash_icon {
     margin-top: -1px;
@@ -146,6 +153,7 @@ ion-item
     outline: none;
     display: inline;
     font-size: 20px;
+    color: black;
     // cursor: pointer;
 }
 
@@ -153,12 +161,13 @@ ion-item
     --min-height: 60px !important;
     --padding-start: 20px;
     --padding-end: 20px;
-    font-size: 18px;
+    font-size: 16px;
     // --background: var(--ion-color-light);
     border:1px dashed var(--ion-color-dark);
     width: 100%;
     border-radius: 10px;
     border-width: 1px; /* Adjust the width */
+    color: black;
   
 }
 .scrollable-content {

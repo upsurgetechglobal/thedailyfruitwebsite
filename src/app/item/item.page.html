@@ -130,20 +130,20 @@
 
     <div *ngIf="data" class="ion-padding">
         <ion-segment [scrollable]="true" mode="sm" color="dark" *ngIf="isMobile" class="cat_menu">
-            <ion-segment-button *ngFor="let cat of categories_list" (click)="selectProducts(cat.id)" [ngClass]="cat_id == cat.id ? 'mobile_selected_category':''">
-                {{ cat.name}}
+            <ion-segment-button  *ngFor="let cat of categories_list" (click)="selectProducts(cat.id)" [ngClass]="cat_id == cat.id ? 'mobile_selected_category':''">
+                <span>{{ cat.name}}</span>
             </ion-segment-button>
         </ion-segment>
         <ion-card [class]="isMobile?'':'category_card'">
             <ion-row>
                 <ion-col [size]="isMobile ? 12 :2">
                     <ion-card-content class="scrollable-content" *ngIf="!isMobile">
-                        <ion-list *ngFor="let cat of categories_list" style="cursor: pointer;padding:0px;">
+                        <ion-list *ngFor="let cat of categories_list">
                             <ion-item lines="none" [ngClass]="cat_id == cat.id ? 'selected_category':'non_selected_category'"
                                 (click)="selectProducts(cat.id)">
-                                <ion-row>
-                                    <ion-col size="4"><img src="{{ cat.img }}" class="cat_img"></ion-col>
-                                    <ion-col size="8">
+                                <ion-row class="cat_row">
+                                    <ion-col size="4" class="cat_img_col"><img src="{{ cat.img }}" class="cat_img"></ion-col>
+                                    <ion-col size="8" class="cat_title_col">
                                         <h3 class="cat_title">{{ cat.name }}</h3>
                                     </ion-col>
                                 </ion-row>
@@ -191,14 +191,14 @@
                                     </ion-col>
                                     <ion-col [size]="isMobile? 12: 4">
                                         <ion-button color="primary" expand="block" shape="round" color="dark"
-                                            size="medium" *ngIf="!item?.cart_added" style="margin-top: 10px;"
-                                            (click)="add_to_cart(item)">
+                                            size="medium" *ngIf="!item?.cart_added"
+                                            (click)="add_to_cart(item)" class="add_btn">
                                             {{ item?.subscribed_item ? 'Subscribe' : text.add}}</ion-button>
 
                                             <div class="quantity-field" *ngIf="item?.cart_added">
                                                 <button class="value-button decrease-button" (click)="decrement(item)">-</button>
                                                 <span class="number">
-                                                    <span style="margin-top: -100px;">{{item.qty}}</span>
+                                                    <p style="margin-top: -2px;">{{item.qty}}</p>
                                                 </span>
                                                 <button class="value-button increase-button" (click)="increment(item)">+
                                                 </button>

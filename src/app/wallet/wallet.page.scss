@@ -24,12 +24,23 @@ ion-content
     margin-top: 20px;
 }
 
-ion-segment
+ion-segment, ion-segment-button
 {
     background-color: white;
     width:90%;
     margin: auto;
     border-radius: 10px;
+    color: black !important;
+}
+// ion-segment-button:hover{
+//     background-color: var(--ion-color-dark);
+//     color: white !important;
+// }
+ion-item{
+    --background: white;
+}
+.item-label{
+    color: black;
 }
 
 .sek1
@@ -61,3 +72,19 @@ ion-segment
 {
     display: block;margin-top: 5px;color:gray;
 }
+ion-input{
+    color: black !important;
+}
+// ion-card,ion-content,
+// ion-header,
+// ion-toolbar,
+// // ion-item,
+// // ion-label,
+// // ion-input,
+// ion-accordion,
+// // ion-list,
+// ion-select,
+// ion-select-option{
+//   background-color: white !important;
+//   color: black !important;
+// }

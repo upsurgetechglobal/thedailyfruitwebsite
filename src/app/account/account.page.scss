@@ -18,7 +18,11 @@ ion-item
 
 ion-list
 {
+   background-color: white;
     border-radius: 10px;
+}
+.item-label{
+   color: black;
 }
 
 .title
@@ -65,7 +69,12 @@ ion-searchbar
  {
     margin-top: 5px;
     display: block;
+    color: black !important;
+   //  cursor: pointer;
  }
+.topBtn ion-col{
+   cursor: pointer;
+}
 
  .sek1
  {
@@ -81,3 +90,18 @@ ion-searchbar
  {
     width: 96%;height: 500px;border-radius: 10px;margin-left:2%;margin-top: 10%;
  }
+// ion-card,ion-content,
+// ion-header,
+// ion-toolbar,
+// ion-item,
+// ion-label,
+// ion-input,
+// ion-accordion,
+// ion-list,
+// ion-select,
+// ion-select-option,
+// p,
+ion-item {
+  --background: white !important;
+  color: black !important;
+}

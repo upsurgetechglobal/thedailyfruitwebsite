@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   isMobile: boolean = false;
   data:any;
   user_data:any;
+  user_id:any;
 
   constructor(
     private platform: Platform,
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     // private oneSignal: OneSignal
   ) {
     const userData = localStorage.getItem('user_data');
-
+    this.user_id = localStorage.getItem('user_id');
     this.checkScreenSize();
 
     if (userData !== null) {
@@ -58,11 +59,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+    
     this.otherService.triggerLoadData.subscribe(() => {
-      const user_id = localStorage.getItem('user_id');
+      this.user_id = localStorage.getItem('user_id');
       this.loadData(); 
-      if(user_id){
+      if(this.user_id){
         this.loadUserData();
       }else{
         this.user_data = null
@@ -82,10 +83,11 @@ export class AppComponent implements OnInit {
       });
   }
   userAccount() {
-    if (this.user_data == undefined && this.user_data?.user   == undefined) {
-      this.router.navigate(["login"]);
-    } else {
+    console.log('this.user_id',this.user_id)
+    if (this.user_id) {
       this.router.navigate(["/tabs/account"]);
+    } else {
+      this.router.navigate(["login"]);
     }
   }
   

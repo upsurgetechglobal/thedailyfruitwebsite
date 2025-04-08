@@ -12,100 +12,94 @@ import { Share } from '@capacitor/share';
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,RouterLink]
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
 })
 export class AccountPage implements OnInit {
-data:any;
-fakeData:any = [1,2,3,4,5,6];
-text:any;
-isMobile: boolean = false;
+  data: any;
+  fakeData: any = [1, 2, 3, 4, 5, 6];
+  text: any;
+  isMobile: boolean = false;
 
-
-  constructor(public server : ServerService,public otherService : OtherService) { 
-
+  constructor(public server: ServerService, public otherService: OtherService) {
     const text = localStorage.getItem('app_lang');
-    
-    if(text !== null) 
-    {
-      this.text =  JSON.parse(text);
+
+    if (text !== null) {
+      this.text = JSON.parse(text);
       this.text = this.text.text;
       // this.text.subscription = 'My Orders'
     }
 
     this.checkScreenSize();
-
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.checkScreenSize();
   }
- 
+
   private checkScreenSize() {
     this.isMobile = window.innerWidth <= 768; // Adjust the breakpoint as needed
   }
 
-  ngOnInit() 
-  {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
+    this.otherService.statusBar('#ffffff', 2);
+
+    this.loadData();
   }
 
-  ionViewDidEnter()
-  {
-    this.otherService.statusBar("#ffffff",2);
-
-    this.loadData(); 
+  async loadData() {
+    this.server.account().subscribe((response: any) => {
+      this.data = response.data;
+      console.log(this.data);
+    });
   }
 
-  async loadData()
-  {
-    this.server.account().subscribe((response:any) => {
-      
-      this.data   = response.data;
-      console.log(this.data)
-      
-      });
-  }
-
-  async logout()
-  {
-    this.otherService.confirm() .then(res => {
-      if (res === 'ok') 
-      {
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("user_data");
+  async logout() {
+    this.otherService.confirm().then((res) => {
+      if (res === 'ok') {
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('user_data');
         this.otherService.triggerLoadData.emit();
-        this.otherService.redirect("tabs/home");     
+        this.otherService.redirect('tabs/home');
       }
     });
   }
-  
-  async deleteAccount()
-  {
-    this.otherService.confirm() .then(res => {
-      if (res === 'ok') 
-      {
-        this.server.deleteAccount().subscribe((response:any) => {
-      
+
+  async deleteAccount() {
+    this.otherService.confirm().then((res) => {
+      if (res === 'ok') {
+        this.server.deleteAccount().subscribe((response: any) => {
           this.data = response.data;
 
           this.otherService.toast(this.text.account_delete);
 
-          localStorage.removeItem("user_id");
-          localStorage.removeItem("user_data");
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('user_data');
 
-          this.otherService.redirect("welcome");     
-          
-          });   
+          this.otherService.redirect('welcome');
+        });
       }
     });
   }
 
-  async shareApp()
-  {
+  // async shareApp()
+  // {
+  //   await Share.share({
+  //     title: '',
+  //     text: this.data.user.rcode+' '+this.text.ref_code,
+  //     dialogTitle: this.text.ref_title,
+  //   });
+  // }
+  async shareApp() {
+    const referralCode = this.data.user.rcode;
+    const message = `Get ₹200.00 instant e-Cash by signing up on The Daily Fruit! 🥭\r\n\r\nUse my referral code: *${referralCode}*\r\n\r\nJoin now and enjoy fresh fruits delivered to your doorstep.\r\n\r\n🔗 Visit: https://admin.thedailyfruit.in/welcome`;
+
     await Share.share({
-      title: '',
-      text: this.data.user.rcode+' '+this.text.ref_code,
-      dialogTitle: this.text.ref_title,
+      title: 'Get ₹200 instantly on The Daily Fruit',
+      text: message,
+      dialogTitle: 'Invite Friends to The Daily Fruit',
     });
   }
 }

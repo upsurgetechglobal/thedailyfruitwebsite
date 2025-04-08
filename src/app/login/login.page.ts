@@ -18,8 +18,8 @@ export class LoginPage implements OnInit {
   hasClick:any = false;
   setting:any;
   text:any;
-  email:any = "user@gmail.com";
-  password:any = "123456";
+  email:any = "";
+  password:any = "";
   isMobile: boolean = false;
 
   constructor(

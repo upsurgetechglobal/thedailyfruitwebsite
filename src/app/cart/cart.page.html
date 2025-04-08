@@ -170,6 +170,9 @@
                     currency:'INR' }}</span></h3> <br>
                 <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()"
                   >{{ text.checkout_button }}</ion-button>
+                    <p *ngIf="validate()">
+                      Note: The amount will be deducted from your wallet balance.
+                    </p>
               </ion-col>
             </ion-row>
           </div>
@@ -184,7 +187,7 @@
       <br><br>
       <img src="assets/empty-cart.gif" style="width: 20%;">
 
-      <h1 align="center">{{ text.cart_empty }}</h1>
+      <h1 align="center" class="headTitle">{{ text.cart_empty }}</h1>
 
       <div class="ion-padding" style="text-align: center;">
         <ion-button routerLink="/tabs/home" [expand]="isMobile ? 'block' : ''" mode="ios" color="dark">{{

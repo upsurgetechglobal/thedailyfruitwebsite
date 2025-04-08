@@ -35,7 +35,7 @@ export class HomePage {
     'Friday',
     'Saturday',
   ];
-
+  filteredItems:any;
   showScrollTopButton = false;
   @ViewChild('content', { static: false }) content: any;
   constructor(
@@ -124,6 +124,7 @@ if (
     this.server.homepage().subscribe((response: any) => {
       this.data = response.data;
       console.log(' this.data', this.data)
+      this.filteredItems = this.data.trending;
     // this.data = this.sample_data;
     localStorage.setItem('cates', JSON.stringify(this.data.cate));
     localStorage.setItem('admin_setting', JSON.stringify(this.data.admin));
@@ -136,6 +137,8 @@ if (
       localStorage.setItem('subscribed_items',JSON.stringify(item))
       this.router.navigate(['/subscribed-cart'], { replaceUrl: true });
     }else{
+      item.cart_added = true;
+      item.qty = 1;
     this.hasClick = true;
     var allData = {
       cart_no: this.cart_no,
@@ -153,6 +156,61 @@ if (
       this.otherService.toast(this.text.added);
     });
   }
+  }
+
+  increment(item: any) {
+    if (item.qty < 10) {
+    const existingItem = this.filteredItems.find(
+      (res: any) => res.id === item.id
+    );
+    existingItem.qty += 1;
+    this.otherService.triggerLoadData.emit();
+    this.addToCart(item,'increment')
+  }
+  }
+
+  decrement(item: any) {
+    if (item.qty > 1) {
+      const existingItem = this.filteredItems.find(
+        (res: any) => res.id === item.id
+      );
+      existingItem.qty -= 1;
+      this.otherService.triggerLoadData.emit();
+      this.addToCart(item,'decrement')
+    }else{
+      this.removefromcart(item)
+    }
+  }
+  async removefromcart(item:any)
+  {
+    // this.otherService.confirm() .then(res => {
+    //   if (res === 'ok') 
+    //   {
+        this.server.getCart(item.cart_id).subscribe((response:any) => {
+          item.cart_added = false;
+          this.otherService.triggerLoadData.emit();
+          this.otherService.toast(this.text.removed);
+          
+          });       
+    //   }
+    // });
+  }
+ 
+  
+  addToCart(item:any,mode:any){
+    var allData = {
+      cart_no: this.cart_no,
+      item_id: item.id,
+      mode:mode,
+      qty:1,
+      store_id: item.store_id
+    };
+
+    this.server.add_to_cart(allData).subscribe((response: any) => {
+      this.hasClick = false;
+      // this.otherService.triggerLoadData.emit();
+      // this.otherService.toast(this.text.added);
+    });
   }
 
   async highlyRecommended() {

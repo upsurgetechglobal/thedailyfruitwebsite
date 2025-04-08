@@ -37,20 +37,20 @@
 <ion-segment value="1" color="dark" [(ngModel)]="type" mode="md">
   
   <ion-segment-button [value]="1">
-    <ion-label>{{ text.trans }}</ion-label>
+    <ion-label class="item-label">{{ text.trans }}</ion-label>
   </ion-segment-button>
   
-  <ion-segment-button [value]="2" color="dark">
-    <ion-label>{{ text.add_fund }}</ion-label>
+  <ion-segment-button [value]="2">
+    <ion-label class="item-label" >{{ text.add_fund }}</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 <div [ngSwitch]="type" class="ion-padding bottom">
 
-<div *ngSwitchCase="1">
+<div *ngSwitchCase="1" >
 
-<ion-item *ngFor="let trans of data.trans" lines="full">
-<ion-label>{{ setting.currency }}{{ trans.amount }} <span style="float:right">{{ trans.created_at | date:'dd-MM-yyyy'  }}</span>
+<ion-item *ngFor="let trans of data.trans" lines="full" >
+<ion-label class="item-label">{{ setting.currency }}{{ trans.amount }} <span style="float:right">{{ trans.created_at | date:'dd-MM-yyyy'  }}</span>
   
   
 <small class="notes">{{ trans.notes }}</small></ion-label>
@@ -64,7 +64,7 @@
 
 <div *ngSwitchCase="2">
 
-  <p>{{ text.fund_desc }}</p>
+  <ion-label class="item-label">{{ text.fund_desc }}</ion-label><br>
   
   <br>
   <ion-input label="Enter Amount" label-placement="floating" fill="outline" type="tel" maxlength="10" [(ngModel)]="amount" name="amount" mode="md"></ion-input>

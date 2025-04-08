@@ -162,11 +162,19 @@
                     <p class="desc">{{ text.starting_date_desc }}</p>
       
                     <ion-item lines="none" class="address">
-                      <ion-select label="{{ isMobile ?  start_date ? start_date : text.start_date : text.start_date}}" placeholder="Select" interface="popover"
-                        [(ngModel)]="start_date" name="start_date" (ionChange)="startDate()">
-                        <ion-select-option *ngFor="let date of checkout_data?.dates" [value]="date">{{
-                          date }}</ion-select-option>
-                      </ion-select>
+                      <ion-select
+                      label="{{ isMobile ? start_date ? start_date : text.start_date : text.start_date }}"
+                      placeholder="Select"
+                      interface="popover"
+                      [(ngModel)]="start_date"
+                      name="start_date"
+                      (ionChange)="startDate()"
+                    >
+                      <ion-select-option *ngFor="let date of checkout_data?.dates" [value]="date">
+                        <ion-label class="item-label">{{ date }}</ion-label>
+                      </ion-select-option>
+                    </ion-select>
+                    
                       <ion-icon name="calendar-outline" slot="start" color="dark"></ion-icon>
                     </ion-item>
                   </ion-col>
@@ -197,6 +205,9 @@
                         currency:'INR' }}</s>&nbsp;<span *ngIf="payble_amount">{{ total - save |
                         currency:'INR' }}</span></h3> <br>
                     <ion-button mode="ios" expand="block" color="dark" id="open-modal" expand="block" (click)="placeOrder()">{{ text.checkout_button }}</ion-button>
+                    <p *ngIf="validate()">
+                      Note: The amount will be deducted from your wallet balance.
+                    </p>
                   </ion-col>
                 </ion-row>
               </div>

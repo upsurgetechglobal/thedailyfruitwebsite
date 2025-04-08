@@ -79,14 +79,19 @@ ion-content {
 .iname_price {
     font-size: 25px;
     font-weight: 700;
+    color: var(--ion-color-dark);
 }
 .mobile_iname_price {
     font-size: 12px !important;
     font-weight: 700;
+    color: var(--ion-color-dark);
+
 }
 .mobile_iname_name{
     font-size: 16px;
     font-weight: 700;
+    color: var(--ion-color-dark);
+
 }
 
 
@@ -142,7 +147,7 @@ ion-content {
     margin-right: -4px;
     border-radius: 8px 0 0 8px;
     color: rgb(208, 1, 1);
-    font-size: 35px;
+    font-size: 30px;
     cursor: pointer;
 }
 
@@ -150,7 +155,7 @@ ion-content {
     margin-left: -4px;
     border-radius: 0 8px 8px 0;
     color: green;
-    font-size: 35px;
+    font-size: 25px;
     cursor: pointer;
 
 }
@@ -166,7 +171,7 @@ ion-content {
     padding: 0;
     outline: none;
     display: inline;
-    font-size: 22px;
+    font-size: 20px;
     color: black;
     // cursor: pointer;
 }
@@ -185,8 +190,23 @@ ion-content {
     width: 100%;
     border-radius: 10px;
     border-width: 1px;
+    color: black;
     /* Adjust the width */
 
+}
+ion-content,
+ion-header,
+ion-toolbar,
+ion-item,
+ion-label,
+ion-input,
+ion-accordion,
+ion-list,
+ion-select,
+p,
+div {
+  background-color: white !important;
+  color: black !important;
 }
 
 
@@ -242,3 +262,4 @@ ion-card {
 img {
     border-radius: 10px;
 }
+

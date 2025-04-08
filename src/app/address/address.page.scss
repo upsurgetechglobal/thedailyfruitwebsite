@@ -12,12 +12,44 @@ ion-content{
   border-right: 3px solid whitesmoke;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
-
+  --background: white !important;
   &::-webkit-scrollbar {
       width: 0;
       height: 0;
   }
 }
+ion-modal {
+  --background: white !important;
+  color: black !important;
+}
+
+ion-content,
+ion-header,
+ion-toolbar,
+ion-item,
+ion-label,
+ion-input,
+ion-accordion,
+p,
+div {
+  background-color: white !important;
+  color: black !important;
+}
+
+
+// .type {
+//   background-color: var(--ion-color-light);
+//   padding: 10px 15px;
+//   border-radius: 5px;
+//   color: black;
+// }
+
+// .typeSelected {
+//   background-color: var(--ion-color-dark);
+//   color: white;
+//   padding: 10px 15px;
+//   border-radius: 5px;
+// }
 
 .type
 {
