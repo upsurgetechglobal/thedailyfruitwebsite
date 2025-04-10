@@ -55,7 +55,7 @@ export class ItemPage implements OnInit {
   hasClick = false;
   show = true;
   categories_list: any;
-
+  selectedCatName: string = '';
   categoryItemsMap: { [key: number]: number[] } = {
     1: [1, 2,6],
     2: [5],
@@ -154,9 +154,11 @@ export class ItemPage implements OnInit {
   
   async selectProducts(cat_id: any) {
     this.cat_id = cat_id;
+    this.selectedCategory(this.cat_id)
     this.server.item({ store_id: 1, cat_id: cat_id }).subscribe((response: any) => {
       this.filteredItems = response.data.item;
       console.log('Filtered Items with cart status:', this.filteredItems);
+    
       // this.updateCartStatus();
     });
   }
@@ -179,7 +181,13 @@ export class ItemPage implements OnInit {
   async loadCategoriesData() {
     this.server.homepage().subscribe((response: any) => {
       this.categories_list = response.data.cate;
+      this.selectedCategory(this.cat_id)
     });
+  }
+
+  selectedCategory(cat_id:any){
+    const selectedCat = this.categories_list.find((cat:any) => cat?.id == cat_id);
+      this.selectedCatName = selectedCat ? selectedCat.name : '';
   }
 
   getSavedAddress() {

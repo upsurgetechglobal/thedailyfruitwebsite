@@ -182,7 +182,8 @@ swiper-container
 }
 .mobileFont
 {
-    font-size: 14px;
+    font-size: 13px;
+    color:black !important;
 }
 
 .webFont
@@ -190,6 +191,7 @@ swiper-container
     font-size: 16px;
     color:black !important;
     margin-top: 10px;
+    // white-space: nowrap; 
 }
 
 

@@ -22,7 +22,7 @@
 <ion-row style="text-align: center;">
     <ion-col size="3" *ngIf="!isMobile"></ion-col>
 <ion-col [size]="isMobile ? 6 :3"><ion-button shape="round" color="dark" routerLink="/tabs/home" routerDirection="root" (click)="close()"><span style="white-space: nowrap;">{{ text.go_back }}</span></ion-button></ion-col>
-<ion-col  [size]="isMobile ? 6 :3"><ion-button shape="round" color="dark" routerLink="/tabs/account" routerDirection="forward" (click)="close()"><span style="white-space: nowrap;">{{ text.my_order }}</span></ion-button></ion-col>
+<ion-col  [size]="isMobile ? 6 :3"><ion-button shape="round" color="dark" routerLink="/tabs/subscription" routerDirection="forward" (click)="close()"><span style="white-space: nowrap;">{{ text.my_order }}</span></ion-button></ion-col>
 <ion-col size="3" *ngIf="!isMobile"></ion-col>
 </ion-row>
 </ion-col>

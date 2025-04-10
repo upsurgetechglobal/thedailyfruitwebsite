@@ -7,18 +7,24 @@ p {
     color: gray;
 }
 
+/* Default styles for laptop and larger screens */
 ion-input {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    margin: 10px;
-    border-radius: 50%;
-    color: black !important;
-    --background: #e1e1e1;
-    --padding-start: 7px;
-    font-size: 25px;
-}
-
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    font-size: 20px;
+    color: black;
+  }
+  
+  /* Mobile view styles (up to 767px wide) */
+  @media (max-width: 767px) {
+    ion-input {
+      margin-left: 1.8rem; /* Only apply margin-left in mobile */
+    }
+  }
+  
 .signup-card {
     // max-width: 500px;
     width: 100%;
@@ -28,6 +34,12 @@ ion-input {
     // padding: 10px;
     background: #ffffff;
 }
+.verify-button {
+    width: 60%;
+    margin: 0 auto; /* This centers the button horizontally */
+    display: block; /* Ensures margin auto works */
+  }
+  
 
 .headTitle {
     text-align: center;

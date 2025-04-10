@@ -128,12 +128,19 @@
     </div> -->
 
 
-    <div *ngIf="data" class="ion-padding">
-        <ion-segment [scrollable]="true" mode="sm" color="dark" *ngIf="isMobile" class="cat_menu">
-            <ion-segment-button  *ngFor="let cat of categories_list" (click)="selectProducts(cat.id)" [ngClass]="cat_id == cat.id ? 'mobile_selected_category':''">
-                <span>{{ cat.name}}</span>
+    <div *ngIf="data" [class]="isMobile?'':'ion-padding'">
+        <ion-segment scrollable mode="md" *ngIf="isMobile" class="cat-menu">
+            <ion-segment-button 
+              *ngFor="let cat of categories_list" 
+              (click)="selectProducts(cat.id)" 
+              [ngClass]="{ 'mobile-selected-category': cat_id == cat.id }"
+              class="cat-card"
+            >
+              <img [src]="cat.img" class="cat-img" />
+              <span class="cat-name">{{ cat.name }}</span>
             </ion-segment-button>
-        </ion-segment>
+          </ion-segment>
+          
         <ion-card [class]="isMobile?'':'category_card'">
             <ion-row>
                 <ion-col [size]="isMobile ? 12 :2">
@@ -151,15 +158,15 @@
                         </ion-list>
                     </ion-card-content>
                 </ion-col>
-                <ion-col [size]="isMobile ? 12 :10" style="padding: 5px 25px;">
-
+                <ion-col [size]="isMobile ? 12 :10" [style.padding]="!isMobile ?'5px 25px':''">
+                    <h3 class="headTitle" *ngIf="isMobile">{{selectedCatName}}</h3>
                     <ion-row *ngIf="filteredItems">
                         <ion-col [size]="isMobile? 12: 4" *ngFor="let item of filteredItems" style="margin-bottom: 10px;">
                             <ion-card class="product_card">
                                 <ion-row>
                                     <ion-col size="3"><img src="{{ item.img }}">
                                     </ion-col>
-                                    <ion-col size="9" style="padding: 15px 10px;">
+                                    <ion-col size="9" [style.padding]="!isMobile ?'15px 10px':''">
                                         <span class="iname">{{ item.name }}</span>
                                         <span class="actual_price">{{ item.price | currency:'INR' }} </span>
                                         <br>

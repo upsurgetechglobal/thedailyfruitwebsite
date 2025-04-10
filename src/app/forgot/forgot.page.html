@@ -18,7 +18,8 @@
   <br><br>
   <form #form="ngForm" (ngSubmit)="forgot(form.value)">
   
-    <ion-input label="{{ text.phone }}" name="phone" ngModel label-placement="floating" fill="outline" mode="md" *ngIf="setting.verify_type == 1 || setting.verify_type == 2" [disabled]="hasClick" required></ion-input>
+    <ion-input label="{{ text.phone }}" name="phone" ngModel label-placement="floating" fill="outline" mode="md" *ngIf="setting.verify_type == 1 || setting.verify_type == 2" [disabled]="hasClick" required
+    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" maxlength="10"></ion-input>
   
     <ion-input label="{{ text.email }}" name="email" ngModel label-placement="floating" fill="outline" mode="md" *ngIf="setting.verify_type == 3 || setting.verify_type == 0" [disabled]="hasClick" required></ion-input>
   

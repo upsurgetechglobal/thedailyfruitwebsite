@@ -9,7 +9,7 @@
       <ion-col [size]="isMobile?4:3"></ion-col>
       <ion-col size="4" class="menu-container" *ngIf="!isMobile">
         <ion-button fill="clear" routerLink="/tabs/home" routerLinkActive="active-menu">
-          <span>{{ text.menu_home }}</span>
+          <span>{{ text?.menu_home }}</span>
         </ion-button>
 
         <ion-button fill="clear" routerLink="/tabs/item/1" routerLinkActive="active-menu">
@@ -49,7 +49,7 @@
     </ion-row>
   </ion-header>
   <ion-split-pane contentId="main-content">
-    <!-- <ion-menu contentId="main-content" type="push" swipeGesture="false" *ngIf="isMobile">
+    <ion-menu contentId="main-content" type="push" swipeGesture="false" *ngIf="isMobile">
       <ion-content>
         
         <br><br>
@@ -137,7 +137,7 @@
         </ion-list>
         
       </ion-content>
-    </ion-menu> -->
+    </ion-menu>
 
     <ion-router-outlet id="main-content" style="font-family: 'League Spartan', serif;"
       dir="{{ dir }}"></ion-router-outlet>

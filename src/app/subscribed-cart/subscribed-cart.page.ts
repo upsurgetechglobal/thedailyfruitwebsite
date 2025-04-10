@@ -185,7 +185,7 @@ export class SubscribedCartPage implements OnInit {
         return;
       }
   
-      this.otherService.showLoading();
+      // this.otherService.showLoading();
   
       const allData = {
         plan: this.sub_time,
@@ -217,7 +217,7 @@ export class SubscribedCartPage implements OnInit {
         })
         // console.log( this.cal)
         // this.total = this.cal.total;
-        this.otherService.hideLoading();
+        // this.otherService.hideLoading();
       });
     }
   

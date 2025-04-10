@@ -72,6 +72,7 @@ export class LoginPage implements OnInit {
     this.hasClick = true;
 
     this.server.login(data).subscribe((response:any) => {
+      console.log('response',response)
       // const mockResponse = {
       //   user: {
       //     id: '410e7a8e201-3375-4ceb-a9c8-e138e5128171',
@@ -84,24 +85,26 @@ export class LoginPage implements OnInit {
 
     this.hasClick = false;
 
-    if(response.msg != "done")
+    if(!response.status)
     {
-      this.otherService.toast(response.error);
+      this.otherService.toast(response.message);
     }
     else
     {
+      
+      localStorage.setItem('token',response.token);
       localStorage.setItem('user_id',response.user.id);
 
       localStorage.setItem('user_data', JSON.stringify(response.user));
       this.otherService.triggerLoadData.emit();
       this.otherService.toast(this.text.logged_in);
       const path = window.location.pathname;
-      console.log(path); // "/tabs/cart"
-      if(path == '/tabs/cart' || path == '/subscribed-cart'){
+      // console.log(path); // "/tabs/cart"
+      // if(path == '/tabs/cart' || path == '/subscribed-cart'){
         this.loctaion.back();
-      }else{
-        this.router.navigate(['/tabs/home']);    
-       }
+      // }else{
+      //   this.router.navigate(['/tabs/home']);    
+      //  }
 
       // if(localStorage.getItem('cart_no') && localStorage.getItem('cart_no') != undefined)
       // {

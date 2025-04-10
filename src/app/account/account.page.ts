@@ -61,6 +61,7 @@ export class AccountPage implements OnInit {
       if (res === 'ok') {
         localStorage.removeItem('user_id');
         localStorage.removeItem('user_data');
+        localStorage.removeItem('token');
         this.otherService.triggerLoadData.emit();
         this.otherService.redirect('tabs/home');
       }

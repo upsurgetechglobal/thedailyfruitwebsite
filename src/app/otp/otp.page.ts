@@ -22,6 +22,13 @@ export class OtpPage implements OnInit {
   text:any;
   isMobile: boolean = false;
 
+  otp = {
+    otp_1: '',
+    otp_2: '',
+    otp_3: '',
+    otp_4: ''
+  };
+
   constructor(public server : ServerService,public otherService : OtherService) {
   
     const userRes = localStorage.getItem('user_res');
@@ -63,23 +70,49 @@ export class OtpPage implements OnInit {
     this.otherService.statusBar("#ffc927",2);
   }
 
-  otpChange(e:any,next:any,prev:any)
-  {
-    if(e.target.value.length < 1 && prev)
-    {
-      prev.setFocus()
-    }
-    else if(next && e.target.value.length>0)
-    {
-      next.setFocus();
-    }
-    else
-    {
-     return 0;
-    }
+  // otpChange(e:any,next:any,prev:any)
+  // {
+  //   if(e.target.value.length < 1 && prev)
+  //   {
+  //     prev.setFocus()
+  //   }
+  //   else if(next && e.target.value.length>0)
+  //   {
+  //     next.setFocus();
+  //   }
+  //   else
+  //   {
+  //    return 0;
+  //   }
     
-    return 0;
+  //   return 0;
+  // }
+  otpChange(event: any, next: any, prev: any) {
+    const input = event.target.value;
+  
+    // Only allow numeric values
+    if (!/^\d$/.test(input)) {
+      event.target.value = ''; // Clear invalid input
+      return;
+    }
+  
+    if (input.length > 0 && next) {
+      next.setFocus();
+    } else if (input.length === 0 && prev) {
+      prev.setFocus();
+    }
   }
+
+  handleKeyDown(event: KeyboardEvent, next: any, prev: any) {
+    const target = event.target as HTMLInputElement;
+  
+    if (event.key === 'Backspace' && target.value === '' && prev) {
+      prev.setFocus();
+    }
+  }
+  
+  
+  
 
   verify(data:any)
   {    
@@ -94,7 +127,7 @@ export class OtpPage implements OnInit {
     
       this.hasClick = false;
 
-      if(response.msg != "done")
+      if(!response.status)
       {
         this.otherService.toast(response.error);
       }
@@ -103,11 +136,11 @@ export class OtpPage implements OnInit {
         if(this.res.user.status == 0)
         {
             localStorage.setItem('user_id',response.user.id);
-
+            localStorage.setItem('token',response.token);
             localStorage.setItem('user_data', JSON.stringify(response.user));
 
             this.otherService.toast(this.text.account_created);
-
+            this.otherService.triggerLoadData.emit();
             if(localStorage.getItem('cart_no') && localStorage.getItem('cart_no') != undefined)
             {
               this.otherService.redirect("cart","root");

@@ -82,16 +82,6 @@
                       </ion-label>
                     </ion-item>
                     <br><br>
-                    <!-- <ion-item lines="none">
-                            <ion-label class="ion-text-wrap"><b>Description</b>
-                              <span style="display: block;margin-top: 5px;" class="dtime">{{ selected_item.desc }}</span>
-                            </ion-label>
-                            <span>
-                              Our Diabetic Fruit Box is thoughtfully curated for individuals managing diabetes, ensuring a
-                              delicious and health-conscious selection of fruits. Each fruit is carefully chosen to be low in
-                              sugar while still being rich in essential nutrients, fiber, and antioxidants.
-                            </span>
-                          </ion-item> -->
                     <div class="description">
                       <ion-label class="ion-text-wrap"><b>Description</b><br>
                       </ion-label>
@@ -144,7 +134,7 @@
                     <p class="desc">{{ text.checkout_desc }}</p>
       
       
-                    <ion-list>
+                    <!-- <ion-list>
                       <ion-radio-group [(ngModel)]="sub_time" (click)="startDate()">
                         <div class="radio-container">
                           <span *ngFor="let time of checkout_data?.time" lines="none" class="subscribed_type"
@@ -154,7 +144,21 @@
                           </span>
                         </div>
                       </ion-radio-group>
+                    </ion-list> -->
+                    <ion-list>
+                      <ion-radio-group [(ngModel)]="sub_time" (ionChange)="startDate()">
+                        <div class="radio-container">
+                          <span *ngFor="let time of checkout_data?.time"
+                                class="subscribed_type"
+                                [ngClass]="{'selected_type': sub_time === time?.id}"
+                                (click)="sub_time = time?.id">
+                            <ion-radio [value]="time?.id" class="hidden-radio"></ion-radio>
+                            <span>{{ time?.title }}</span>
+                          </span>
+                        </div>
+                      </ion-radio-group>
                     </ion-list>
+                    
                   </ion-col>
                 </ion-row>
                 <ion-row>
